@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>식당 상세 | BizBeacon for Boss</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <!-- 내부 CSS  -->
+    <style>
+        .detail-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .restaurant-img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .btn-action {
+            min-width: 100px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<!--<div th:replace="partials/header :: *"></div>-->
+
+<main class="container">
+
+<!--
+    [식당 상세 페이지 흐름]
+
+    1. 페이지 진입 시:
+       - GET /api/restaurants/{id} API 호출 → Restaurant 데이터 조회
+       - 조회수 +1 업데이트 처리(POST)
+
+    2. 버튼 표시 조건:
+       - restaurant.userId == session.user.id → 수정하기/삭제하기 버튼 표시
+       - restaurant.userId != session.user.id → 채팅하기 버튼 표시
+
+    3. 좋아요:
+       - "👍" 버튼 클릭 시 POST /api/restaurants/{id}/like
+       - 이미 좋아요 누른 경우 → DELETE /api/restaurants/{id}/like
+
+    4. 수정하기:
+       - /restaurant-form/{id} 페이지로 이동 (기존 값 불러오기)
+
+    5. 삭제하기:
+       - DELETE /api/restaurants/{id} API 호출
+       - 성공 시 → /restaurants 페이지로 redirect
+
+    6. 채팅하기:
+       - POST /chats 요청 (상대방 userId 전달)
+       - 성공 시 → /chat/{roomId} 페이지로 이동
+    -->
+
+
+    <div class="detail-container">
+        <!-- 뒤로가기 -->
+        <a th:href="@{/restaurants}" class="btn btn-link mb-3">&lt; 뒤로가기</a>
+
+        <!-- 대표 이미지 -->
+        <img th:src="${restaurant.photoUrl}" alt="식당 이미지" class="restaurant-img">
+
+        <!-- 상호명 -->
+        <h3 th:text="${restaurant.name}">OK Burger</h3>
+
+        <!-- 조회수/좋아요 -->
+        <p>
+            조회수 <span th:text="${restaurant.viewCount}">15</span> |
+            좋아요 <span th:text="${restaurant.likeCount}">20</span>
+            <button class="btn btn-sm btn-outline-warning">👍</button>
+
+            <!-- 타인 가게일 경우 (채팅하기) -->
+            <div th:unless="${restaurant.userId == sessionUser.id}">
+                <a th:href="@{'/chat?partnerId=' + ${restaurant.userId}}" class="btn btn-primary btn-action">채팅하기</a>
+            </div>
+        </p>
+
+        <!-- 대표 메뉴/가격 -->
+        <h5 th:text="${restaurant.menuName}">데리야끼 버거</h5>
+        <p th:text="${restaurant.description}">스테이크 200g과 양상추, 토마토로 당일 생산합니다.</p>
+        <p><strong th:text="${#numbers.formatInteger(restaurant.price,0)} + '원'">11,000원</strong></p>
+        <p>장소 | <span th:text="${restaurant.address}">강서구 화곡동</span></p>
+
+        <!-- 버튼 영역 -->
+        <div class="mt-4">
+            <!-- 본인 가게일 경우 (수정/삭제) -->
+            <div th:if="${restaurant.userId == sessionUser.id}">
+                <a th:href="@{'/restaurant-form/' + ${restaurant.id}}" class="btn btn-secondary btn-action">수정하기</a>
+                <form th:action="@{'/api/restaurants/' + ${restaurant.id}}" method="post" style="display:inline;">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" class="btn btn-danger btn-action">삭제하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<!--<div th:replace="partials/footer :: *"></div>-->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
