@@ -7,6 +7,9 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
   //오류에 해당하는 문구는 차후 수정 필요
+  //커스텀에러에 필요한 상수 자유롭게 추가하여 사용하시면됩니다
+  // ex)EMAIL_NULL(HttpStatus.BAD_REQUEST, "이메일은 필수입력입니다.")
+
   USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
   INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
   INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다."),

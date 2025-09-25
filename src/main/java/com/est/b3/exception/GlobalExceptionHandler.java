@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
   // 사용자 정의 예외 처리 - 예외처리 문구 추가 필요시 ErrorCode에 상수 추가 후 사용
+  // CustomException 파일에 사용예시 주석달려있음
   @ExceptionHandler(CustomException.class)
   public ResponseEntity<ErrorResponse> handleCustomException(CustomException e) {
     ErrorCode errorCode = e.getErrorCode();

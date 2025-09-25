@@ -23,7 +23,7 @@ public class ErrorResponse {
     return new ErrorResponse(errorCode);
   }
 
-  /* Response 예시 프론트에서 필요한 값만 출력 제어
+  /* Response JSON 예시 프론트에서 필요한 값만 출력 제어해주시면 됩니다.
   {
     "status": 400,
       "error": "Bad Request",
