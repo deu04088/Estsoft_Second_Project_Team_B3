@@ -1,0 +1,13 @@
+/* 헤더 로고 이미지 */
+.header-logo {
+    height: 40px;
+}
+
+/* 헤더 로그인 버튼 */
+.btn-outline-dark {
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    border-color: rgb(184, 184, 184);
+}
