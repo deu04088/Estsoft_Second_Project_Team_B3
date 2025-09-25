@@ -1,0 +1,50 @@
+/* 헤더 공통 CSS */
+
+/* 헤더 로고 이미지 */
+.header-logo {
+    height: 40px;
+}
+
+/* 헤더 로그인 버튼 */
+.login-btn-outline-dark {
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    border-color: #dadbe1;
+}
+
+/* 헤더 로그아웃 버튼 */
+.logout-btn-outline-dark {
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    color: #dadbe1;
+    border-color: #dadbe1;
+}
+
+/* 헤더 채팅하기 버튼 */
+.chat-btn-outline-dark {
+    border-radius: 6px;
+    border-width: 1px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    color: #2f9eab;
+    border-color: #2f9eab;
+}
+
+/* 검색창 */
+.search-box {
+    width: 270px;
+    border-radius: 8px;
+    background-color: #f2f3f6;
+    border: none;
+}
+
+/* 내비 메뉴 */
+.nav-link {
+    color: #555;
+    font-weight: 500;
+    padding: 8px 16px;
+}
