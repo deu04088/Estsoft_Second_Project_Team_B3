@@ -1,48 +1,33 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8" />
-        <title>Header</title>
-        <!-- 부트스트랩 -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <!-- css -->
-        <link rel="stylesheet" href="../../static/css/header.css" />
-    </head>
+<header th:fragment="logined-header" class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container">
+        <a th:href="@{/restaurant}">
+            <img th:src="@{/images/header_logo.png}" alt="Logo" class="header-logo" />
+        </a>
 
-    <body>
-        <!-- 헤더 -->
-        <header class="navbar navbar-expand-lg navbar-light bg-white">
-            <div class="container">
-                <a href="#">
-                    <img src="../../static/images/header_logo.png" alt="Logo" class="header-logo" />
-                </a>
+        <!-- 내비 메뉴 -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
+            <li class="nav-item"><a class="nav-link active ms-2 fw-bold" th:href="@{/restaurants}">동네소개</a></li>
+            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/address-certify}">동네인증</a></li>
+            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/restaurant-detail}">점포관리</a></li>
+        </ul>
 
-                <!-- 내비 메뉴 -->
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
-                    <li class="nav-item"><a class="nav-link active ms-2 fw-bold" href="#">동네소개</a></li>
-                    <li class="nav-item"><a class="nav-link ms-2 fw-bold" href="#">동네인증</a></li>
-                    <li class="nav-item"><a class="nav-link ms-2 fw-bold" href="#">점포관리</a></li>
-                </ul>
+        <!-- 검색창 -->
+        <form class="d-flex me-3">
+            <input
+                class="form-control me-2 search-box"
+                type="search"
+                placeholder="찾는 메뉴가 뭐에요?"
+                aria-label="search"
+            />
+        </form>
 
-                <!-- 검색창 -->
-                <form class="d-flex me-3">
-                    <input
-                        class="form-control me-2 search-box"
-                        type="search"
-                        placeholder="찾는 메뉴가 뭐에요?"
-                        aria-label="search"
-                    />
-                </form>
+        <!-- 채팅하기/로그아웃 버튼 -->
+        <div class="d-flex me-3">
+            <a th:href="@{/chat}" class="btn chat-btn-outline-dark">채팅하기</a>
+        </div>
 
-                <!-- 채팅하기/로그아웃 버튼 -->
-                <div class="d-flex me-3">
-                    <a href="/login" class="btn chat-btn-outline-dark">채팅하기</a>
-                </div>
-
-                <div class="d-flex me-3">
-                    <a href="/login" class="btn logout-btn-outline-dark">로그아웃</a>
-                </div>
-            </div>
-        </header>
-    </body>
-</html>
+        <div class="d-flex me-3">
+            <a th:href="@{/}" class="btn logout-btn-outline-dark">로그아웃</a>
+        </div>
+    </div>
+</header>

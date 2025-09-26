@@ -41,13 +41,11 @@
 </head>
 <body>
 
-<!-- Header -->
-<!--<div th:replace="partials/header :: *"></div>-->
 
-<main class="container my-5">
-    <h2 class="text-center mb-4">동네 인증</h2>
+        <main class="container my-5">
+            <h2 class="text-center mb-4">동네 인증</h2>
 
-<!--
+            <!--
     [동네 인증 처리 흐름 정리]
 
     1. 사용자가 주소를 입력하고 "내 동네 설정" 버튼을 누르면
@@ -61,6 +59,7 @@
        → 해당 주소가 DB(User.address)에 저장됨
        → /restaurants 페이지(우리 동네 식당 리스트)로 이동
 -->
+
 
     <!-- 주소 입력 -->
     <form th:action="@{/api/users/address}" method="post">
@@ -82,11 +81,12 @@
     <p class="text-center">현재 위치는 <span id="ggaddress">불러오는 중...</span> 입니다.</p>
     <p class="text-center"><span id="result">불러오는 중...</span> 입니다.</p>
 
-    <!-- 인증 완료 버튼 -->
-    <div class="d-grid gap-2 mt-4">
-        <a th:href="@{/restaurants}" class="btn btn-certify">동네인증 완료하기</a>
-    </div>
-</main>
+
+            <!-- 인증 완료 버튼 -->
+            <div class="d-grid gap-2 mt-4">
+                <a th:href="@{/restaurants}" class="btn btn-certify">동네인증 완료하기</a>
+            </div>
+        </main>
 
 <!-- Footer -->
 <!--<div th:replace="partials/footer :: *"></div>-->
@@ -95,6 +95,6 @@
 </script>
 <script src="/js/googlemap.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
 </html>

@@ -2,6 +2,8 @@ package com.est.b3.domain;
 
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,7 +12,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "restaurants")
 @Builder
@@ -18,6 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Restaurant {
 
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   private Long id;
 
@@ -46,10 +48,13 @@ public class Restaurant {
   private Integer state;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "boss_id")
   private User user;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "photo_id")
   private Photo photo;
+
+  @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+  private List<Like> likes = new ArrayList<>();
 }
