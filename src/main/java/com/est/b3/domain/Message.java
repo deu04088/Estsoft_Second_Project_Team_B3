@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "messages")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Message {
 
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   private Long id;
 

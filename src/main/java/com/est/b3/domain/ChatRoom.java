@@ -12,21 +12,21 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "chat_rooms")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ChatRoom {
 
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
+  @JoinColumn(name = "boss_id")
   private User user;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id2")
+  @JoinColumn(name = "boss_id2")
   private User user2;
 
   @Column(name = "created_at")
