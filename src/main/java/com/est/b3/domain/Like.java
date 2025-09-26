@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "likes")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Like {
 
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Id
   private Long id;
 
