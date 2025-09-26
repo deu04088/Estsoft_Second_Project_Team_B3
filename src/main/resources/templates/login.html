@@ -1,109 +1,141 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <title>로그인 | BizBeacon for Boss</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
-        <link th:href="@{/css/style.css}" rel="stylesheet" />
-        <link th:href="@{/css/header.css}" rel="stylesheet" />
-        <link th:href="@{/css/footer.css}" rel="stylesheet" />
-        <!-- 내부 CSS (추후 style.css로 이동 예정) -->
-        <style>
-            body {
-                background-color: #f8f9fa;
-            }
-            main {
-                max-width: 400px;
-            }
-            h2 {
-                font-weight: bold;
-                color: #20a198;
-            }
-            .form-label {
-                font-weight: 500;
-            }
-            .btn-primary {
-                background-color: #20a198;
-                border: none;
-                font-weight: bold;
-            }
-            .btn-primary:hover {
-                background-color: #1a7d75;
-            }
-            .text-center a {
-                text-decoration: none;
-                color: #20a198;
-            }
-            .text-center a:hover {
-                text-decoration: underline;
-            }
-        </style>
-    </head>
-    <body>
-        <!-- Header -->
-        <div th:replace="partials/header :: header"></div>
+<head>
+    <meta charset="UTF-8"/>
+    <title>로그인 | BizBeacon for Boss</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/header.css}" rel="stylesheet"/>
+    <link th:href="@{/css/footer.css}" rel="stylesheet"/>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
 
-        <main class="container my-5">
-            <h2 class="text-center mb-4">로그인</h2>
+        main {
+            max-width: 400px;
+        }
 
-            <!--
-        [로그인 처리 흐름]
+        h2 {
+            font-weight: bold;
+            color: #20a198;
+        }
 
-        1. 로그인 버튼은 단순히 서버의 로그인 엔드포인트(/login)로 요청을 보냄.
-           → 프론트에서는 아이디/비밀번호 입력값만 넘겨주면 됨.
+        .form-label {
+            font-weight: 500;
+        }
 
-        2. 백엔드(Spring Boot)에서 아이디/비밀번호 검증 진행.
-           - 실패 시: 다시 /login 페이지로 redirect + 오류 메시지 전달
-           - 성공 시: 세션/토큰 발급 후 사용자 정보 확인
+        .btn-primary {
+            background-color: #20a198;
+            border: none;
+            font-weight: bold;
+        }
 
-        3. 로그인 성공 후 분기 처리:
-           - 사용자 DB에 address 값이 있으면 → /restaurants 페이지로 redirect
-           - address 값이 없으면 → /address-certify 페이지로 redirect
+        .btn-primary:hover {
+            background-color: #1a7d75;
+        }
+
+        .text-center a {
+            text-decoration: none;
+            color: #20a198;
+        }
+
+        .text-center a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<div th:replace="partials/header :: header"></div>
+
+<main class="container my-5">
+    <h2 class="text-center mb-4">로그인</h2>
+    <!--
+            [로그인 처리 흐름]
+
+            1. 로그인 버튼은 단순히 서버의 로그인 엔드포인트(/login)로 요청을 보냄.
+               → 프론트에서는 아이디/비밀번호 입력값만 넘겨주면 됨.
+
+            2. 백엔드(Spring Boot)에서 아이디/비밀번호 검증 진행.
+               - 실패 시: 다시 /login 페이지로 redirect + 오류 메시지 전달
+               - 성공 시: 세션/토큰 발급 후 사용자 정보 확인
+
+            3. 로그인 성공 후 분기 처리:
+               - 사용자 DB에 address 값이 있으면 → /restaurants 페이지로 redirect
+               - address 값이 없으면 → /address-certify 페이지로 redirect
     -->
 
-            <!-- 로그인 폼 -->
-            <form th:action="@{/login}" method="post">
-                <div class="mb-3">
-                    <label for="username" class="form-label">아이디</label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        class="form-control"
-                        placeholder="아이디를 입력해주세요"
-                        required
-                    />
-                </div>
+    <!-- 에러 메시지 표시 영역 -->
+    <div id="errorBox" class="alert alert-danger text-center" style="display:none;"></div>
 
-                <div class="mb-3">
-                    <label for="password" class="form-label">비밀번호</label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="비밀번호를 입력해주세요"
-                        required
-                    />
-                </div>
+    <!-- 로그인 폼 -->
+    <form onsubmit="login(event)">
+        <div class="mb-3">
+            <label for="userName" class="form-label">아이디</label>
+            <input type="text" id="userName" name="userName"
+                   class="form-control" placeholder="아이디를 입력해주세요" required/>
+        </div>
 
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary">로그인</button>
-                </div>
-            </form>
+        <div class="mb-3">
+            <label for="password" class="form-label">비밀번호</label>
+            <input type="password" id="password" name="password"
+                   class="form-control" placeholder="비밀번호를 입력해주세요" required/>
+        </div>
 
-            <!-- 회원가입 이동 -->
-            <div class="text-center mt-3">
-                <p>
-                    아직 계정이 없으신가요?
-                    <a th:href="@{/signup}">회원가입</a>
-                </p>
-            </div>
-        </main>
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
+    </form>
 
-        <!-- Footer -->
-        <div th:replace="partials/footer :: footer"></div>
+    <!-- 회원가입 이동 -->
+    <div class="text-center mt-3">
+        <p>
+            아직 계정이 없으신가요?
+            <a th:href="@{/signup}">회원가입</a>
+        </p>
+    </div>
+</main>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+<!-- Footer -->
+<div th:replace="partials/footer :: footer"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function login(event) {
+        event.preventDefault();
+
+        const userName = document.getElementById("userName").value;
+        const password = document.getElementById("password").value;
+
+        const data = {userName, password};
+
+        fetch("/api/bosses/login", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status >= 200 && result.status < 300) {
+                    // 로그인 성공 후 분기 처리
+                    if (result.data.address) {
+                        window.location.href = "/restaurants";
+                    } else {
+                        window.location.href = "/address-certify";
+                    }
+                } else {
+                    document.getElementById("errorBox").style.display = "block";
+                    document.getElementById("errorBox").innerText = result.message || "로그인 실패";
+                }
+            })
+            .catch(err => {
+                document.getElementById("errorBox").style.display = "block";
+                document.getElementById("errorBox").innerText = "서버 오류가 발생했습니다.";
+                console.error(err);
+            });
+    }
+</script>
+</body>
 </html>
+
+
