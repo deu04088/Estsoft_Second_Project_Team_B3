@@ -3,6 +3,8 @@ package com.est.b3.domain;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,13 +14,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
-@Setter
 @Entity
 @Table(name = "users")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
+    @Id
+    private Long id;
+  
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
 
@@ -42,5 +47,8 @@ public class User {
 
     @Column(name = "state")
     private Integer state;
+
+  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+  private List<Like> likes = new ArrayList<>();
 
 }

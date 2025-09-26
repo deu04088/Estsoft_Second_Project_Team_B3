@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Photo {
 
-  @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Id
   private Long id;
 
   @Column(nullable = false)

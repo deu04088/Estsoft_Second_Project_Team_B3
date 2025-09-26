@@ -1,12 +1,23 @@
 <header th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
         <a th:href="@{/}">
-            <!-- 이미지 경로 수정 -->
             <img th:src="@{/images/header_logo.png}" alt="Logo" class="header-logo" />
         </a>
 
         <div class="d-flex">
-            <a th:href="@{/login}" class="btn login-btn-outline-dark">로그인</a>
+            <!-- 로그인 안 한 경우 -->
+            <a th:if="${session.loginBoss == null}"
+               th:href="@{/login}"
+               class="btn login-btn-outline-dark">
+                로그인
+            </a>
+
+            <!-- 로그인 한 경우 -->
+            <form th:if="${session.loginBoss != null}"
+                  th:action="@{/api/bosses/logout}"
+                  method="post" class="mb-0">
+                <button type="submit" class="btn btn-danger">로그아웃</button>
+            </form>
         </div>
     </div>
 </header>
