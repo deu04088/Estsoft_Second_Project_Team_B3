@@ -29,7 +29,7 @@ public class RestaurantEnrollService {
     private static final String UPLOAD_DIR = "C:/Coding/b3/sav";
     public Restaurant saveRestaurant(String name, String menuName, Integer price, String description, String address, String photoUrl) {
         Restaurant restaurantInfo = Restaurant.builder()
-                .photoUrl(photoUrl)             // Restaurant.java에 해당 Column 추가 필요
+                //.photoUrl(photoUrl)             // Restaurant.java에 해당 Column 추가 필요
                 .name(name)
                 .menuName(menuName)
                 .price(price)
