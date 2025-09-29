@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+</head>
+<body>
+<h1>Chat Test</h1>
+<script>
+    const socket = new SockJS('/chatting');
+    const stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, frame => {
+        console.log('Connected: ' + frame);
+
+        // 채팅방 구독
+        stompClient.subscribe('/topic/chatroom/1', message => {
+            console.log('Received:', message.body);
+        });
+
+        // 서버에 메시지 전송
+        // /app/chat.send로 보내는 것이다
+        stompClient.send('/api/chat/chat.send', {}, JSON.stringify({
+            chatRoomId: 1,
+            senderId: 1,
+            content: '안녕!'
+        }));
+    });
+</script>
+</body>
+</html>
