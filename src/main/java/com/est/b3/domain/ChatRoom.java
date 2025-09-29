@@ -22,11 +22,11 @@ public class ChatRoom {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boss_id")
-    private User user;
+    private Boss user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "boss_id2")
-    private User user2;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Boss user2;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

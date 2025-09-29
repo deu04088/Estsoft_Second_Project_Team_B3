@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "messages")
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,7 +27,7 @@ public class Message {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
-    private User sender;
+    private Boss sender;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -39,5 +40,6 @@ public class Message {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
 }
 
