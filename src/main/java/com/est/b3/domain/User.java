@@ -20,9 +20,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
-    @Id
-    private Long id;
-  
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;

@@ -18,7 +18,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // 구독 경로
         config.enableSimpleBroker("/topic");
         // 메시지 전송 prefix
-        config.setApplicationDestinationPrefixes("/app");
+        config.setApplicationDestinationPrefixes("/api/chat");
     }
 
     // 웹소켓 엔트포인트를 지정
@@ -26,7 +26,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         // SockJS 엔드포인트
-        registry.addEndpoint("/ws-chat")
+        registry.addEndpoint("/chatting")
                 .setAllowedOriginPatterns("*") // 개발 시 모든 origin 허용
                 .withSockJS();
     }

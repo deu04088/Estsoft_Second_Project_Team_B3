@@ -31,4 +31,8 @@ public class ChatPageController {
         return "chat";
     }
 
+    @GetMapping("/chat")
+    public String chat(Model model) {
+        return "chat-test";
+    }
 }
