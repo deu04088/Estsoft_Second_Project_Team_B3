@@ -1,0 +1,154 @@
+/* ===== 공통 ===== */
+body {
+    background-color: #f8f9fa;
+}
+
+/* 회원가입 전용 컨테이너 */
+.signup-container {
+    max-width: 500px;
+}
+
+/* 헤더는 고정 높이 대신 내용 크기만큼 */
+header {
+    flex: 0 0 auto;
+}
+
+.auth-container,
+.signup-container {
+    max-width: 500px;
+    min-height: 60vh;
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    flex: 1 0 auto;
+}
+
+/* 푸터는 항상 아래에 */
+footer {
+    flex: 0 0 auto;
+}
+
+h2 {
+    font-weight: bold;
+    color: #20a198;
+}
+
+/* input wrapper */
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* 왼쪽 아이콘 */
+.left-icon {
+    position: absolute;
+    left: 16px;
+    font-size: 1rem;
+    color: #bdbdbd;
+    pointer-events: none;
+}
+
+/* input 내부 여백 */
+.form-control {
+    padding-left: 2.5rem !important;
+}
+
+/* 오른쪽 아이콘 그룹 (회원가입) */
+.right-icons {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    position: absolute;
+    right: 12px;
+}
+
+/* 상태 아이콘 & 배지 기본 상태 */
+.status-icon,
+.password-strength-badge {
+    opacity: 0;
+    width: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.status-icon.visible,
+.password-strength-badge.visible {
+    opacity: 1;
+    width: auto;
+}
+
+/* 비밀번호 보기 버튼 */
+.toggle-password {
+    right: 12px;
+    font-size: 1.1rem;
+    color: #bdbdbd;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+/* 안전도 뱃지 */
+.password-strength-badge {
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.password-strength-badge.weak {
+    background-color: #ffe3e3;
+    color: #d9534f;
+}
+
+.password-strength-badge.medium {
+    background-color: #fff3cd;
+    color: #f0ad4e;
+}
+
+.password-strength-badge.safe {
+    background-color: #d4edda;
+    color: #28a745;
+}
+
+/* 안내 문구*/
+.validation-hint {
+    min-height: 1.2rem;
+    font-size: 0.85rem;
+    margin-top: 4px;
+    padding-left: 0.25rem;
+    visibility: hidden;
+}
+
+.validation-hint.visible {
+    visibility: visible;
+}
+
+.validation-hint.valid {
+    color: #28a745;
+}
+
+.validation-hint.invalid {
+    color: #d9534f;
+}
+
+/* 버튼 */
+.btn-primary {
+    background-color: #20a198;
+    border: none;
+    font-weight: bold;
+}
+
+.btn-primary:hover {
+    background-color: #1a7d75;
+}
+
+/* 하단 링크 */
+.text-center a {
+    text-decoration: none;
+    color: #20a198;
+}
+
+.text-center a:hover {
+    text-decoration: underline;
+}
