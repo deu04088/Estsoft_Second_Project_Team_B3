@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Entity
@@ -49,7 +48,7 @@ public class Restaurant {
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "boss_id")
-  private User user;
+  private Boss boss;
 
   @OneToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "photo_id")
@@ -57,4 +56,7 @@ public class Restaurant {
 
   @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
   private List<Like> likes = new ArrayList<>();
+
+  @Column(name = "view_count")
+  private Integer viewCount = 0;
 }

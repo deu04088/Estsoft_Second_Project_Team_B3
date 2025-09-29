@@ -55,7 +55,7 @@
 
     2. 검색:
        - 검색창에 메뉴명 입력 후 제출 → /search?menu=값 요청
-       - 결과 페이지(search.html)에서 동일한 카드 구조로 출력
+       - 결과 페이지(restaurants-search.html)에서 동일한 카드 구조로 출력
 
     3. 카드 클릭:
        - 특정 식당 상세 페이지(/restaurant-detail/{id})로 이동
@@ -72,14 +72,15 @@
                 <div class="col-md-3" th:each="restaurant : ${restaurants}">
                     <a th:href="@{/restaurant-detail/{id}(id=${restaurant.id})}" class="text-decoration-none text-dark">
                         <div class="restaurant-card">
-                            <div class="mb-2" style="height: 150px; background: #f1f3f5">
-                                <span>사진</span>
+                            <!-- S3에 등록된 식당 사진 가져오기 -->
+                            <img th:src="${restaurant.s3Url}"
+                                 alt="식당 이미지"
+                                 style="width: 100%; height: 100%; object-fit: cover;" />
                             </div>
-                            <h5 th:text="${restaurant.name}">OK Burger</h5>
-                            <p th:text="${restaurant.menuName}">더블치즈 버거</p>
-                            <p th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'">11,000원</p>
-                            <small>조회수 <span th:text="${restaurant.viewCount}">15</span></small>
-                        </div>
+                            <h5 th:text="${restaurant.name}">식당 이름</h5>
+                            <p th:text="${restaurant.menuName}">대표 메뉴</p>
+                            <p th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'">메뉴 가격</p>
+                            <small>조회수 <span th:text="${restaurant.viewCount}">조회수</span></small>
                     </a>
                 </div>
             </div>
@@ -88,10 +89,18 @@
             <div class="d-flex justify-content-center my-4">
                 <nav>
                     <ul class="pagination">
-                        <li class="page-item disabled"><a class="page-link">&lt;</a></li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link">&gt;</a></li>
+                        <li th:classappend="${page.first} ? 'disabled'" class="page-item">
+                            <a class="page-link" th:href="@{${url}(page=${page.number - 1})}">&lt;</a>
+                        </li>
+
+                        <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                            th:classappend="${i == page.number} ? 'active'">
+                            <a class="page-link" th:href="@{${url}(page=${i})}" th:text="${i + 1}">1</a>
+                        </li>
+
+                        <li th:classappend="${page.last} ? 'disabled'" class="page-item">
+                            <a class="page-link" th:href="@{${url}(page=${page.number + 1})}">&gt;</a>
+                        </li>
                     </ul>
                 </nav>
             </div>

@@ -46,7 +46,7 @@ public class ChatService {
         return messageRepository.findByChatRoom_Id(chatRoomId);
     }
 
-    // 메시지 읽기 완료
+//     메시지 읽기 완료
     public void markAsRead(Long messageId) {
         Message msg = messageRepository.findById(messageId).orElseThrow();
         msg.setIsRead(1);

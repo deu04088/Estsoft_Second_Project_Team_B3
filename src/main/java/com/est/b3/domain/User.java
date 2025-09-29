@@ -20,9 +20,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
-    @Id
-    private Long id;
-  
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     private Long id;
@@ -47,8 +44,5 @@ public class User {
 
     @Column(name = "state")
     private Integer state;
-
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-  private List<Like> likes = new ArrayList<>();
 
 }

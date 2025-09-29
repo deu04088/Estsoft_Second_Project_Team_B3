@@ -3,7 +3,7 @@
 
 CREATE TABLE bosses (
                        id BIGINT PRIMARY KEY,
-                       boss_name VARCHAR(20),
+                       user_name VARCHAR(20),
                        nick_name VARCHAR(30),
                        password VARCHAR(60),
                        address VARCHAR(50),
@@ -33,6 +33,10 @@ CREATE TABLE restaurants (
                              FOREIGN KEY (boss_id) REFERENCES bosses(id),
                              FOREIGN KEY (photo_id) REFERENCES photos(id)
 );
+
+-- 레스토랑 조회수 컬럼 추가 : 기본 0으로 초기화 --
+ALTER TABLE restaurants ADD COLUMN view_count INT DEFAULT 0;
+
 
 
 CREATE TABLE likes (
