@@ -45,7 +45,4 @@ public class User {
     @Column(name = "state")
     private Integer state;
 
-  @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-  private List<Like> likes = new ArrayList<>();
-
 }

@@ -2,7 +2,6 @@ package com.est.b3.repository;
 
 import com.est.b3.domain.Restaurant;
 import com.est.b3.dto.RestaurantResponseDto;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -23,13 +22,14 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
         r.menuName,
         r.price,
         r.address,
-        p.s3Url
+        p.s3Url,
+        r.viewCount
     )
     FROM Restaurant r
     LEFT JOIN r.photo p
     LEFT JOIN Like l ON l.restaurant = r
     WHERE r.address LIKE %:address%
-    GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url
+    GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
     ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> findByAddressSortedByLikes(
@@ -45,14 +45,15 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
       r.menuName,
       r.price,
       r.address,
-      p.s3Url
+      p.s3Url,
+      r.viewCount
   )
   FROM Restaurant r
   LEFT JOIN r.photo p
   LEFT JOIN Like l ON l.restaurant = r
   WHERE r.address LIKE %:address%
     AND r.menuName LIKE %:menu%
-  GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url
+  GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
   ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> searchRestaurantsByMenu(
