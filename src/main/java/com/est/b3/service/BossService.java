@@ -1,10 +1,7 @@
 package com.est.b3.service;
 
 import com.est.b3.domain.Boss;
-import com.est.b3.dto.LoginRequest;
-import com.est.b3.dto.LoginResponse;
-import com.est.b3.dto.SignupRequest;
-import com.est.b3.dto.SignupResponse;
+import com.est.b3.dto.*;
 import com.est.b3.exception.CustomException;
 import com.est.b3.exception.ErrorCode;
 import com.est.b3.repository.BossRepository;
@@ -61,11 +58,26 @@ public class BossService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), boss.getPassword())) {
-            throw new CustomException(ErrorCode.INVALID_REQUEST); // 필요하면 ErrorCode.PASSWORD_MISMATCH 추가
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH); // 필요하면 ErrorCode.PASSWORD_MISMATCH 추가
         }
 
-        // 세션에 로그인 정보 저장
-        session.setAttribute("loginBoss", boss);
+        // 로그인 응답 DTO (주소 포함 → 프론트에서 분기 처리용)
+        LoginResponse loginResponse = new LoginResponse(
+                boss.getId(),
+                boss.getUserName(),
+                boss.getNickName(),
+                boss.getAddress()
+        );
+
+        // 세션에는 주소 제외한 최소 정보만 저장
+        SessionUserDTO sessionUser = new SessionUserDTO(
+                boss.getId(),
+                boss.getUserName(),
+                boss.getNickName()
+        );
+
+        session.setAttribute("loginBoss", sessionUser);
+
 
         /*
          [나중 Security 적용 시 이 부분을 교체]
@@ -75,12 +87,7 @@ public class BossService {
          SecurityContextHolder.getContext().setAuthentication(authentication);
         */
 
-        return new LoginResponse(
-                boss.getId(),
-                boss.getUserName(),
-                boss.getNickName(),
-                boss.getAddress()
-        );
+        return loginResponse;
     }
 
     /**
