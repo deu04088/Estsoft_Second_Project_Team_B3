@@ -19,11 +19,13 @@ public class ChatController {
     private final BossRepository bossRepository;
 
     // 사용자 id로 채팅방 리스트 조회
-    @GetMapping("/rooms/{bossId}")
-    public List<ChatRoomDto> getChatRoomsByUserId(@PathVariable Long bossId) {
-        List<ChatRoom> rooms = chatService.getChatRoomsByBossId(bossId);
-        return rooms.stream().map(ChatRoomDto::new).toList();
-    }
+//    @GetMapping("/rooms/{bossId}")
+//    public List<ChatRoomDto> getChatRoomsByUserId(@PathVariable Long bossId) {
+//        List<ChatRoom> rooms = chatService.getChatRoomsByBossId(bossId);
+//        return rooms.stream()
+//                .map(ChatRoomDto::new)
+//                .toList();
+//    }
 
     // 채팅방 id로 메시지 리스트 조회
     @GetMapping("/messages/{chatRoomId}")

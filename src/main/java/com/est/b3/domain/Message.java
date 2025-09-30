@@ -13,7 +13,6 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "messages")
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,7 +20,7 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-  
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
@@ -42,5 +41,17 @@ public class Message {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    // 세터 안씀
+    // 기본 값 0, 읽으면 1
+    @PrePersist
+    public void prePersist() {
+        if (this.isRead == null) {
+            this.isRead = 0;
+        }
+    }
+
+    public void markAsRead() {
+        this.isRead++;
+    }
 }
 
