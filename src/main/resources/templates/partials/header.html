@@ -14,10 +14,31 @@
 
             <!-- 로그인 한 경우 -->
             <form th:if="${session.loginBoss != null}"
+                  id="logoutForm"
                   th:action="@{/api/bosses/logout}"
                   method="post" class="mb-0">
                 <button type="submit" class="btn btn-danger">로그아웃</button>
             </form>
         </div>
     </div>
+
+    <script>
+        // 로그아웃 후 index 페이지로 리다이렉트
+        const logoutForm = document.getElementById("logoutForm");
+
+        if (logoutForm) {
+
+            logoutForm.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const response = await fetch(logoutForm.action, {
+                    method: "POST",
+                });
+
+                if (response.ok) {
+                    window.location.href = "/";
+                }
+            });
+        }
+    </script>
 </header>
