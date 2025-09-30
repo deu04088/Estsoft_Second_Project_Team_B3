@@ -5,21 +5,22 @@
 -- users
 INSERT INTO bosses (user_name, nick_name, password, address, created_at, role, state)
 VALUES
-    ('test001', 'example001', 'pass001', '서울', CURRENT_TIMESTAMP, 'admin', 1),
-    ('test002', 'example002', 'pass002', '부산', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test003', 'example003', 'pass003', '인천', CURRENT_TIMESTAMP, 'boss', 0),
-    ('test004', 'example004', 'pass004', '대구', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test005', 'example005', 'pass005', '대전', CURRENT_TIMESTAMP, 'boss', 0),
-    ('test006', 'example006', 'pass006', '광주', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test007', 'example007', 'pass007', '울산', CURRENT_TIMESTAMP, 'boss', 0),
-    ('test008', 'example008', 'pass008', '수원', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test009', 'example009', 'pass009', '전주', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test010', 'example010', 'pass010', '청주', CURRENT_TIMESTAMP, 'boss', 0),
-    ('test011', 'example011', 'pass011', '김해', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test012', 'example012', 'pass012', '포항', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test013', 'example013', 'pass013', '창원', CURRENT_TIMESTAMP, 'boss', 0),
-    ('test014', 'example014', 'pass014', '안양', CURRENT_TIMESTAMP, 'boss', 1),
-    ('test015', 'example015', 'pass015', '의정부', CURRENT_TIMESTAMP, 'boss', 1);
+    ('test001', 'example001', '$2b$10$TdkRWhKSkAhHRXabE.Ry9ulj/ROINqMFQDYHXVO467hTruipoSkCa', '서울', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1),
+    ('test002', 'example002', '$2b$10$KdniFkA6Bcp39p8OGIdoHuPyCUyLKBTHuaVK4gwGy9xSY2ukJkl5i', '부산', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test003', 'example003', '$2b$10$r8TNFYz102zKrC9/8RVLj.a4HqYHhWpju4Fmy1uGFQZVztc6uh8AK', '인천', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test004', 'example004', '$2b$10$Jm6DDoz8nt8yjGI8L1jI4./mifSCusZu7cy3hu/Xl/AS6peO22l6y', '대구', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test005', 'example005', '$2b$10$C5ce9ckep9hhV7N3gU/pJ.ZQimnucR8AQc.PVcKUjjWBsWml400GO', '대전', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test006', 'example006', '$2b$10$YvToTedet9J2ehHkm3SYuufSwVR4ZItBi5m37edISFMCeLxdBeXZq', '광주', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test007', 'example007', '$2b$10$8IiC36cLgDWurWL.UPkb6.bTw.qkY2R0x.29q6i4KF4Sic2nRA30C', '울산', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test008', 'example008', '$2b$10$E5etMi7Eft3CPUnideXP5OKBBzI.OqBTBdOoJBykM/0lblA3PftQ6', '수원', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test009', 'example009', '$2b$10$lnYdyKLAnh56t2VKBrF5Su.fnyV1fd31HKR7KW8bSPjv4xSnieJBG', '전주', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test010', 'example010', '$2b$10$jQf5P3zqRtkdlcGc0/Y4meKUGgwh8663MEE8pC0a8LP0AW9T1Dym2', '청주', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test011', 'example011', '$2b$10$cvBHPEsdlKlqIwXgdcm2Hez46iGSZehyWCh5pagpC.qOUXf4UXKJ6', '김해', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test012', 'example012', '$2b$10$58bNno5YfnalhJ6ficiVTekZ3ldjsiN5HpOKMiQa8fvcJQAB/XGda', '포항', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test013', 'example013', '$2b$10$cjRmbGzjS2uTyZ1OfTNzbOPVvVKTNNBBUQbXHHwEdJjfAc9uflyQ.', '창원', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test014', 'example014', '$2b$10$a6/32ykgKdCWmFBa38MFfOCDTmr8gBnqxqdlq3JA5vWoq6MyNx.aW', '안양', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test015', 'example015', '$2b$10$983JGu2BUW.XKnxPtJmBeOM7QgYtfYLZQryosgRuq8NdxEP.HXyCW', '의정부', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1);
+
 
 -- photo
 INSERT INTO photos (s3key, s3url, upload_date)

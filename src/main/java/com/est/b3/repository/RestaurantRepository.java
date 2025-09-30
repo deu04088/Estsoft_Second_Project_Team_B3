@@ -8,6 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
   // JPQL 방식으로 좋아요 순 이름 순 정렬
   // 조회 결과를 DTO 객체로 반환
@@ -60,4 +62,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
       @Param("address") String address,
       @Param("menu") String menu,
       Pageable pageable);
+
+  // 이미지 검색을 위한 bossId로 검색
+  Optional<Restaurant> findByBossId(Long bossId);
 }
