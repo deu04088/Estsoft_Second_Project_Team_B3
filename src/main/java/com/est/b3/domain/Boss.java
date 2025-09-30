@@ -47,4 +47,9 @@ public class Boss {
         if (this.role == null) this.role = "ROLE_USER";
         if (this.state == null) this.state = 1;
     }
+
+  // 도메인 메서드: 주소 업데이트
+    public void updateAddress(String newAddress) {
+      this.address = newAddress;
+    }
 }
