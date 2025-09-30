@@ -151,20 +151,21 @@ export function setupButton() {
   });
 }
 
-//인증 완료 버튼 구현부 페이지 및 컨트롤러 완성 후 작성
-/*certifyBtn.addEventListener("click", async () => {
+
+certifyBtn.addEventListener("click", async () => {
   const address = hiddenAddress.value;
 
   try {
-    const res = await fetch('/api/bosses/address', {
+    const res = await fetch('/api/update-address', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ address })
+      body: JSON.stringify({ address }),
+      credentials: 'include'
     });
 
     if (res.ok) {
-      // POST 성공 후 /restaurants 페이지 이동
-      window.location.href = '/restaurants';
+      // POST 성공 후 /restaurants 페이지 이동해야하나 일단 메인으로 이동하게
+      window.location.href = '/';
     } else {
       alert("주소 저장 실패, 다시 시도해주세요.");
     }
@@ -172,7 +173,7 @@ export function setupButton() {
     alert("서버 통신 오류");
     console.error(err);
   }
-});*/
+});
 
 
 // 구글 지도 로드 (HTML에서 API Key 주입)

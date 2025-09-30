@@ -22,12 +22,15 @@ public class SecurityConfig {
                 // 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll() // h2-console 열기
-                        .anyRequest().permitAll()
+                        .requestMatchers("/api/update-address").authenticated() //주소 수정시 로그인 필요
+                    .anyRequest().permitAll()
                 )
 
                 // 기본 로그인/HTTP Basic 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);
+
+
 
         return http.build();
     }
