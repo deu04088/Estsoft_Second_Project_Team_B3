@@ -1,20 +1,22 @@
 package com.est.b3.controller.page;
 
+import com.est.b3.domain.Boss;
 import com.est.b3.dto.RestaurantResponseDto;
+import com.est.b3.dto.SessionUserDTO;
 import com.est.b3.service.RestaurantService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -40,33 +42,43 @@ public class RestaurantPageController {
     }
 
     // 식당 리스트 페이지 (우리 동네 식당 소개)
-    @GetMapping("/restaurants/{bossId}") //로그인 세션 완성 후 /restaurants 로 변경 가능
+    @GetMapping("/restaurants")
     public String getRestaurantsPage(
-        @PathVariable Long bossId,
+        HttpSession session,
         @PageableDefault(size = 16) Pageable pageable,
         Model model
     ) {
+        SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss"); // 세션에 로그인된 Boss 꺼내기
+
+        Long bossId = sessionUser.getId();
         Page<RestaurantResponseDto> page = restaurantService.getRestaurantsByBossAddress(bossId, pageable);
+
         model.addAttribute("restaurants", page.getContent());
         model.addAttribute("page", page);
-        model.addAttribute("url", "/restaurants/" + bossId);
-        return "restaurants"; // Thymeleaf 템플릿 이름
+        model.addAttribute("url", "/restaurants");
+        return "restaurants";
     }
 
+
+
     // 메뉴 검색 페이지
-    @GetMapping("/restaurants/{bossId}/search")
+    @GetMapping("/restaurants/search")
     public String searchRestaurantsPage(
-        @PathVariable Long bossId,
+        HttpSession session,
         @RequestParam String menu,
         @PageableDefault(size = 16) Pageable pageable,
         Model model
     ) {
+        SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss");
+
+        Long bossId = sessionUser.getId();
         Page<RestaurantResponseDto> page = restaurantService.searchRestaurants(bossId, menu, pageable);
+
         model.addAttribute("restaurants", page.getContent());
         model.addAttribute("page", page);
         model.addAttribute("menu", menu);
-        model.addAttribute("url", "/restaurants/" + bossId + "/search?menu=" + menu);
-        return "restaurant-search"; // 검색 결과 템플릿
+        model.addAttribute("url", "/restaurants/search?menu=" + menu);
+        return "restaurants-search"; // 검색 결과 템플릿
     }
 
     // 식당 등록 페이지
