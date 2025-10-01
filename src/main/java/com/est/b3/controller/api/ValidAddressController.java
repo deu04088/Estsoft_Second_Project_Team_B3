@@ -29,6 +29,13 @@ public class ValidAddressController {
       @AuthenticationPrincipal UserDetails userDetails,
       @RequestBody AddressRequest request
   ) {
+    String address = request.getAddress();
+    // 패턴 검증
+    String regex = "^[가-힣]+(시|도)\\s([가-힣]+(구|군|시)\\s)?[가-힣]+(동|읍|면)$";
+    if (address == null || !address.matches(regex)) {
+      return ResponseEntity.badRequest().build(); // 형식 오류 시 400 반환
+    }
+
     validationService.updateAddress(userDetails.getUsername(), request.getAddress());
     return ResponseEntity.ok().build();
   }

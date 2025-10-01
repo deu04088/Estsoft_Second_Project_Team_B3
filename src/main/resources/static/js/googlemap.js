@@ -47,12 +47,20 @@ export function getCurrentDongEupMyeon(lat, lng, callback) {
   geocoder.geocode({ location: { lat, lng } }, (results, status) => {
     if (status === "OK" && results[0]) {
       const components = results[0].address_components;
+
+      const level1 = components.find(c => c.types.includes("sublocality_level_1"));
+      const level2 = components.find(c => c.types.includes("sublocality_level_2"));
+
       let current = "";
-      components.forEach(comp => {
-        if (comp.types.includes("sublocality_level_2")) {
-          current = comp.long_name;
-        }
-      });
+
+      // level_1에 동/읍/면이 있으면 우선 사용
+      if (level1 && /(동|읍|면)$/.test(level1.long_name)) {
+        current = level1.long_name;
+      } else if (level2 && /(동|읍|면)$/.test(level2.long_name)) {
+        // level_1에 없으면 level_2 사용
+        current = level2.long_name;
+      }
+
       callback(current);
     } else {
       callback(null);
@@ -69,13 +77,13 @@ export function setupButton() {
 
   btn.addEventListener("click", async () => {
     const address = document.getElementById("addressInput").value.trim();
-    const regex = /^[가-힣]+(시|도)\s[가-힣]+(구|군|시)\s[가-힣]+(동|읍|면)$/;
+    const regex = /^[가-힣]+(시|도)\s([가-힣]+(구|군|시)\s)?[가-힣]+(동|읍|면)$/;
     if (!regex.test(address)) {
       alert("주소를 동/읍/면까지 정확히 입력해주세요");
       return;
     }
     if (!address) {
-      resultBox.textContent = "주소를 입력해주세요.";
+      alert("주소를 입력해주세요");
       certifyBtn.disabled = true;
       return;
     }
@@ -90,7 +98,7 @@ export function setupButton() {
         return;
       }
     } catch {
-      resultBox.textContent = "주소 검증 중 오류 발생";
+      resultBox.textContent = "주소 검증 중 오류 발생 다시 시도해주세요";
       certifyBtn.disabled = true;
       return;
     }
@@ -133,7 +141,7 @@ export function setupButton() {
             } else {
               currentBox.textContent = `${address}`;
               //원활한 테스트를 위해 다를경우 현재 기기위치의 동을 표시해 줍니다.
-              resultBox.textContent = '현재 위치가 내 동내 설정과 다릅니다. 기기위치'+ `${currentDong}`;
+              resultBox.textContent = '현재 위치가 내 동내 설정과 다릅니다. 현재 위치'+ `${currentDong}`;
               certifyBtn.disabled = true;
             }
           });
@@ -160,12 +168,12 @@ certifyBtn.addEventListener("click", async () => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ address }),
-      credentials: 'include'
+      //credentials: 'include' 토큰 전달부 시큐리티 완성후 풀기
     });
 
     if (res.ok) {
       // POST 성공 후 /restaurants 페이지 이동해야하나 일단 메인으로 이동하게
-      window.location.href = '/';
+      window.location.href = '/address-certify';
     } else {
       alert("주소 저장 실패, 다시 시도해주세요.");
     }
