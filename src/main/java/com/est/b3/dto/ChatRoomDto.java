@@ -22,11 +22,4 @@ public class ChatRoomDto {
     private LocalDateTime createdAt;
     private String lastMessage;
     private int unreadCount;
-
-    public ChatRoomDto(ChatRoom room, Boss partner, Photo photo) {
-        this.id = room.getId();
-        this.partnerNickName = partner.getNickName();
-        this.createdAt = room.getCreatedAt();
-        this.partnerProfileUrl = photo.getS3Url();
-    }
 }
