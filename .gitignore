@@ -39,3 +39,6 @@ out/
 
 ### map key ###
 .env
+
+### Local Uploads (Image Upload Temp Directory) ###
+uploads/

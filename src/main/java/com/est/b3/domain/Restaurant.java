@@ -50,7 +50,7 @@ public class Restaurant {
   @JoinColumn(name = "boss_id")
   private Boss boss;
 
-  @OneToOne(fetch = FetchType.LAZY)
+  @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   @JoinColumn(name = "photo_id")
   private Photo photo;
 
