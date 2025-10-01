@@ -23,23 +23,24 @@ VALUES
 
 
 -- photo
-INSERT INTO photos (s3key, s3url, upload_date)
+INSERT INTO photos (s3key, s3url, original_filename, upload_date)
 VALUES
-    ('photo_001', 'https://example.com/photo_001.jpg', CURRENT_TIMESTAMP),
-    ('photo_002', 'https://example.com/photo_002.jpg', CURRENT_TIMESTAMP),
-    ('photo_003', 'https://example.com/photo_003.jpg', CURRENT_TIMESTAMP),
-    ('photo_004', 'https://example.com/photo_004.jpg', CURRENT_TIMESTAMP),
-    ('photo_005', 'https://example.com/photo_005.jpg', CURRENT_TIMESTAMP),
-    ('photo_006', 'https://example.com/photo_006.jpg', CURRENT_TIMESTAMP),
-    ('photo_007', 'https://example.com/photo_007.jpg', CURRENT_TIMESTAMP),
-    ('photo_008', 'https://example.com/photo_008.jpg', CURRENT_TIMESTAMP),
-    ('photo_009', 'https://example.com/photo_009.jpg', CURRENT_TIMESTAMP),
-    ('photo_010', 'https://example.com/photo_010.jpg', CURRENT_TIMESTAMP),
-    ('photo_011', 'https://example.com/photo_011.jpg', CURRENT_TIMESTAMP),
-    ('photo_012', 'https://example.com/photo_012.jpg', CURRENT_TIMESTAMP),
-    ('photo_013', 'https://example.com/photo_013.jpg', CURRENT_TIMESTAMP),
-    ('photo_014', 'https://example.com/photo_014.jpg', CURRENT_TIMESTAMP),
-    ('photo_015', 'https://example.com/photo_015.jpg', CURRENT_TIMESTAMP);
+    ('sample_001', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_002', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_003', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_004', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_005', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_006', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_007', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_008', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_009', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_010', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_011', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_012', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_013', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_014', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_015', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP);
+
 
 -- restaurants
 INSERT INTO restaurants (name, address, menu_name, price, description, created_at, updated_at, state, boss_id, photo_id)

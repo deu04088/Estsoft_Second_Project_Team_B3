@@ -1,43 +1,55 @@
-<header th:fragment="header" class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container">
-        <a th:href="@{/}">
-            <img th:src="@{/images/header_logo.png}" alt="Logo" class="header-logo" />
+<header th:fragment="header" class="navbar navbar-expand-lg fixed-top custom-header">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+
+        <!-- 로고 + 라벨 -->
+        <a th:href="@{/}" class="d-flex align-items-center text-decoration-none">
+            <img th:src="@{/images/b3-logo.png}" alt="Logo" class="header-logo me-2" />
+            <span class="header-title mx-2">BizBeacon for Boss</span>
         </a>
 
-        <div class="d-flex">
+        <!-- 버튼 -->
+        <div>
             <!-- 로그인 안 한 경우 -->
             <a th:if="${session.loginBoss == null}"
                th:href="@{/login}"
-               class="btn login-btn-outline-dark">
-                로그인
+               class="btn-rounded btn-login">
+                <i class="fa-solid fa-right-to-bracket"></i> 로그인
             </a>
 
             <!-- 로그인 한 경우 -->
             <form th:if="${session.loginBoss != null}"
                   id="logoutForm"
                   th:action="@{/api/bosses/logout}"
-                  method="post" class="mb-0">
-                <button type="submit" class="btn btn-danger">로그아웃</button>
+                  method="post" class="d-inline">
+                <button type="submit" class="btn-rounded btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                </button>
             </form>
         </div>
     </div>
 
     <script>
-        // 로그아웃 후 index 페이지로 리다이렉트
+        // 스크롤 시 헤더 배경 전환 (메인/레스토랑 등 일반 페이지에서만)
+        window.addEventListener("scroll", function () {
+            const header = document.querySelector(".custom-header");
+
+            // auth 페이지에서는 무시
+            if (document.body.classList.contains("auth-page")) return;
+
+            if (window.scrollY > 50) {
+                header.classList.add("scrolled");
+            } else {
+                header.classList.remove("scrolled");
+            }
+        });
+
+        // 로그아웃 처리
         const logoutForm = document.getElementById("logoutForm");
-
         if (logoutForm) {
-
             logoutForm.addEventListener("submit", async (e) => {
                 e.preventDefault();
-
-                const response = await fetch(logoutForm.action, {
-                    method: "POST",
-                });
-
-                if (response.ok) {
-                    window.location.href = "/";
-                }
+                const response = await fetch(logoutForm.action, { method: "POST" });
+                if (response.ok) window.location.href = "/";
             });
         }
     </script>

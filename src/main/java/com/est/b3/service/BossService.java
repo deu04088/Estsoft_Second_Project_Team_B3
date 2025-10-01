@@ -69,11 +69,12 @@ public class BossService {
                 boss.getAddress()
         );
 
-        // 세션에는 주소 제외한 최소 정보만 저장
+        // 세션에는 주소 제외한 최소 정보만 저장 -> 수정사항 : address 추가
         SessionUserDTO sessionUser = new SessionUserDTO(
                 boss.getId(),
                 boss.getUserName(),
-                boss.getNickName()
+                boss.getNickName(),
+                boss.getAddress()
         );
 
         session.setAttribute("loginBoss", sessionUser);
