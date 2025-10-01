@@ -12,14 +12,17 @@
         </ul>
 
         <!-- 검색창 -->
-        <form class="d-flex me-3">
+        <form class="d-flex me-3" method="get" action="/restaurants/search">
             <input
                 class="form-control me-2 search-box"
                 type="search"
+                name="menu"
                 placeholder="찾는 메뉴가 뭐에요?"
                 aria-label="search"
             />
+            <button class="btn btn-outline-success" type="submit">검색</button>
         </form>
+
 
         <!-- 채팅하기/로그아웃 버튼 -->
         <div class="d-flex me-3">
