@@ -1,0 +1,69 @@
+/* 헤더 전체 */
+.custom-header {
+    background: transparent;  /* 기본 투명 */
+    padding: 10px 20px;
+    z-index: 1000;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* 스크롤 시 배경 흰색 */
+.custom-header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 로고 */
+.header-logo {
+    height: 40px;
+}
+
+/* 로고 옆 텍스트 */
+.header-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: white;
+}
+
+.custom-header.scrolled .header-title {
+    color: #373737;
+}
+
+/* 공통 버튼 */
+.btn-rounded {
+    border: none;
+    border-radius: 50px;
+    padding: 4px 24px;
+    font-weight: 500;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, box-shadow 0.3s;
+    text-decoration: none;
+}
+
+/* hover 효과 */
+.btn-rounded:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* 로그인 버튼 (짙은 다크 브라운) */
+.btn-login {
+    background: linear-gradient(135deg, #373737, #2c2c2c);
+}
+
+/* 로그아웃 버튼 (짙은 레드 브라운) */
+.btn-logout {
+    background: linear-gradient(135deg, #373737, #29201f);
+}
+
+/* ===== Auth 페이지 전용 (로그인/회원가입) ===== */
+.auth-page .custom-header {
+    background: rgba(255, 255, 255, 0.95); /* 처음부터 흰색 */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.auth-page .custom-header .header-title {
+    color: #333; /* 글자도 처음부터 검정 */
+}

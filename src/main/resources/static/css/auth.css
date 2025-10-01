@@ -14,13 +14,17 @@ header {
 }
 
 .auth-container,
-.signup-container {
+.auth-container {
     max-width: 500px;
-    min-height: 60vh;
+    min-height: 100vh;
     margin-top: 3rem;
     margin-bottom: 3rem;
     flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
+
 
 /* 푸터는 항상 아래에 */
 footer {
@@ -29,7 +33,7 @@ footer {
 
 h2 {
     font-weight: bold;
-    color: #20a198;
+    color: #373737;
 }
 
 /* input wrapper */
@@ -134,19 +138,24 @@ h2 {
 
 /* 버튼 */
 .btn-primary {
-    background-color: #20a198;
+    background-color: #373737;
     border: none;
     font-weight: bold;
 }
 
-.btn-primary:hover {
-    background-color: #1a7d75;
+.btn.btn-primary:hover {
+    background-color: #2c2c2c;
+}
+
+.btn.btn-primary:active,
+.btn.btn-primary:focus:active {
+    background-color: rgb(62, 135, 222);
 }
 
 /* 하단 링크 */
 .text-center a {
     text-decoration: none;
-    color: #20a198;
+    color: #2049a1;
 }
 
 .text-center a:hover {
