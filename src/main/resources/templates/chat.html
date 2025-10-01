@@ -171,19 +171,17 @@
         <div class="chat-list">
             <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
                 <h6 class="mb-0">내 아이디: <span
-                        th:text="${session.user != null ? session.user.username : '게스트'}">myId</span></h6>
-                <!-- 읽지 않은 항목 토글 버튼 -->
+                        th:text="${user != null ? user.userName : '게스트'}">myId</span></h6>
                 <div class="form-check form-switch d-flex align-items-center">
                     <label class="form-check-label small me-2" for="unreadToggle">읽지 않은 항목</label>
                     <input class="form-check-input" type="checkbox" id="unreadToggle">
                 </div>
             </div>
 
-            <!-- 채팅방 목록 반복 -->
             <div th:each="room : ${chatRooms}" class="chat-list-item"
-                 th:onclick="'location.href=\'/chat?roomId=' + ${room.id} + '\''">
-                <img th:src="${room.partnerProfileUrl != null ? room.partnerProfileUrl : '/images/default-profile.png'}"
-                     alt="상대방 사진">
+                 th:onclick="'location.href=\'/chat/' + ${room.id} + '\''"><img
+                    th:src="${room.partnerProfileUrl != null ? room.partnerProfileUrl : '/images/default-profile.png'}"
+                    alt="상대방 사진">
                 <div>
                     <strong th:text="${room.partnerNickName}">상대방 닉네임</strong><br>
                     <small th:text="${room.lastMessage}">최근 메시지</small>
@@ -192,34 +190,36 @@
             </div>
         </div>
 
-        <!-- 채팅창 -->
-<!--        <div class="chat-room">-->
-<!--            &lt;!&ndash; 상단 상대방 정보 &ndash;&gt;-->
-<!--            <div class="chat-header">-->
-<!--                <img th:src="${partner.partnerProfileUrl}" alt="상대방 사진">-->
-<!--                <div>-->
-<!--                    <strong th:text="${partner.nickname}">상대방 아이디</strong><br>-->
-<!--                    <small th:text="${partner.address}">강서구 화곡동</small>-->
-<!--                </div>-->
-<!--            </div>-->
+        <div th:if="${partnerInfo != null}" class="chat-room">
+            <div class="chat-header">
+                <img th:src="${partnerInfo.partnerProfileUrl != null ? partnerInfo.partnerProfileUrl : '/images/default-profile.png'}"
+                     alt="상대방 사진">
 
-<!--            &lt;!&ndash; 메시지 영역 &ndash;&gt;-->
-<!--            <div class="messages" id="messageArea">-->
-<!--                <div th:each="msg : ${messages}" class="message"-->
-<!--                     th:classappend="${msg.senderId == session.user.id} ? ' me' : ' other'">-->
-<!--                    <div>-->
-<!--                        <div class="message-content" th:text="${msg.content}">메시지 내용</div>-->
-<!--                        <div class="message-time" th:text="${#temporals.format(msg.createdAt, 'HH:mm')}">오전 9:00</div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+                <div>
+                    <strong th:text="${partnerInfo.partnerNickName}">상대방 아이디</strong><br>
+                </div>
+            </div>
 
-<!--            &lt;!&ndash; 메시지 입력 &ndash;&gt;-->
-<!--            <form id="chatForm" class="message-input">-->
-<!--                <input type="text" id="message" placeholder="메시지를 입력해주세요" class="form-control">-->
-<!--                <button type="submit" class="btn btn-primary">전송</button>-->
-<!--            </form>-->
-<!--        </div>-->
+            <div class="messages" id="messageArea">
+                <div th:each="msg : ${messages}" class="message"
+                     th:classappend="${msg.senderId == user.id} ? ' me' : ' other'">
+                    <div>
+                        <div class="message-content" th:text="${msg.content}">메시지 내용</div>
+                        <div class="message-time" th:text="${#temporals.format(msg.createdAt, 'HH:mm')}">오전 9:00</div>
+                    </div>
+                </div>
+            </div>
+
+            <form id="chatForm" class="message-input">
+                <input type="text" id="message" placeholder="메시지를 입력해주세요" class="form-control">
+                <button type="submit" class="btn btn-primary">전송</button>
+            </form>
+        </div>
+
+        <div th:if="${partnerInfo == null}" class="chat-room"
+             style="justify-content: center; align-items: center; font-size: 1.2rem; color: #6c757d; border-left: 1px solid #dee2e6;">
+            <p>채팅방을 선택해주세요.</p>
+        </div>
     </div>
 </main>
 

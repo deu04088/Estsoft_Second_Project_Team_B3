@@ -28,9 +28,9 @@ public class ChatController {
 //    }
 
     // 채팅방 id로 메시지 리스트 조회
-    @GetMapping("/messages/{chatRoomId}")
-    public List<MessageDto> getMessageByChatRoomId(@PathVariable Long chatRoomId) {
-        List<Message> messages = chatService.getMessagesByChatRoomId(chatRoomId);
-        return messages.stream().map(MessageDto::new).toList();
-    }
+//    @GetMapping("/messages/{chatRoomId}")
+//    public List<MessageDto> getMessageByChatRoomId(@PathVariable Long chatRoomId) {
+//        List<Message> messages = chatService.getMessagesByChatRoomId(chatRoomId);
+//        return messages.stream().map(MessageDto::new).toList();
+//    }
 }

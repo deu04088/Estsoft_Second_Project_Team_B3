@@ -3,6 +3,8 @@ package com.est.b3.controller.page;
 import com.est.b3.controller.api.ChatController;
 import com.est.b3.domain.Boss;
 import com.est.b3.dto.ChatRoomDto;
+import com.est.b3.dto.MessageDto;
+import com.est.b3.dto.SessionUserDTO;
 import com.est.b3.service.ChatService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -28,14 +30,18 @@ public class ChatPageController {
     @GetMapping
     public String chatList(HttpSession session, Model model) {
         // 세션 내의 정보 확인
-        Boss boss = (Boss) session.getAttribute("loginBoss");
+        Object sessionAttribute = session.getAttribute("loginBoss");
 
-        if (boss == null) {
-            log.warn("[SESSION]boss is null");
+        // instanceof : 객체 타입 확인
+        // 로그인 풀리면 로그인하라고 보내버림
+        // 패턴 변수 인텔리제이가 추천해줌
+        if (!(sessionAttribute instanceof SessionUserDTO sessionUser)) {
+            log.warn("[SESSION] 객체 타입 불일치");
             return "redirect:/login";
         }
-        // 사용자 아이디
-        Long bossId = boss.getId();
+
+        // 사용자 아이디 확인
+        Long bossId = sessionUser.getId();
         log.info("[SESSION] boss id : " + bossId);
 
         // 채팅방 리스트 가져오기
@@ -46,24 +52,45 @@ public class ChatPageController {
                 .toList();
 
         model.addAttribute("chatRooms", chatRooms);
-        model.addAttribute("user", boss);
+        model.addAttribute("user", sessionUser);
 
         return "chat";
     }
 
     @GetMapping("/{chatRoomId}")
-    public String chat(Model model, @PathVariable Long chatRoomId) {
-        // 세션 user 더미
-        Map<String, Object> dummyUser = new HashMap<>();
-        dummyUser.put("username", "testUser");
-        model.addAttribute("session", Map.of("user", dummyUser));
+    public String chat(HttpSession session, Model model, @PathVariable Long chatRoomId) {
+        // 세션 내의 정보 확인
+        Object sessionAttribute = session.getAttribute("loginBoss");
 
-        // partner 더미
-        Map<String, Object> dummyPartner = new HashMap<>();
-        dummyPartner.put("profileUrl", "/images/default-profile.png");
-        dummyPartner.put("nickname", "상대방유저");
-        dummyPartner.put("address", "강서구 화곡동");
-        model.addAttribute("partner", dummyPartner);
+        // instanceof : 객체 타입 확인
+        // 로그인 풀리면 로그인하라고 보내버림
+        // 패턴 변수 인텔리제이가 추천해줌
+        if (!(sessionAttribute instanceof SessionUserDTO sessionUser)) {
+            log.warn("[SESSION] 불일치");
+            return "redirect:/login";
+        }
+
+        // 사용자 아이디 확인
+        Long bossId = sessionUser.getId();
+        log.info("[SESSION] boss id : " + bossId);
+
+        // 채팅방 리스트 가져오기
+        // 채팅방, 사용자 id 전달
+        List<ChatRoomDto> chatRooms = chatService.getChatRoomsByBossId(bossId)
+                .stream()
+                .map(room -> chatService.toDto(room, bossId))
+                .toList();
+
+        model.addAttribute("chatRooms", chatRooms);
+        model.addAttribute("user", sessionUser);
+
+        // 현재 채팅방 정보 가져오기
+        ChatRoomDto partnerInfo = chatService.getChatRoomDetail(chatRoomId, bossId);
+        // 메시지 리스트 가져오기
+        List<MessageDto> messages = chatService.getMessagesByChatRoomId(chatRoomId);
+
+        model.addAttribute("partnerInfo", partnerInfo);
+        model.addAttribute("messages", messages);
 
         return "chat";
     }
