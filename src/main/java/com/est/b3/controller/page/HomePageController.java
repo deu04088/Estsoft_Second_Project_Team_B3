@@ -1,5 +1,6 @@
 package com.est.b3.controller.page;
 
+import com.est.b3.dto.SessionUserDTO;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,10 +45,15 @@ public class HomePageController {
         return "signup"; // templates/signup.html
     }
 
-    // 동네 인증 페이지[단순 연결]
+    // 동네 인증 페이지
     @GetMapping("/address-certify")
-    public String addressCertify(Model model) {
-        model.addAttribute("apiKey", googleMapsApiKey);
-        return "address-certify"; // templates/address-certify.html
+    public String addressCertify(HttpSession httpSession, Model model) {
+      SessionUserDTO loginUser = (SessionUserDTO) httpSession.getAttribute("loginBoss");
+      if (loginUser == null) {
+        return "redirect:/login"; // 로그인 페이지로 리다이렉트
+      }
+      model.addAttribute("user", loginUser);
+      model.addAttribute("apiKey", googleMapsApiKey);
+      return "address-certify"; // templates/address-certify.html
     }
 }

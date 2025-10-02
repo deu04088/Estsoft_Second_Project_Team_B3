@@ -29,8 +29,6 @@ function initMap() {
     fillColor: "#3399FF",
     fillOpacity: 0.2
   });
-
-
 }
 
 // -----------------------------
@@ -71,88 +69,104 @@ export function getCurrentDongEupMyeon(lat, lng, callback) {
 // -----------------------------
 // 버튼 이벤트
 export function setupButton() {
-  const btn = document.getElementById("addressSearchBtn");
   const resultBox = document.getElementById("result");
   const currentBox = document.getElementById("ggaddress");
 
-  btn.addEventListener("click", async () => {
-    const address = document.getElementById("addressInput").value.trim();
-    const regex = /^[가-힣]+(시|도)\s([가-힣]+(구|군|시)\s)?[가-힣]+(동|읍|면)$/;
-    if (!regex.test(address)) {
-      alert("주소를 동/읍/면까지 정확히 입력해주세요");
-      return;
-    }
-    if (!address) {
-      alert("주소를 입력해주세요");
-      certifyBtn.disabled = true;
-      return;
-    }
-
-    // 행안부 API 유효성 체크
-    try {
-      const res = await fetch(`/api/check-address?address=${encodeURIComponent(address)}`);
-      const status = await res.text();
-      if (status !== "VALID") {
-        resultBox.textContent = "존재하지 않는 주소입니다.";
+  document.querySelectorAll(".addressBtn").forEach(btn => {
+    btn.addEventListener("click", async () => {
+      const address = document.getElementById("addressInput").value.trim();
+      const regex = /^[가-힣]+(시|도)\s([가-힣]+(구|군|시)\s)?[가-힣]+(동|읍|면)$/;
+      if (!regex.test(address)) {
+        alert("주소를 동/읍/면까지 정확히 입력해주세요");
         certifyBtn.disabled = true;
         return;
       }
-    } catch {
-      resultBox.textContent = "주소 검증 중 오류 발생 다시 시도해주세요";
-      certifyBtn.disabled = true;
-      return;
-    }
+      if (!address) {
+        alert("주소를 입력해주세요");
+        certifyBtn.disabled = true;
+        return;
+      }
 
-    // 기기위치로 지도 새로 표시
-    const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ address }, (results, status) => {
-      if (status === "OK" && results[0]) {
-        const location = results[0].geometry.location;
+      // 행안부 API 유효성 체크 및 데이터 가져오기
+      try {
+        const res = await fetch('/api/check-address', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({address})
+        });
 
-        // 지도 중심이동 + 마커 + 원
-        map.setCenter(location);
-        marker.setPosition(location);
-        circle.setCenter(location);
+        const data = await res.json();
 
-        // 동/읍/면 비교
-        const inputDong = extractDongEupMyeon(address);
-
-        if (!navigator.geolocation) {
-          resultBox.textContent = "브라우저에서 위치 정보를 지원하지 않습니다.";
+        if (!data || !data.juso || data.juso.length === 0) {
+          resultBox.textContent = "존재하지 않는 주소입니다.";
           certifyBtn.disabled = true;
           return;
         }
+        //json의 형태로 가져오고 아래와 같이 데이터 합쳐서 써도되고 따로써도됨
+        // 시/도 + 구/군 + 동/읍/면 가져오기
+        const juso = data.juso[0];
+        const fullAddress = [juso.siNm, juso.sggNm, juso.emdNm]
+        .filter(p => p && p.trim() !== "")
+        .join(" ");
 
-        navigator.geolocation.getCurrentPosition((pos) => {
-          const lat = pos.coords.latitude;
-          const lng = pos.coords.longitude;
+      // 기기위치로 지도 새로 표시
+      const geocoder = new google.maps.Geocoder();
+      geocoder.geocode({address : fullAddress}, (results, status) => {
+        if (status === "OK" && results[0]) {
+          const location = results[0].geometry.location;
 
-          getCurrentDongEupMyeon(lat, lng, (currentDong) => {
-            if (!inputDong || !currentDong) {
-              resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
-              certifyBtn.disabled = true;
-              return;
-            }
-            if (inputDong === currentDong) {
-              currentBox.textContent = `${address}`;
-              resultBox.textContent = '현재 위치가 내 동내 설정과 같습니다.';
-              hiddenAddress.value = address;
-              certifyBtn.disabled = false;
-            } else {
-              currentBox.textContent = `${address}`;
-              //원활한 테스트를 위해 다를경우 현재 기기위치의 동을 표시해 줍니다.
-              resultBox.textContent = '현재 위치가 내 동내 설정과 다릅니다. 현재 위치'+ `${currentDong}`;
-              certifyBtn.disabled = true;
-            }
+          // 지도 중심이동 + 마커 + 원
+          map.setCenter(location);
+          marker.setPosition(location);
+          circle.setCenter(location);
+
+          // 동/읍/면 비교
+          const inputDong = extractDongEupMyeon(fullAddress);
+
+          if (!navigator.geolocation) {
+            resultBox.textContent = "브라우저에서 위치 정보를 지원하지 않습니다.";
+            certifyBtn.disabled = true;
+            return;
+          }
+
+          navigator.geolocation.getCurrentPosition((pos) => {
+            const lat = pos.coords.latitude;
+            const lng = pos.coords.longitude;
+
+            getCurrentDongEupMyeon(lat, lng, (currentDong) => {
+              if (!inputDong || !currentDong) {
+                resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
+                certifyBtn.disabled = true;
+                return;
+              }
+
+              if (inputDong === currentDong) {
+                currentBox.textContent = fullAddress;
+                resultBox.textContent = '현재 위치가 내 동내 설정과 같습니다.';
+                hiddenAddress.value = fullAddress;
+                certifyBtn.disabled = false;
+              } else {
+                currentBox.textContent = fullAddress;
+                //원활한 테스트를 위해 다를경우 현재 기기위치의 동을 표시해 줍니다.
+                resultBox.textContent = '현재 위치가 내 동내 설정과 다릅니다. 현재 위치 '
+                    + `${currentDong}`;
+                certifyBtn.disabled = true;
+              }
+            });
+
+          }, () => {
+            resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
+            certifyBtn.disabled = true;
           });
 
-        }, () => {
+        } else {
           resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
           certifyBtn.disabled = true;
-        });
-
-      } else {
-        resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
+        }
+      });
+      } catch (err) {
+        console.error(err);
+        resultBox.textContent = "주소 검증 중 오류 발생, 다시 시도해주세요.";
         certifyBtn.disabled = true;
       }
     });
@@ -173,7 +187,7 @@ certifyBtn.addEventListener("click", async () => {
 
     if (res.ok) {
       // POST 성공 후 /restaurants 페이지 이동해야하나 일단 메인으로 이동하게
-      window.location.href = '/address-certify';
+      window.location.href = '/restaurants';
     } else {
       alert("주소 저장 실패, 다시 시도해주세요.");
     }

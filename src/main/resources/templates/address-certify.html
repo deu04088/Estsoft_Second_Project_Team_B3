@@ -69,21 +69,21 @@
             <input type="text" id="addressInput" name="address" class="form-control"
                    placeholder="예)서울특별시 종로구 회현동"
                    title="동/읍/면까지 입력해주세요" required>
-            <button type="button" id ="addressSearchBtn" class="btn btn-outline-primary">내 동네 설정</button>
-
-<!--      시큐리티 적용되고 동네인증 페이지 접속 부분 편집 필요
+<!--            <button type="button" id ="addressSearchBtn" class="btn btn-outline-primary">내 동네 설정</button>
+          -->
           <button type="button"
-                  class="btn btn-outline-primary"
+                  class="btn-outline-primary addressBtn"
+                  id ="addressSetBtn"
                   th:if="${user.address == null}">
             내 동네 설정
           </button>
 
           <button type="button"
-                  class="btn btn-outline-primary"
+                  class="btn-outline-primary addressBtn"
+                  id ="addressUpBtn"
                   th:if="${user.address != null}">
             내 동네 수정
-          </button>-->
-
+          </button>
 
         </div>
 
