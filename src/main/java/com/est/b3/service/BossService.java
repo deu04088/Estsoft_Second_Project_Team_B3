@@ -74,7 +74,10 @@ public class BossService {
                 boss.getId(),
                 boss.getUserName(),
                 boss.getNickName(),
-                boss.getAddress()
+                boss.getAddress(),
+                boss.getSiDo(),
+                boss.getGuGun(),
+                boss.getDongEupMyeon()
         );
 
         session.setAttribute("loginBoss", sessionUser);
