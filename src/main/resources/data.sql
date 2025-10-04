@@ -61,6 +61,7 @@ VALUES
     ('example014', '안양', '호떡', 3000, '한국식 길거리 팬케이크', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 14, 14),
     ('example015', '의정부', '국밥', 8500, '국에 밥말아 먹는 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 15, 15);
 
+
 -- likes
 INSERT INTO likes (boss_id, restaurant_id, liked_at)
 VALUES

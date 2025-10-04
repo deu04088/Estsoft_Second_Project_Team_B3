@@ -49,6 +49,9 @@ public class RestaurantPageController {
         Model model
     ) {
         SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss"); // 세션에 로그인된 Boss 꺼내기
+        if (sessionUser == null) {
+            return "redirect:/index"; // 로그인 안 되어 있으면 index.html로 이동
+        }
 
         Long bossId = sessionUser.getId();
         Page<RestaurantResponseDto> page = restaurantService.getRestaurantsByBossAddress(bossId, pageable);
@@ -70,6 +73,9 @@ public class RestaurantPageController {
         Model model
     ) {
         SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss");
+        if (sessionUser == null) {
+            return "redirect:/index";
+        }
 
         Long bossId = sessionUser.getId();
         Page<RestaurantResponseDto> page = restaurantService.searchRestaurants(bossId, menu, pageable);

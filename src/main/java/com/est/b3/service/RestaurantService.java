@@ -23,10 +23,10 @@ public class RestaurantService {
     Boss boss = bossRepository.findById(bossId)
         .orElseThrow(() -> new IllegalArgumentException("not found boss"));
 
+    String siDo = boss.getSiDo();
+    String dong = boss.getDongEupMyeon();
 
-    String address = boss.getAddress();
-
-    return restaurantRepository.findByAddressSortedByLikes(address, pageable);
+    return restaurantRepository.findByAddressSortedByLikes(siDo,dong, pageable);
   }
 
   // 메뉴로 식당 검색
@@ -34,9 +34,9 @@ public class RestaurantService {
     Boss boss = bossRepository.findById(bossId)
         .orElseThrow(() -> new IllegalArgumentException("not found boss"));
 
+    String siDo = boss.getSiDo();
+    String dong = boss.getDongEupMyeon();
 
-    String address = boss.getAddress();
-
-    return restaurantRepository.searchRestaurantsByMenu(address, menu, pageable);
+    return restaurantRepository.searchRestaurantsByMenu(siDo,dong, menu, pageable);
   }
 }
