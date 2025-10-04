@@ -58,7 +58,10 @@ public class Boss {
     }
 
   // 도메인 메서드: 주소 업데이트
-    public void updateAddress(String newAddress) {
-      this.address = newAddress;
-    }
+    public void updateAddress(String fullAddress, String siDo, String guGun, String dongEupMyeon) {
+      this.address = fullAddress;
+      this.siDo = siDo;
+      this.guGun = guGun;
+      this.dongEupMyeon = dongEupMyeon;
+  }
 }

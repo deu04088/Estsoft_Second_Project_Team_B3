@@ -22,7 +22,6 @@ public class SecurityConfig {
                 // 요청 권한 설정
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/h2-console/**").permitAll() // h2-console 열기
-                        .requestMatchers("/api/update-address").authenticated() //주소 수정시 로그인 필요
                     .anyRequest().permitAll()
                 )
 
