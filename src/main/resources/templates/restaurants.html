@@ -89,17 +89,24 @@
             <div class="d-flex justify-content-center my-4">
                 <nav>
                     <ul class="pagination">
+                        <!-- 이전 페이지 -->
                         <li th:classappend="${page.first} ? 'disabled'" class="page-item">
-                            <a class="page-link" th:href="@{${url}(page=${page.number - 1})}">&lt;</a>
+                            <a class="page-link"
+                               th:href="@{${url}(menu=${menu}, page=${page.number - 1})}">&lt;</a>
                         </li>
 
-                        <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
-                            th:classappend="${i == page.number} ? 'active'">
-                            <a class="page-link" th:href="@{${url}(page=${i})}" th:text="${i + 1}">1</a>
+                        <!-- 페이지 번호 -->
+                        <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                            th:classappend="${i == page.number} ? 'active'" class="page-item">
+                            <a class="page-link"
+                               th:href="@{${url}(menu=${menu}, page=${i})}"
+                               th:text="${i + 1}">1</a>
                         </li>
 
+                        <!-- 다음 페이지 -->
                         <li th:classappend="${page.last} ? 'disabled'" class="page-item">
-                            <a class="page-link" th:href="@{${url}(page=${page.number + 1})}">&gt;</a>
+                            <a class="page-link"
+                               th:href="@{${url}(menu=${menu}, page=${page.number + 1})}">&gt;</a>
                         </li>
                     </ul>
                 </nav>

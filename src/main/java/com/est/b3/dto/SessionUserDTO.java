@@ -13,4 +13,7 @@ public class SessionUserDTO {
     private String userName;
     private String nickName;
     private String address;
+    private String siDo;
+    private String guGun;
+    private String dongEupMyeon;
 }

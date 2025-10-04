@@ -30,12 +30,15 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     FROM Restaurant r
     LEFT JOIN r.photo p
     LEFT JOIN Like l ON l.restaurant = r
-    WHERE r.address LIKE %:address%
+    WHERE r.siDo = :siDo
+      AND r.dongEupMyeon = :dongEupMyeon
     GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
     ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> findByAddressSortedByLikes(
-      @Param("address") String address, Pageable pageable);
+      @Param("siDo") String siDo,
+      @Param("dongEupMyeon") String dongEupMyeon,
+      Pageable pageable);
 
 
   // 마찬가지로 JPQL 사용하겠습니다.
@@ -53,15 +56,18 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
   FROM Restaurant r
   LEFT JOIN r.photo p
   LEFT JOIN Like l ON l.restaurant = r
-  WHERE r.address LIKE %:address%
+  WHERE r.siDo = :siDo
+    AND r.dongEupMyeon = :dongEupMyeon
     AND r.menuName LIKE %:menu%
   GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
   ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> searchRestaurantsByMenu(
-      @Param("address") String address,
+      @Param("siDo") String siDo,
+      @Param("dongEupMyeon") String dongEupMyeon,
       @Param("menu") String menu,
       Pageable pageable);
+
 
   // 이미지 검색을 위한 bossId로 검색
   Optional<Restaurant> findByBossId(Long bossId);

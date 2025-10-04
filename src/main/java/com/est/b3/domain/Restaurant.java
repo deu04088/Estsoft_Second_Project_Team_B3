@@ -28,6 +28,15 @@ public class Restaurant {
   @Column(length = 50)
   private String address;
 
+  @Column(name = "siDo", length = 20)
+  private String siDo;
+
+  @Column(name = "guGun", length = 20)
+  private String guGun;
+
+  @Column(name = "dongEupMyeon", length = 20)
+  private String dongEupMyeon;
+
   @Column(name = "menu_name", length = 30)
   private String menuName;
 
