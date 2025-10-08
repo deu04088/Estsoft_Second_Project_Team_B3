@@ -1,8 +1,5 @@
 package com.est.b3.dto;
 
-import com.est.b3.domain.Boss;
-import com.est.b3.domain.ChatRoom;
-import com.est.b3.domain.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

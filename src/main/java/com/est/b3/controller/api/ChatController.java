@@ -7,11 +7,15 @@ import com.est.b3.dto.MessageDto;
 import com.est.b3.repository.BossRepository;
 import com.est.b3.service.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/chat")
 public class ChatController {
@@ -33,4 +37,18 @@ public class ChatController {
 //        List<Message> messages = chatService.getMessagesByChatRoomId(chatRoomId);
 //        return messages.stream().map(MessageDto::new).toList();
 //    }
+
+    // stomp로 채팅
+    @MessageMapping("/{roomId}") //여기로 전송되면 메서드 호출 -> WebSocketConfig prefixes 에서 적용한건 앞에 생략
+    @SendTo("/topic/{roomId}")   //구독하고 있는 장소로 메시지 전송 (목적지)  -> WebSocketConfig Broker 에서 적용한건 앞에 붙어줘야됨
+    public MessageDto chat(@DestinationVariable Long roomId, MessageDto messageDto) {
+
+        //채팅 저장
+        Message chat = chatService.saveMessage(roomId, messageDto.getSenderId(), messageDto.getContent());
+        return MessageDto.builder()
+                .chatRoomId(roomId)
+                .senderId(chat.getSender().getId())
+                .content(chat.getContent())
+                .build();
+    }
 }
