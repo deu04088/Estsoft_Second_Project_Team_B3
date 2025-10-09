@@ -260,12 +260,31 @@
         // STOMP 연결
         connect();
 
+        // 메시지 읽음 처리
+        if (currentRoomId && currentUserId) {
+            markAllAsRead(currentRoomId, currentUserId);
+        }
+
         // 메시지 전송 버튼 이벤트 바인딩
         $('#chatForm').on('submit', function (e) {
             e.preventDefault();
             sendMessage();
         });
     });
+
+    // 읽음 처리 메서드
+    function markAllAsRead(roomId, userId) {
+        $.ajax({
+            type: 'PUT',
+            url: `/api/chat/messages/read/${roomId}?bossId=${userId}`,
+            contentType: 'application/json'
+        }).done(function () {
+            console.log(`[READ] Room ${roomId}: All unread messages marked as read.`);
+            // 읽음 처리 후 읽음 cnt 처리 추가
+        }).fail(function (error) {
+            console.error('[READ ERROR]', error);
+        });
+    }
 
     function connect() {
         // WebSocketConfig에서 sockjs 엔드포인트 /chatting
@@ -281,12 +300,12 @@
             // 구독 (메시지를 받을 때마다 showMessage 함수 실행)
             stompClient.subscribe(subscriptionUrl, function (message) {
                 // message.body는 JSON 문자열이므로 파싱
+                console.log(message.body);
                 showMessage(JSON.parse(message.body));
             });
 
         }, function (error) {
             console.error('STOMP Error: ' + error);
-
         });
     }
 
@@ -304,7 +323,7 @@
                 'content': content
             };
 
-            // 메시지 전송 경로: /api/chat/{roomId}
+            // 메시지 전송 경로
             var destinationUrl = `/api/chat/${currentRoomId}`;
 
             // send(destination, 헤더, 페이로드)
@@ -315,9 +334,22 @@
         }
     }
 
+    // 개별 메시지 읽음 처리
+    function markIndividualMessageAsRead(messageId) {
+        $.ajax({
+            type: 'PUT',
+            url: `/api/chat/message/read/${messageId}`,
+            contentType: 'application/json'
+        }).done(function () {
+            console.log(`[READ] Message ID ${messageId} marked as read.`);
+        }).fail(function (error) {
+            console.error('[READ ERROR]', error);
+        });
+    }
+
     // 수신된 메시지를 화면에 표시
     function showMessage(message) {
-        // message 객체의 필드: id, chatRoomId, senderId, content, createdAt
+        // message 객체
         var isMe = (message.senderId == currentUserId);
         var messageClass = isMe ? 'me' : 'other';
         var time = new Date(message.createdAt);
@@ -331,6 +363,11 @@
                 </div>
             </div>
         `;
+
+        if (message.id && message.senderId !== currentUserId) {
+            // 개별 메시지 읽음 처리
+            markIndividualMessageAsRead(message.id);
+        }
 
         var $messageArea = $('#messageArea');
         $messageArea.append(messageHtml);

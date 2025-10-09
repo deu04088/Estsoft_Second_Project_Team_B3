@@ -40,6 +40,18 @@ public class ChatService {
         messageRepository.save(msg);
     }
 
+    // 채팅방 내의 모든 메시지 읽음으로 처리
+    @Transactional
+    public void markAllAsReadByRoomId(Long chatRoomId, Long currentBossId) {
+        // 상대방의 메시지만 찾음
+        List<Message> unreadMessages = messageRepository
+                .findByChatRoom_IdAndIsReadAndSender_IdNot(chatRoomId, 0, currentBossId);
+
+        for (Message message : unreadMessages) {
+            message.markAsRead();
+        }
+    }
+
     // Dto로 변환
     public ChatRoomDto toDto(ChatRoom room, Long bossId) {
         // 상대 사용자(partner) 찾기
