@@ -30,4 +30,6 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
             @Param("chatRoomId") Long chatRoomId,
             @Param("currentBossId") Long currentBossId
     );
+
+    List<Message> findByChatRoom_IdAndIsReadAndSender_IdNot(Long chatRoomId, int i, Long currentBossId);
 }

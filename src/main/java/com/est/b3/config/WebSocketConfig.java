@@ -9,7 +9,7 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 // https://velog.io/@kmh916/Spring-Boot-%EC%B1%84%ED%8C%85-%EA%B5%AC%ED%98%84SockJSStomp-1.-%EA%B8%B0%EB%B3%B8-%EB%8F%99%EC%9E%91-%EA%B5%AC%ED%98%84
 // 인텔리제이가 websocket 설치하라고 나올텐데 설치할 것!
 @Configuration
-@EnableWebSocketMessageBroker
+@EnableWebSocketMessageBroker // 메시지 전송을 중재하는 역할
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     // 메시지 브로커를 활성화하고 subscribe 메시지 접두사 설정
@@ -28,6 +28,6 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         // SockJS 엔드포인트
         registry.addEndpoint("/chatting")
                 .setAllowedOriginPatterns("*") // 개발 시 모든 origin 허용
-                .withSockJS();
+                .withSockJS(); // 버전 낮은 브라우저에서도 사용 가능
     }
 }

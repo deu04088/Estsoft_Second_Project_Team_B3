@@ -1,14 +1,16 @@
 package com.est.b3.dto;
 
 import com.est.b3.domain.Message;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 // 메시지 리턴 템플릿
+@Getter
+@Builder
 @Data
+@NoArgsConstructor // STOMP 수신 (JSON -> DTO 변환) 시 필요
+@AllArgsConstructor
 public class MessageDto {
     private Long id;
     private Long chatRoomId;

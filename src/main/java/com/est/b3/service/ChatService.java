@@ -3,12 +3,15 @@ package com.est.b3.service;
 import com.est.b3.domain.*;
 import com.est.b3.dto.ChatRoomDto;
 import com.est.b3.dto.MessageDto;
+import com.est.b3.repository.BossRepository;
 import com.est.b3.repository.ChatRoomRepository;
 import com.est.b3.repository.MessageRepository;
 import com.est.b3.repository.RestaurantRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,27 +22,7 @@ public class ChatService {
     private final MessageRepository messageRepository;
     private final ChatRoomRepository chatRoomRepository;
     private final RestaurantRepository restaurantRepository;
-
-    // 메시지 전송
-//    public Message saveMessage(ChatDto dto) {
-//        // 챗룸 미아
-//        ChatRoom chatRoom = chatRoomRepository.findById(dto.getChatRoomId())
-//                .orElseThrow(() -> new IllegalArgumentException("ChatRoom not found"));
-//
-//        // 보낸 사용자 미아
-//        User sender = userRepository.findById(dto.getSenderId())
-//                .orElseThrow(() -> new IllegalArgumentException("User not found"));
-//
-//        Message message = Message.builder()
-//                .chatRoom(chatRoom)
-//                .sender(sender)
-//                .content(dto.getContent())
-//                .isRead(0)
-//                .createdAt(LocalDateTime.now())
-//                .build();
-//
-//        return messageRepository.save(message);
-//    }
+    private final BossRepository bossRepository;
 
     // 내가 속한 채팅방 리스트 조회
     public List<ChatRoom> getChatRoomsByBossId(Long bossId) {
@@ -55,6 +38,18 @@ public class ChatService {
         // 1로 변경
         msg.markAsRead();
         messageRepository.save(msg);
+    }
+
+    // 채팅방 내의 모든 메시지 읽음으로 처리
+    @Transactional
+    public void markAllAsReadByRoomId(Long chatRoomId, Long currentBossId) {
+        // 상대방의 메시지만 찾음
+        List<Message> unreadMessages = messageRepository
+                .findByChatRoom_IdAndIsReadAndSender_IdNot(chatRoomId, 0, currentBossId);
+
+        for (Message message : unreadMessages) {
+            message.markAsRead();
+        }
     }
 
     // Dto로 변환
@@ -126,5 +121,23 @@ public class ChatService {
 
         //todto에 넣어서 반환, 상대방 정보만 채움
         return toDto(room, bossId);
+    }
+
+    // STOMP 메시지 저장
+    @Transactional
+    public Message saveMessage(Long chatRoomId, Long senderId, String content) {
+
+        ChatRoom chatRoom = chatRoomRepository.getReferenceById(chatRoomId);
+        Boss sender = bossRepository.getReferenceById(senderId);
+
+        Message message = Message.builder()
+                .chatRoom(chatRoom)
+                .sender(sender)
+                .content(content)
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        // 3. 저장 및 DB ID, createdAt이 채워진 엔티티 리턴
+        return messageRepository.save(message);
     }
 }

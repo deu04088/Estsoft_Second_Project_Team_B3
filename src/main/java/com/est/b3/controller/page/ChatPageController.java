@@ -81,6 +81,10 @@ public class ChatPageController {
                 .map(room -> chatService.toDto(room, bossId))
                 .toList();
 
+        for (ChatRoomDto chatRoom : chatRooms) {
+            log.info("ChatRoomDto : " + chatRoom.toString());
+        }
+
         model.addAttribute("chatRooms", chatRooms);
         model.addAttribute("user", sessionUser);
 
@@ -93,10 +97,5 @@ public class ChatPageController {
         model.addAttribute("messages", messages);
 
         return "chat";
-    }
-
-    @GetMapping("/chat")
-    public String chat(Model model) {
-        return "chat-test";
     }
 }
