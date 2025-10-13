@@ -71,22 +71,23 @@ export function getCurrentDongEupMyeon(lat, lng, callback) {
 export function setupButton() {
   const resultBox = document.getElementById("result");
   const currentBox = document.getElementById("ggaddress");
+  const certifyBtn = document.getElementById("certifyBtn");
+  const hiddenAddress = document.getElementById("hiddenAddress");
 
   document.querySelectorAll(".addressBtn").forEach(btn => {
     btn.addEventListener("click", async () => {
       const address = document.getElementById("addressInput").value.trim();
       const regex = /^[가-힣]+(시|도)\s([가-힣]+(구|군|시)\s)?[가-힣]+(동|읍|면)$/;
-      if (!regex.test(address)) {
-        alert("주소를 동/읍/면까지 정확히 입력해주세요");
-        certifyBtn.disabled = true;
-        return;
-      }
       if (!address) {
         alert("주소를 입력해주세요");
         certifyBtn.disabled = true;
         return;
       }
-
+      if (!regex.test(address)) {
+        alert("주소를 예시(서울특별시 종로구 회현동)와 같이 입력해주세요");
+        certifyBtn.disabled = true;
+        return;
+      }
       // 행안부 API 유효성 체크 및 데이터 가져오기
       try {
         const res = await fetch('/api/check-address', {
@@ -98,7 +99,7 @@ export function setupButton() {
         const data = await res.json();
 
         if (!data || !data.juso || data.juso.length === 0) {
-          resultBox.textContent = "존재하지 않는 주소입니다.";
+          alert("존재하지 않는 주소입니다.");
           certifyBtn.disabled = true;
           return;
         }
@@ -142,25 +143,34 @@ export function setupButton() {
 
               if (inputDong === currentDong) {
                 currentBox.textContent = fullAddress;
-                resultBox.textContent = '현재 위치가 내 동내 설정과 같습니다.';
+                resultBox.textContent = "현재 위치가 내 동내 설정과 같습니다.";
                 hiddenAddress.value = fullAddress;
                 certifyBtn.disabled = false;
               } else {
                 currentBox.textContent = fullAddress;
                 //원활한 테스트를 위해 다를경우 현재 기기위치의 동을 표시해 줍니다.
-                resultBox.textContent = '현재 위치가 내 동내 설정과 다릅니다. 현재 위치 '
-                    + `${currentDong}`;
+                resultBox.textContent = `현재 위치가 내 동네 설정과 다릅니다. 현재 위치 ${currentDong}`;
                 certifyBtn.disabled = true;
               }
             });
-
-          }, () => {
-            resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
+          }, (err) => {
+            let message = "위치 정보 가져오기 실패, 다시 시도해주세요.";
             certifyBtn.disabled = true;
+            switch (err.code) {
+              case 1:
+                message = "브라우저 또는 장치에서 위치 접근이 차단되었습니다. 설정에서 위치 허용 후 다시 시도해주세요.";
+                break;
+              case 2:
+                message = "기기에서 위치 정보를 가져올 수 없습니다. GPS또는 네트워크 위치 서비스를 켜주세요.";
+                break;
+              case 3:
+                message = "위치 정보를 가져오는데 시간이 초과되었습니다. 네트워크 상태를 확인해주세요.";
+                break;
+            }
+            resultBox.textContent = message;
           });
-
         } else {
-          resultBox.textContent = "위치 정보 가져오기 실패 다시 시도해주세요.";
+          resultBox.textContent = "구글 좌표 변환에 실패했습니다. 관리자에게 문의해주세요";
           certifyBtn.disabled = true;
         }
       });

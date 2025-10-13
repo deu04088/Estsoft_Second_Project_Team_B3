@@ -24,6 +24,15 @@
             justify-content: left;
             border-radius: 6px;
         }
+        .addressBtn {
+          background-color: #198754; /* Bootstrap primary 색상 */
+          color: #fff;
+          font-weight: bold;
+        }
+
+        .addressBtn:hover {
+          background-color: #157347;
+        }
         .btn-certify {
             background-color: #198754; /* Bootstrap success 색상 */
             color: #fff;
@@ -34,8 +43,8 @@
         }
         #map {
           justify-content: center;
-          height:700px;
-          width: 700px;
+          height:100%;
+          width: 100%;
         }
     </style>
 </head>
@@ -43,7 +52,7 @@
 
 
         <main class="container my-5">
-            <h2 class="text-center mb-4">동네 인증</h2>
+            <h2 class="text-start mb-4">동네 인증</h2>
 
             <!--
     [동네 인증 처리 흐름 정리]
@@ -72,14 +81,14 @@
 <!--            <button type="button" id ="addressSearchBtn" class="btn btn-outline-primary">내 동네 설정</button>
           -->
           <button type="button"
-                  class="btn-outline-primary addressBtn"
+                  class="btn addressBtn ms-2"
                   id ="addressSetBtn"
                   th:if="${user.address == null}">
             내 동네 설정
           </button>
 
           <button type="button"
-                  class="btn-outline-primary addressBtn"
+                  class="btn addressBtn ms-2"
                   id ="addressUpBtn"
                   th:if="${user.address != null}">
             내 동네 수정
@@ -91,7 +100,7 @@
     <!-- 지도 영역 -->
     <div class="mb-3 map-box">
         <!-- 나중에 Google Maps API로 대체 -->
-        <h3>현재 위치로 동네 인증하기</h3>
+        <h3 class="w-100 text-start">현재 위치로 동네 인증하기</h3>
         <div id="map"></div>
     </div>
 
