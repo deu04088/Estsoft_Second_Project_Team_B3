@@ -17,7 +17,7 @@ public class Boss {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long id;
 
-    @Column(name = "user_name", length = 20, nullable = false, unique = true)
+    @Column(name = "user_name", length = 100, nullable = false, unique = true)
     private String userName;   // 로그인 ID
 
     @Column(name = "nick_name", length = 30, nullable = false, unique = true)
