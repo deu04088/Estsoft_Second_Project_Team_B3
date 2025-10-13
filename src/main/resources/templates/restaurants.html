@@ -65,8 +65,13 @@
 -->
 
         <main class="container">
-            <!-- 식당 리스트 -->
+
             <h3 class="text-center mb-4">우리 동네 식당 소개</h3>
+            <!-- 식당이 없을 경우 안내 문구 -->
+            <div th:if="${page.totalElements == 0}" class="text-center my-5">
+                <p class="text-muted">근처 동네에 등록된 식당이 없습니다.</p>
+            </div>
+            <!-- 식당 리스트 -->
             <div class="row g-4">
                 <!-- 반복 렌더링 예시 -->
                 <div class="col-md-3" th:each="restaurant : ${restaurants}">
@@ -86,16 +91,14 @@
             </div>
 
             <!-- 페이지네이션 -->
-            <div class="d-flex justify-content-center my-4">
+            <div class="d-flex justify-content-center my-4" th:if="${page.totalElements > 0}">
                 <nav>
                     <ul class="pagination">
-                        <!-- 이전 페이지 -->
                         <li th:classappend="${page.first} ? 'disabled'" class="page-item">
                             <a class="page-link"
                                th:href="@{${url}(menu=${menu}, page=${page.number - 1})}">&lt;</a>
                         </li>
 
-                        <!-- 페이지 번호 -->
                         <li th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
                             th:classappend="${i == page.number} ? 'active'" class="page-item">
                             <a class="page-link"
@@ -103,7 +106,6 @@
                                th:text="${i + 1}">1</a>
                         </li>
 
-                        <!-- 다음 페이지 -->
                         <li th:classappend="${page.last} ? 'disabled'" class="page-item">
                             <a class="page-link"
                                th:href="@{${url}(menu=${menu}, page=${page.number + 1})}">&gt;</a>
