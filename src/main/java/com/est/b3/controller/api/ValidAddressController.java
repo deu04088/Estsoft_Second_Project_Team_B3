@@ -23,6 +23,12 @@ public class ValidAddressController {
   @PostMapping("/api/check-address")
   public ResponseEntity<?> checkAddress(@RequestBody Map<String, String> body) {
     String address = body.get("address");
+
+    String regex = "^[가-힣]+(시|도)\\s([가-힣]+(구|군|시)\\s)?[가-힣]+(동|읍|면)$";
+    if (address == null || !address.matches(regex)) {
+      return ResponseEntity.ok(Map.of("status", "INVALID", "reason", "INVALID_FORMAT"));
+    }
+
     Map<String, Object> response = addressValidationService.validateAddress(address);
 
     if (response == null) return ResponseEntity.ok(Map.of("status", "INVALID"));
@@ -55,7 +61,7 @@ public class ValidAddressController {
 
     //DB 업데이트
     Boss boss = bossRepository.findById(loginUser.getId())
-        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자"));
+        .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
     boss.updateAddress(fullAddress, siDo, guGun, dongEupMyeon);
     bossRepository.save(boss);
 
