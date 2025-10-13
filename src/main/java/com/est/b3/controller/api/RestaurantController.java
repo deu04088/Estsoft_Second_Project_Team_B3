@@ -1,9 +1,7 @@
 package com.est.b3.controller.api;
 
-import com.est.b3.domain.Restaurant;
 import com.est.b3.dto.RestaurantResponseDto;
 import com.est.b3.service.RestaurantService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,19 +19,19 @@ public class RestaurantController {
 
   private final RestaurantService restaurantService;
 
-  @GetMapping("/{userId}") // 엔드포인트 -/api/restaurants/1?page=0
-  public Page<RestaurantResponseDto> getRestaurantsByUser(
-      @PathVariable Long userId,
+  @GetMapping("/{bossId}") // 엔드포인트 -/api/restaurants/1?page=0
+  public Page<RestaurantResponseDto> getRestaurantsByBoss(
+      @PathVariable Long bossId,
       @PageableDefault(size = 16) Pageable pageable
   ) {
-    return restaurantService.getRestaurantsByUserAddress(userId, pageable);
+    return restaurantService.getRestaurantsByBossAddress(bossId, pageable);
   }
-  @GetMapping("/{userId}/search") // 엔드포인트 -/api/restaurants/1/search?menu=메뉴&page=0
-  public Page<RestaurantResponseDto> searchRestaurantsByUser(
-      @PathVariable Long userId,
+  @GetMapping("/{bossId}/search") // 엔드포인트 -/api/restaurants/1/search?menu=메뉴&page=0
+  public Page<RestaurantResponseDto> searchRestaurantsByBoss(
+      @PathVariable Long bossId,
       @RequestParam String menu,
       @PageableDefault(size = 16) Pageable pageable
   ) {
-    return restaurantService.searchRestaurants(userId, menu, pageable);
+    return restaurantService.searchRestaurants(bossId, menu, pageable);
   }
 }

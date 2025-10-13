@@ -15,7 +15,7 @@
         }
         .map-box {
             width: 100%;
-            height: 300px;
+            height: 700px;
             background: #e9ecef;
             display: flex;
             flex-direction: column;
@@ -23,6 +23,15 @@
             align-items: center;
             justify-content: left;
             border-radius: 6px;
+        }
+        .addressBtn {
+          background-color: #198754; /* Bootstrap primary 색상 */
+          color: #fff;
+          font-weight: bold;
+        }
+
+        .addressBtn:hover {
+          background-color: #157347;
         }
         .btn-certify {
             background-color: #198754; /* Bootstrap success 색상 */
@@ -43,7 +52,7 @@
 
 
         <main class="container my-5">
-            <h2 class="text-center mb-4">동네 인증</h2>
+            <h2 class="text-start mb-4">동네 인증</h2>
 
             <!--
     [동네 인증 처리 흐름 정리]
@@ -62,39 +71,58 @@
 
 
     <!-- 주소 입력 -->
-    <form th:action="@{/api/users/address}" method="post">
+          <!--구조 변경으로인한 삭제 부분 이 버튼은 주소 검증을 위한 버튼-->
+          <!--<form th:action="@{/api/users/address}" method="post">-->
+
         <div class="input-group mb-3">
             <input type="text" id="addressInput" name="address" class="form-control"
-                   placeholder="예) 서울 강서구 화곡동" required>
-            <button type="submit" id ="addressSearchBtn" class="btn btn-outline-primary">내 동네 설정</button>
+                   placeholder="예)서울특별시 종로구 회현동"
+                   title="동/읍/면까지 입력해주세요" required>
+<!--            <button type="button" id ="addressSearchBtn" class="btn btn-outline-primary">내 동네 설정</button>
+          -->
+          <button type="button"
+                  class="btn addressBtn ms-2"
+                  id ="addressSetBtn"
+                  th:if="${user.address == null}">
+            내 동네 설정
+          </button>
+
+          <button type="button"
+                  class="btn addressBtn ms-2"
+                  id ="addressUpBtn"
+                  th:if="${user.address != null}">
+            내 동네 수정
+          </button>
+
         </div>
-    </form>
+
 
     <!-- 지도 영역 -->
     <div class="mb-3 map-box">
         <!-- 나중에 Google Maps API로 대체 -->
-        <h3>현재 위치로 동네 인증하기</h3>
+        <h3 class="w-100 text-start">현재 위치로 동네 인증하기</h3>
         <div id="map"></div>
     </div>
 
     <!-- 현재 위치 표시 -->
-    <p class="text-center">현재 위치는 <span id="ggaddress">불러오는 중...</span> 입니다.</p>
-    <p class="text-center"><span id="result">불러오는 중...</span> 입니다.</p>
+    <p class="text-center">현재 위치는 <span id="ggaddress">서울특별시 종로구 회현동</span> 입니다.</p>
+    <p class="text-center"><span id="result"></span> </p>
 
 
             <!-- 인증 완료 버튼 -->
-            <div class="d-grid gap-2 mt-4">
-                <a th:href="@{/restaurants}" class="btn btn-certify">동네인증 완료하기</a>
-            </div>
-        </main>
 
-<!-- Footer -->
+          <form class="d-grid gap-2 mt-4" id="certifyForm">
+             <input type="hidden" name="address" id="hiddenAddress">
+             <button type="button" id="certifyBtn" class="btn btn-certify" disabled>동네인증 완료하기</button>
+           </form>
+         </main>
+
+ <!-- Footer -->
 <!--<div th:replace="partials/footer :: *"></div>-->
-<script th:inline="javascript">
-  const apiKey = /*[[${apiKey}]]*/ 'DEFAULT_KEY';
-</script>
-<script src="/js/googlemap.js"></script>
-
+        <script th:inline="javascript">
+          window.GOOGLE_MAPS_API_KEY = /*[[${apiKey}]]*/ 'DEFAULT_KEY';
+        </script>
+        <script src="/js/googlemap.js" type="module"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

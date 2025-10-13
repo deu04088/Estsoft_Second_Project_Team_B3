@@ -1,18 +1,29 @@
 package com.est.b3.controller.page;
 
+import com.est.b3.domain.Boss;
+import com.est.b3.dto.RestaurantResponseDto;
+import com.est.b3.dto.SessionUserDTO;
+import com.est.b3.service.RestaurantService;
+import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class RestaurantPageController {
+
+    private final RestaurantService restaurantService;
 
     // 공통으로 더미 식당 생성하는 헬퍼 메서드 [추후 삭제]
     private Map<String, Object> createRestaurant(Long id, String name, String menuName,
@@ -32,21 +43,48 @@ public class RestaurantPageController {
 
     // 식당 리스트 페이지 (우리 동네 식당 소개)
     @GetMapping("/restaurants")
-    public String list(Model model) {
+    public String getRestaurantsPage(
+        HttpSession session,
+        @PageableDefault(size = 16) Pageable pageable,
+        Model model
+    ) {
+        SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss"); // 세션에 로그인된 Boss 꺼내기
+        if (sessionUser == null) {
+            return "redirect:/login"; // 로그인 안 되어 있으면 index.html로 이동
+        }
 
-        // 임시 데이터 [연결 확인용] : 추후 개발시 지우세요
-        List<Map<String, Object>> dummyRestaurants = new ArrayList<>();
-        dummyRestaurants.add(
-                createRestaurant(1L, "OK Burger", "더블치즈 버거", 11000, 15,
-                        "/images/sample-burger.png", 1, 1L)
-        );
-        dummyRestaurants.add(
-                createRestaurant(2L, "김밥천국", "참치김밥", 3500, 42,
-                        "/images/sample-kimbap.png", 2, 2L)
-        );
+        Long bossId = sessionUser.getId();
+        Page<RestaurantResponseDto> page = restaurantService.getRestaurantsByBossAddress(bossId, pageable);
 
-        model.addAttribute("restaurants", dummyRestaurants);
+        model.addAttribute("restaurants", page.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/restaurants");
         return "restaurants";
+    }
+
+
+
+    // 메뉴 검색 페이지
+    @GetMapping("/restaurants/search")
+    public String searchRestaurantsPage(
+        HttpSession session,
+        @RequestParam String menu,
+        @PageableDefault(size = 16) Pageable pageable,
+        Model model
+    ) {
+        SessionUserDTO sessionUser = (SessionUserDTO) session.getAttribute("loginBoss");
+        if (sessionUser == null) {
+            return "redirect:/index";
+        }
+
+        Long bossId = sessionUser.getId();
+        Page<RestaurantResponseDto> page = restaurantService.searchRestaurants(bossId, menu, pageable);
+
+        model.addAttribute("restaurants", page.getContent());
+        model.addAttribute("page", page);
+        model.addAttribute("menu", menu);
+        model.addAttribute("url", "/restaurants/search?menu=" + menu);
+        return "restaurants-search"; // 검색 결과 템플릿
     }
 
     // 식당 등록 페이지
@@ -89,24 +127,5 @@ public class RestaurantPageController {
         return "restaurant-detail"; // templates/restaurant-detail.html
     }
 
-    @GetMapping("/search")
-    public String search(
-            @RequestParam String menu,
-            @RequestParam(defaultValue = "0") int page,
-            Model model) {
 
-        // 임시 데이터 (추후 DB에서 조회)
-        // http://localhost:8080/search?menu=치킨&page=2
-        // 카드리스트 안뜨는게 정상
-        List<Map<String, Object>> searchResults = new ArrayList<>();
-        searchResults.add(createRestaurant(1L, "OK Burger", "더블치즈 버거", 11000, 15,
-                "/images/sample-burger.png", 10, 1L));
-        searchResults.add(createRestaurant(2L, "김밥천국", "참치김밥", 3500, 42,
-                "/images/sample-kimbap.png", 5, 2L));
-
-        model.addAttribute("menuKeyword", menu);
-        model.addAttribute("results", searchResults);
-
-        return "search"; // templates/search.html
-    }
 }

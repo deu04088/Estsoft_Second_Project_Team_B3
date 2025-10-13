@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 import lombok.*;
 
 @Getter
@@ -14,12 +13,11 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Boss {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long id;
 
-    @Column(name = "user_name", length = 20, nullable = false, unique = true)
+    @Column(name = "user_name", length = 100, nullable = false, unique = true)
     private String userName;   // 로그인 ID
 
     @Column(name = "nick_name", length = 30, nullable = false, unique = true)
@@ -29,7 +27,16 @@ public class Boss {
     private String password;   // 암호화된 비밀번호
 
     @Column(name = "address", length = 50)
-    private String address;    // 동네 인증 주소
+    private String address;    // 동네 인증 주소 전체주소
+
+    @Column(name = "siDo", length = 20)
+    private String siDo;    // 동네 인증 주소 시도
+
+    @Column(name = "guGun", length = 20)
+    private String guGun;    // 동네 인증 주소 구군
+
+    @Column(name = "dongEupMyeon", length = 20)
+    private String dongEupMyeon;    // 동네 인증 주소 동읍면
 
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
@@ -49,4 +56,12 @@ public class Boss {
         if (this.role == null) this.role = "ROLE_USER";
         if (this.state == null) this.state = 1;
     }
+
+  // 도메인 메서드: 주소 업데이트
+    public void updateAddress(String fullAddress, String siDo, String guGun, String dongEupMyeon) {
+      this.address = fullAddress;
+      this.siDo = siDo;
+      this.guGun = guGun;
+      this.dongEupMyeon = dongEupMyeon;
+  }
 }

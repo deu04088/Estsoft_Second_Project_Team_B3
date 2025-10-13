@@ -1,31 +1,28 @@
-<footer th:fragment="footer" class="footer bg-black text-white pt-4 pb-4">
-    <div class="container">
-        <!-- SNS Icons -->
-        <div class="mb-3 d-flex align-items-center gap-3">
-            <a href="#" class="sns-icons">
-                <img class="sns-icons" th:src="@{/images/instagram_icon.png}" alt="Instagram" />
-            </a>
-            <a href="#" class="sns-icons">
-                <img class="sns-icons" th:src="@{/images/facebook_icon.png}" alt="Facebook" />
-            </a>
-            <a href="#" class="sns-icons">
-                <img class="sns-icons" th:src="@{/images/youtube_icon.png}" alt="Youtube" />
-            </a>
-            <a href="#" class="sns-icons">
-                <img class="sns-icons" th:src="@{/images/blog_icon.png}" alt="blog" />
-            </a>
+<footer th:fragment="footer" class="footer text-white">
+    <div class="container-fluid d-flex flex-column flex-md-row justify-content-between align-items-center">
+
+        <!-- 왼쪽: 프로젝트 정보 -->
+        <div class="footer-info mb-4 mb-md-0">
+            <p class="project-name">B3, BizBeacon for Boss</p>
+            <p class="mb-0 small">사장님들을 위한 동네 식당 소개 & 커뮤니티 서비스</p>
+            <p class="mb-0 small">이스트소프트 백엔드 개발자 부트캠프 오르미</p>
+            <p class="mb-0 small">2025 Spring Boot Team Project</p>
         </div>
 
-        <div class="mb-3">
-            <p class="mb-3 company-name">(주)우아한형제들</p>
-            <p class="mb-1">
-                주소 : 서울특별시 송파구 위례성대로 2 장은빌딩 대표자명: 김범석 사업자등록번호: 120-87-65763
-                사업자정보확인 개인정보처리방침
-            </p>
-            <p class="mb-1">
-                통신판매업: 2012-서울송파-0515 전자금융분쟁처리 TEL: 1600-0987 FAX: 050-6050-0400 MAIL:
-                help@woowahan.com
-            </p>
+        <!-- 오른쪽: 링크 아이콘 -->
+        <div class="footer-links d-flex gap-4">
+            <!-- GitHub -->
+            <a href="https://github.com/deu04088/Estsoft_Second_Project_Team_B3" target="_blank" class="footer-icon" title="GitHub Repository">
+                <i class="fa-brands fa-github"></i>
+            </a>
+            <!-- YouTube 시연 영상 -->
+            <a href="https://youtube.com/your-demo-video" target="_blank" class="footer-icon" title="시연 영상">
+                <i class="fa-brands fa-youtube"></i>
+            </a>
+            <!-- 발표자료 (Google Drive PDF) -->
+            <a href="https://drive.google.com/your-presentation" target="_blank" class="footer-icon" title="발표자료">
+                <i class="fa-solid fa-file-pdf"></i>
+            </a>
         </div>
     </div>
 </footer>

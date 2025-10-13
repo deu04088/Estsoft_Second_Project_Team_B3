@@ -67,7 +67,12 @@
         -->
 
                 <!-- 등록 폼 -->
-                <form th:action="@{/api/restaurants}" method="post" enctype="multipart/form-data">
+                <!--
+                  현재 Controller 매핑은 "/api/restaurant-form"
+                  HTML에서는 "/api/restaurants"로 되어있음 → 일치 필요
+                  임시로 "/api/restaurant-form"으로 맞추는 게 안전
+                -->
+                <form th:action="@{/api/restaurant-form}" method="post" enctype="multipart/form-data">
                     <!-- 사진 업로드 -->
                     <div class="mb-3">
                         <label class="form-label">업장 사진</label>

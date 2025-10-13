@@ -5,8 +5,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -20,14 +20,14 @@ public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-  
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "chat_room_id")
     private ChatRoom chatRoom;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sender_id")
-    private User sender;
+    private Boss sender;
 
     @Column(columnDefinition = "TEXT")
     private String content;
@@ -40,5 +40,23 @@ public class Message {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    // 메시지 보낸 시간 넣어줌
+    // 메시지 읽음 표시 - 세터 안씀
+    // 기본 값 0, 읽으면 1
+    @PrePersist
+    public void prePersist() {
+        if (this.isRead == null) {
+            this.isRead = 0;
+        }
+
+        if (this.createdAt == null) {
+            this.createdAt = LocalDateTime.now();
+        }
+    }
+
+    public void markAsRead() {
+        this.isRead++;
+    }
 }
 

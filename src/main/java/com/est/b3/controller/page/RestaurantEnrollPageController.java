@@ -1,6 +1,9 @@
 package com.est.b3.controller.page;
 
+import com.est.b3.domain.Photo;
+import com.est.b3.dto.PhotoResponseDto;
 import com.est.b3.service.RestaurantEnrollService;
+import com.est.b3.service.RestaurantFileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +16,9 @@ import java.io.IOException;
 @Controller
 public class RestaurantEnrollPageController {
     private final RestaurantEnrollService restaurantEnrollService;
+    private final RestaurantFileService restaurantFileService;
 
-    @PostMapping("/api/restaurant-form")
+    @PostMapping("/api/restaurant-form") // HTML의 action과 일치하도록 html 수정했습니다.
     public String saveRestaurantInfo(@RequestParam(value="photo") MultipartFile photo,
                                      @RequestParam(value="name") String name,
                                      @RequestParam(value="menuName") String menuName,
@@ -22,9 +26,16 @@ public class RestaurantEnrollPageController {
                                      @RequestParam(value="description") String description,
                                      @RequestParam(value="address") String address) throws IOException {
         // 사진 파일 저장 후 URL 생성
-        String photoUrl = restaurantEnrollService.savePhoto(photo);
+        //String photoUrl = restaurantEnrollService.savePhoto(photo);
 
-        this.restaurantEnrollService.saveRestaurant(name, menuName, price, description, address, photoUrl);
+        Photo photoEntity = null;
+
+        if (photo != null && !photo.isEmpty()) {
+            photoEntity = restaurantFileService.savePhotoLocal(photo);
+        }
+
+        restaurantEnrollService.saveRestaurant(name, menuName, price, description, address, photoEntity);
+
         return "redirect:/restaurants";
     }
 }

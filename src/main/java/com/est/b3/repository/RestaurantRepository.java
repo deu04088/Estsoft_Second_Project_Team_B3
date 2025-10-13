@@ -2,12 +2,13 @@ package com.est.b3.repository;
 
 import com.est.b3.domain.Restaurant;
 import com.est.b3.dto.RestaurantResponseDto;
-import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+
+import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
   // JPQL 방식으로 좋아요 순 이름 순 정렬
@@ -23,17 +24,21 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
         r.menuName,
         r.price,
         r.address,
-        p.s3Url
+        p.s3Url,
+        r.viewCount
     )
     FROM Restaurant r
     LEFT JOIN r.photo p
     LEFT JOIN Like l ON l.restaurant = r
-    WHERE r.address LIKE %:address%
-    GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url
+    WHERE r.siDo = :siDo
+      AND r.dongEupMyeon = :dongEupMyeon
+    GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
     ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> findByAddressSortedByLikes(
-      @Param("address") String address, Pageable pageable);
+      @Param("siDo") String siDo,
+      @Param("dongEupMyeon") String dongEupMyeon,
+      Pageable pageable);
 
 
   // 마찬가지로 JPQL 사용하겠습니다.
@@ -45,18 +50,25 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
       r.menuName,
       r.price,
       r.address,
-      p.s3Url
+      p.s3Url,
+      r.viewCount
   )
   FROM Restaurant r
   LEFT JOIN r.photo p
   LEFT JOIN Like l ON l.restaurant = r
-  WHERE r.address LIKE %:address%
+  WHERE r.siDo = :siDo
+    AND r.dongEupMyeon = :dongEupMyeon
     AND r.menuName LIKE %:menu%
-  GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url
+  GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
   ORDER BY COUNT(l) DESC, r.name ASC
 """)
   Page<RestaurantResponseDto> searchRestaurantsByMenu(
-      @Param("address") String address,
+      @Param("siDo") String siDo,
+      @Param("dongEupMyeon") String dongEupMyeon,
       @Param("menu") String menu,
       Pageable pageable);
+
+
+  // 이미지 검색을 위한 bossId로 검색
+  Optional<Restaurant> findByBossId(Long bossId);
 }
