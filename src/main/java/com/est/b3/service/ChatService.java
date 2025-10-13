@@ -86,6 +86,11 @@ public class ChatService {
                 .map(Message::getContent)
                 .orElse("대화 내용 없음"); // 메시지가 없으면 기본 문구
 
+        // 마지막 메시지 생성 시간
+        LocalDateTime lastMessageTime = lastMessageOpt
+                .map(Message::getCreatedAt)
+                .orElse(room.getCreatedAt());
+
         // 읽지 않은 메시지 수
         int unreadCount = messageRepository.countUnreadMessagesByChatRoomAndCurrentBoss(
                 room.getId(),
@@ -99,6 +104,7 @@ public class ChatService {
                 .partnerProfileUrl(profileUrl)
                 .createdAt(room.getCreatedAt())
                 .lastMessage(lastMessageContent)
+                .lastMessageCreatedAt(lastMessageTime)
                 .unreadCount(unreadCount)
                 .build();
     }

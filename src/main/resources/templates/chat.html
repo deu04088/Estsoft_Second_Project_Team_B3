@@ -170,20 +170,29 @@
         <!-- 채팅방 목록 -->
         <div class="chat-list">
             <div class="d-flex justify-content-between align-items-center p-3 border-bottom">
-                <h6 class="mb-0">내 아이디: <span
-                        th:text="${user != null ? user.userName : '게스트'}">myId</span></h6>
+                <h6 class="mb-0"><strong
+                        th:text="${user != null ? user.nickName : '게스트'}">myId</strong>
+                    <!-- 읽지 않은 메시지 수-->
+                    <span th:if="${totalUnreadCount > 0}" class="badge bg-danger ms-2"
+                          th:text="${totalUnreadCount}">0</span>
+                </h6>
                 <div class="form-check form-switch d-flex align-items-center">
                     <label class="form-check-label small me-2" for="unreadToggle">읽지 않은 항목</label>
+                    <!-- 읽지 않은 메시지 수 roomm.unreadCount-->
                     <input class="form-check-input" type="checkbox" id="unreadToggle">
                 </div>
             </div>
 
+            <!-- 최근 메시지 순 정렬-->
             <div th:each="room : ${chatRooms}" class="chat-list-item"
                  th:onclick="'location.href=\'/chat/' + ${room.id} + '\''"><img
                     th:src="${room.partnerProfileUrl != null ? room.partnerProfileUrl : '/images/default-profile.png'}"
                     alt="상대방 사진">
                 <div>
-                    <strong th:text="${room.partnerNickName}">상대방 닉네임</strong><br>
+                    <strong th:text="${room.partnerNickName}">상대방 닉네임</strong>
+                    <small th:text="${#temporals.format(room.lastMessageCreatedAt, 'MM.dd HH:mm')}"
+                           style="color: #6c757d; font-size: 11px; text-align: left;">00.00 00:00</small>
+                    <br>
                     <small th:text="${room.lastMessage}">최근 메시지</small>
                 </div>
                 <span class="unread" th:if="${room.unreadCount > 0}" th:text="${room.unreadCount}">1</span>
@@ -257,6 +266,7 @@
 
         console.log(`[STOMP] Room ID: ${currentRoomId}, User ID: ${currentUserId}`);
 
+        scrollToBottom();
         // STOMP 연결
         connect();
 
@@ -373,7 +383,16 @@
         $messageArea.append(messageHtml);
 
         // 스크롤을 맨 아래로 이동
-        $messageArea.scrollTop($messageArea[0].scrollHeight);
+        scrollToBottom();
+    }
+
+    // 스크롤 아래로 내려줌
+    function scrollToBottom() {
+        var $messageArea = $('#messageArea');
+
+        if ($messageArea.length) {
+            $messageArea.scrollTop($messageArea[0].scrollHeight);
+        }
     }
 </script>
 
