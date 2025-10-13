@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-// 챗룸 json 리턴 템플릿
+// 채팅방 json 리턴 템플릿
 @Data
 @Builder
 @NoArgsConstructor
