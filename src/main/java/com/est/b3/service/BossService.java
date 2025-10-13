@@ -58,7 +58,7 @@ public class BossService {
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
         if (!passwordEncoder.matches(request.getPassword(), boss.getPassword())) {
-            throw new CustomException(ErrorCode.PASSWORD_MISMATCH); // 필요하면 ErrorCode.PASSWORD_MISMATCH 추가
+            throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
         }
 
         // 로그인 응답 DTO (주소 포함 → 프론트에서 분기 처리용)

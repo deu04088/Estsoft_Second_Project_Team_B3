@@ -1,36 +1,105 @@
-<header th:fragment="logined-header" class="navbar navbar-expand-lg navbar-light bg-white">
-    <div class="container">
-        <a th:href="@{/}">
-            <img th:src="@{/images/header_logo.png}" alt="Logo" class="header-logo" />
+<!--<header th:fragment="logined-header" class="navbar navbar-expand-lg navbar-light bg-white">-->
+<!--    <div class="container">-->
+<!--        <a th:href="@{/}">-->
+<!--            <img th:src="@{/images/header_logo.png}" alt="Logo" class="header-logo" />-->
+<!--        </a>-->
+
+<!--        &lt;!&ndash; 내비 메뉴 &ndash;&gt;-->
+<!--        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">-->
+<!--            <li class="nav-item"><a class="nav-link active ms-2 fw-bold" th:href="@{/restaurants}">동네소개</a></li>-->
+<!--            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/address-certify}">동네인증</a></li>-->
+<!--            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/restaurant-detail}">점포관리</a></li>-->
+<!--        </ul>-->
+
+<!--        &lt;!&ndash; 검색창 &ndash;&gt;-->
+<!--        <form class="d-flex me-3" method="get" action="/restaurants/search">-->
+<!--            <input-->
+<!--                class="form-control me-2 search-box"-->
+<!--                type="search"-->
+<!--                name="menu"-->
+<!--                placeholder="찾는 메뉴가 뭐에요?"-->
+<!--                aria-label="search"-->
+<!--            />-->
+<!--            <button class="btn btn-outline-success" type="submit">검색</button>-->
+<!--        </form>-->
+
+
+<!--        &lt;!&ndash; 채팅하기/로그아웃 버튼 &ndash;&gt;-->
+<!--        <div class="d-flex me-3">-->
+<!--            <a th:href="@{/chat}" class="btn chat-btn-outline-dark">채팅하기</a>-->
+<!--        </div>-->
+
+<!--        <div class="d-flex me-3">-->
+<!--            <a th:href="@{/}" class="btn logout-btn-outline-dark">로그아웃</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+
+<header th:fragment="logined-header" class="navbar navbar-expand-lg sticky-top bb-logined-header">
+    <div class="container-fluid px-3 d-flex align-items-center justify-content-between">
+
+        <!-- 로고 -->
+        <a th:href="@{/restaurants}" class="d-flex align-items-center text-decoration-none me-2">
+            <img th:src="@{/images/b3-logo.png}" alt="BizBeacon" class="bb-header-logo me-2" />
+            <span class="bb-header-title">BizBeacon for Boss</span>
         </a>
 
-        <!-- 내비 메뉴 -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-4">
-            <li class="nav-item"><a class="nav-link active ms-2 fw-bold" th:href="@{/restaurants}">동네소개</a></li>
-            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/address-certify}">동네인증</a></li>
-            <li class="nav-item"><a class="nav-link ms-2 fw-bold" th:href="@{/restaurant-detail}">점포관리</a></li>
-        </ul>
+        <!-- 탭 내비게이션: 왼쪽 정렬 -->
+        <nav class="d-none d-md-block">
+            <ul class="navbar-nav flex-row bb-nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/restaurants}">
+                        <i class="fa-solid fa-compass me-1"></i> 동네소개
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/address-certify}">
+                        <i class="fa-solid fa-location-dot me-1"></i> 동네인증
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/restaurant-form}">
+                        <i class="fa-solid fa-store me-1"></i> 점포등록
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-        <!-- 검색창 -->
-        <form class="d-flex me-3" method="get" action="/restaurants/search">
+        <!-- 검색창 (아이콘 버튼 포함) -->
+        <form class="bb-search d-none d-md-flex" method="get" th:action="@{/restaurants/search}">
             <input
-                class="form-control me-2 search-box"
-                type="search"
-                name="menu"
-                placeholder="찾는 메뉴가 뭐에요?"
-                aria-label="search"
+                    class="bb-search-input"
+                    type="search"
+                    name="menu"
+                    placeholder="메뉴를 검색하세요"
+                    aria-label="메뉴 검색"
             />
-            <button class="btn btn-outline-success" type="submit">검색</button>
+            <button class="bb-search-btn" type="submit" aria-label="검색">
+                <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
         </form>
 
-
-        <!-- 채팅하기/로그아웃 버튼 -->
-        <div class="d-flex me-3">
-            <a th:href="@{/chat}" class="btn chat-btn-outline-dark">채팅하기</a>
-        </div>
-
-        <div class="d-flex me-3">
-            <a th:href="@{/}" class="btn logout-btn-outline-dark">로그아웃</a>
+        <!-- 채팅 / 로그아웃 -->
+        <div class="d-flex align-items-center gap-2">
+            <a th:href="@{/chat}" class="bb-btn bb-btn-chat">
+                <i class="fa-regular fa-comment-dots"></i> 채팅
+            </a>
+            <form th:action="@{/api/bosses/logout}" method="post" id="logoutForm">
+                <button type="submit" class="bb-btn bb-btn-logout">
+                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                </button>
+            </form>
         </div>
     </div>
+
+    <script>
+        // 로그아웃 AJAX
+        document.getElementById("logoutForm")?.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch(e.target.action, { method: "POST" });
+            if (res.ok) window.location.href = "/";
+        });
+    </script>
 </header>
+

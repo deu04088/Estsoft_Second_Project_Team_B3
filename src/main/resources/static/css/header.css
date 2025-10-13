@@ -1,50 +1,166 @@
-/* 헤더 공통 CSS */
+/*!* 헤더 공통 CSS *!*/
 
-/* 헤더 로고 이미지 */
-.header-logo {
-    height: 40px;
+/*!* 헤더 로고 이미지 *!*/
+/*.header-logo {*/
+/*    height: 40px;*/
+/*}*/
+
+/*!* 헤더 로그인 버튼 *!*/
+/*.login-btn-outline-dark {*/
+/*    border-radius: 6px;*/
+/*    border-width: 1px;*/
+/*    padding: 6px 20px;*/
+/*    font-size: 0.9rem;*/
+/*    border-color: #dadbe1;*/
+/*}*/
+
+/*!* 헤더 로그아웃 버튼 *!*/
+/*.logout-btn-outline-dark {*/
+/*    border-radius: 6px;*/
+/*    border-width: 1px;*/
+/*    padding: 6px 20px;*/
+/*    font-size: 0.9rem;*/
+/*    color: #dadbe1;*/
+/*    border-color: #dadbe1;*/
+/*}*/
+
+/*!* 헤더 채팅하기 버튼 *!*/
+/*.chat-btn-outline-dark {*/
+/*    border-radius: 6px;*/
+/*    border-width: 1px;*/
+/*    padding: 6px 20px;*/
+/*    font-size: 0.9rem;*/
+/*    color: #2f9eab;*/
+/*    border-color: #2f9eab;*/
+/*}*/
+
+/*!* 검색창 *!*/
+/*.search-box {*/
+/*    width: 270px;*/
+/*    border-radius: 8px;*/
+/*    background-color: #f2f3f6;*/
+/*    border: none;*/
+/*}*/
+
+/*!* 내비 메뉴 *!*/
+/*.nav-link {*/
+/*    color: #555;*/
+/*    font-weight: 500;*/
+/*    padding: 8px 16px;*/
+/*}*/
+
+/* ===== 로그인 후 헤더 공통 ===== */
+.bb-logined-header {
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,.06);
+    min-height: 64px;
+    z-index: 1000;
 }
 
-/* 헤더 로그인 버튼 */
-.login-btn-outline-dark {
-    border-radius: 6px;
-    border-width: 1px;
-    padding: 6px 20px;
-    font-size: 0.9rem;
-    border-color: #dadbe1;
+.bb-header-logo { height: 36px; }
+.bb-header-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #373737;
 }
 
-/* 헤더 로그아웃 버튼 */
-.logout-btn-outline-dark {
-    border-radius: 6px;
-    border-width: 1px;
-    padding: 6px 20px;
-    font-size: 0.9rem;
-    color: #dadbe1;
-    border-color: #dadbe1;
+/* ===== 탭 내비게이션 (왼쪽 정렬) ===== */
+.bb-nav-tabs .nav-link {
+    position: relative;
+    color: #373737;
+    font-weight: 600;
+    padding: 8px 12px;
+    margin: 0 2px;
+    transition: color .2s ease;
+}
+.bb-nav-tabs .nav-link:hover { color: #2f9eab; }
+
+/* 하단 바 애니메이션 */
+.bb-nav-tabs .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 12px;
+    right: 12px;
+    bottom: 0;
+    height: 2px;
+    background: #2f9eab;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .2s ease;
+}
+.bb-nav-tabs .nav-link:hover::after,
+.bb-nav-tabs .nav-link.active::after {
+    transform: scaleX(1);
 }
 
-/* 헤더 채팅하기 버튼 */
-.chat-btn-outline-dark {
-    border-radius: 6px;
-    border-width: 1px;
-    padding: 6px 20px;
-    font-size: 0.9rem;
-    color: #2f9eab;
-    border-color: #2f9eab;
+/* ===== 검색창 (내부 버튼) ===== */
+.bb-search {
+    align-items: center;
+    background: #f2f3f6;
+    border-radius: 24px;
+    padding: 4px 8px 4px 14px;
+    margin: 0 12px;
 }
-
-/* 검색창 */
-.search-box {
-    width: 270px;
-    border-radius: 8px;
-    background-color: #f2f3f6;
+.bb-search-input {
     border: none;
+    background: transparent;
+    outline: none;
+    width: 220px;       /* 필요 시 조절 */
+    padding: 6px 8px;
+    font-size: .95rem;
+    color: #373737;
+}
+.bb-search-input::placeholder { color: #9aa0a6; }
+.bb-search-btn {
+    border: none;
+    background: #e7eef2;
+    border-radius: 18px;
+    padding: 6px 10px;
+    margin-left: 6px;
+    cursor: pointer;
+    transition: transform .15s ease, box-shadow .2s ease, background .2s ease;
+    color: #2f9eab;
+}
+.bb-search-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(47,158,171,.25);
+    background: #deebf2;
 }
 
-/* 내비 메뉴 */
-.nav-link {
-    color: #555;
-    font-weight: 500;
-    padding: 8px 16px;
+/* ===== 액션 버튼 (채팅/로그아웃) ===== */
+.bb-btn {
+    border: none;
+    border-radius: 28px;
+    padding: 6px 16px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.bb-btn:hover {
+    transform: translateY(-2px);
+}
+
+.bb-btn-chat {
+    background: linear-gradient(135deg, #2f9eab, #238f9b);
+    box-shadow: 0 3px 10px rgba(47,158,171,.25);
+}
+.bb-btn-chat:hover { box-shadow: 0 6px 14px rgba(47,158,171,.3); }
+
+.bb-btn-logout {
+    background: linear-gradient(135deg, #373737, #29201f);
+    box-shadow: 0 3px 10px rgba(0,0,0,.18);
+}
+.bb-btn-logout:hover { box-shadow: 0 6px 14px rgba(0,0,0,.22); }
+
+/* ===== 반응형 ===== */
+@media (max-width: 991.98px) {
+    .bb-search-input { width: 160px; }
+}
+@media (max-width: 767.98px) {
+    .bb-search { display: none; } /* 모바일에선 공간 확보 (필요시 드로어 검색으로 확장) */
 }
