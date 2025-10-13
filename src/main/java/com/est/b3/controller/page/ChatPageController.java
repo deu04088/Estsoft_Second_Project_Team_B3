@@ -3,17 +3,19 @@ package com.est.b3.controller.page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
+@RequestMapping("/chat")
 public class ChatPageController {
 
-    // 채팅 페이지[단순 연결]
-    @GetMapping("/chat")
-    public String chat(Model model) {
+    @GetMapping("/{chatRoomId}")
+    public String chat(Model model, @PathVariable Long chatRoomId) {
         // 세션 user 더미
         Map<String, Object> dummyUser = new HashMap<>();
         dummyUser.put("username", "testUser");
