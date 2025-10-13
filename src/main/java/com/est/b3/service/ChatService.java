@@ -16,6 +16,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+// 채팅 서비스 로직
+// 1. 채팅방 리스트 조회
+// 2. 채팅방 내 모든 메시지 읽기 처리
+// 3. 특정 메시지 읽기 처리
+// 4. stomp 메시지 저장
+// 5. 채팅 상대 정보 겟
 @Service
 @RequiredArgsConstructor
 public class ChatService {
@@ -78,7 +84,6 @@ public class ChatService {
             }
         }
 
-        // DTO로 반환
         // 마지막 메시지 내용
         Optional<Message> lastMessageOpt =
                 messageRepository.findTop1ByChatRoom_IdOrderByCreatedAtDesc(room.getId());
@@ -125,7 +130,7 @@ public class ChatService {
         ChatRoom room = chatRoomRepository.findById(chatRoomId)
                 .orElseThrow(() -> new IllegalArgumentException("Chat room not found: " + chatRoomId));
 
-        //todto에 넣어서 반환, 상대방 정보만 채움
+        // todto에 넣어서 반환, 상대방 정보만 채움
         return toDto(room, bossId);
     }
 
@@ -143,7 +148,25 @@ public class ChatService {
                 .createdAt(LocalDateTime.now())
                 .build();
 
-        // 3. 저장 및 DB ID, createdAt이 채워진 엔티티 리턴
+        // 저장 및 DB ID, createdAt이 채워진 엔티티 리턴
         return messageRepository.save(message);
+    }
+
+    // 채팅방의 메시지를 받는 사람의 id를 찾음
+    public Long getPartnerIdByChatRoomAndSender(Long chatRoomId, Long senderId) {
+        ChatRoom room = chatRoomRepository.findById(chatRoomId)
+                .orElseThrow(() -> new IllegalArgumentException("챗룸 찾지 못함: " + chatRoomId));
+
+        // 채팅방의 두 사용자를 비교해 메시지를 받는 사용자를 찾음
+        Long user1Id = room.getUser().getId();
+        Long user2Id = room.getUser2().getId();
+
+        if (user1Id.equals(senderId)) {
+            return user2Id;
+        } else if (user2Id.equals(senderId)) {
+            return user1Id;
+        } else {
+            throw new IllegalStateException("Sender ID " + senderId + " chatRoom ID " + chatRoomId);
+        }
     }
 }

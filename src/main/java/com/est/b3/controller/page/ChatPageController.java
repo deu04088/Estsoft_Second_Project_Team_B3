@@ -1,7 +1,5 @@
 package com.est.b3.controller.page;
 
-import com.est.b3.controller.api.ChatController;
-import com.est.b3.domain.Boss;
 import com.est.b3.dto.ChatRoomDto;
 import com.est.b3.dto.MessageDto;
 import com.est.b3.dto.SessionUserDTO;
@@ -14,13 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+// 채팅 페이지 이동 컨트롤러
 @Controller
 @RequestMapping("/chat")
 @RequiredArgsConstructor
