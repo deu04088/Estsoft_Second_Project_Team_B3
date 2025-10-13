@@ -17,6 +17,7 @@ public class ChatRoomDto {
     private String partnerNickName; // 상대방 닉네임
     private String partnerProfileUrl;
     private LocalDateTime createdAt;
-    private String lastMessage;
-    private int unreadCount;
+    private String lastMessage; // 마지막 메시지, 전송 시간
+    private LocalDateTime lastMessageCreatedAt;
+    private int unreadCount; // 안읽은 메시지 수
 }

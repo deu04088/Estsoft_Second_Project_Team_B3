@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,15 +45,26 @@ public class ChatPageController {
         Long bossId = sessionUser.getId();
         log.info("[SESSION] boss id : " + bossId);
 
-        // 채팅방 리스트 가져오기
+        // 채팅방 리스트 가져오기, 최근 메시지 시간 기준으로 내림차순 정렬
         // 채팅방, 사용자 id 전달
         List<ChatRoomDto> chatRooms = chatService.getChatRoomsByBossId(bossId)
                 .stream()
                 .map(room -> chatService.toDto(room, bossId))
                 .toList();
 
-        model.addAttribute("chatRooms", chatRooms);
+        List<ChatRoomDto> sortedChatRooms = chatRooms.stream()
+                .sorted(Comparator.comparing(ChatRoomDto::getLastMessageCreatedAt,
+                        Comparator.nullsLast(Comparator.reverseOrder())))
+                .toList();
+
+        // 안읽은 메시지 수
+        int totalUnreadCount = sortedChatRooms.stream()
+                .mapToInt(ChatRoomDto::getUnreadCount)
+                .sum();
+
+        model.addAttribute("chatRooms", sortedChatRooms); // 정렬된 리스트 사용
         model.addAttribute("user", sessionUser);
+        model.addAttribute("totalUnreadCount", totalUnreadCount);
 
         return "chat";
     }
@@ -81,12 +93,20 @@ public class ChatPageController {
                 .map(room -> chatService.toDto(room, bossId))
                 .toList();
 
-        for (ChatRoomDto chatRoom : chatRooms) {
-            log.info("ChatRoomDto : " + chatRoom.toString());
-        }
+        // 내림차순 정렬
+        List<ChatRoomDto> sortedChatRooms = chatRooms.stream()
+                .sorted(Comparator.comparing(ChatRoomDto::getLastMessageCreatedAt,
+                        Comparator.nullsLast(Comparator.reverseOrder())))
+                .toList();
 
-        model.addAttribute("chatRooms", chatRooms);
+        // 안읽은 메시지 수
+        int totalUnreadCount = sortedChatRooms.stream()
+                .mapToInt(ChatRoomDto::getUnreadCount)
+                .sum();
+
+        model.addAttribute("chatRooms", sortedChatRooms);
         model.addAttribute("user", sessionUser);
+        model.addAttribute("totalUnreadCount", totalUnreadCount);
 
         // 현재 채팅방 정보 가져오기
         ChatRoomDto partnerInfo = chatService.getChatRoomDetail(chatRoomId, bossId);
