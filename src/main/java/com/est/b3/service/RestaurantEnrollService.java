@@ -38,6 +38,7 @@ public class RestaurantEnrollService {
                                      Photo photo) {
 
         Restaurant restaurantInfo = Restaurant.builder()
+                //.photoUrl(photoUrl)             // Restaurant.java에 해당 Column 추가 필요
                 .name(name)
                 .menuName(menuName)
                 .price(price)
@@ -47,20 +48,7 @@ public class RestaurantEnrollService {
                 .photo(photo)
                 .build();
 
-        return restaurantRepository.save(restaurantInfo);
-    }
-
-//   public Restaurant saveRestaurant(String name, String menuName, Integer price, String description, String address, String photoUrl) {
-//        Restaurant restaurantInfo = Restaurant.builder()
-//                //.photoUrl(photoUrl)             // Restaurant.java에 해당 Column 추가 필요
-//                .name(name)
-//                .menuName(menuName)
-//                .price(price)
-//                .description(description)
-//                .address(address)
-//                .build();
-//
-//        // 로컬 저장 테스트용
+        // 로컬 저장 테스트용
 //        ObjectMapper mapper = new ObjectMapper();
 //        mapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // null 값 제거
 //        mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -105,37 +93,37 @@ public class RestaurantEnrollService {
 //        } catch (IOException e) {
 //            throw new RuntimeException("레스토랑 정보를 파일에 저장하는 중 오류 발생", e);
 //        }
-//
-//        return restaurantRepository.save(restaurantInfo);
-//    }
 
-//    public String savePhoto(MultipartFile photo) throws IOException {
-//        // 사진 검사
-//        if (photo == null || photo.isEmpty()) return null;
-//
-//        // 경로 검사
+        return restaurantRepository.save(restaurantInfo);
+    }
+
+    public String savePhoto(MultipartFile photo) throws IOException {
+        // 사진 검사
+        if (photo == null || photo.isEmpty()) return null;
+
+        // 경로 검사
 //        File dir = new File(UPLOAD_DIR);
 //        if (!dir.exists()) dir.mkdirs();
 //
-//        // 파일 이름 추출, 저장
-//        String filename = photo.getOriginalFilename();
+//        // 파일 이름 추출
+        String filename = photo.getOriginalFilename();
+//        // 파일 저장
 //        File dest = new File(dir, filename);
 //        photo.transferTo(dest);
-//
-//        //photo 객체 생성
-//        Photo photoEntity = Photo.builder()
-//                .s3Key(filename)            // 로컬 파일명 또는 S3 key
-//                .s3Url("https://s3.aws.com/" + filename) // 추후 실제 URL 추출 수정 필요
-//                .uploadDate(LocalDateTime.now())
-//                .build();
-//
-//        // 객체 저장... 근데 지금 굳이....?
-//        photoRepository.save(photoEntity);
-//
-//        // 로컬 URL 생성 (나중에 WebMvcConfigurer로 매핑 필요)
-//        return photoEntity.getS3Url();
-//    }
 
+        //photo 객체 생성(url만 저장)
+        Photo photoEntity = Photo.builder()
+                .s3Key(filename)            // 로컬 파일명 또는 S3 key
+                .s3Url("https://s3.aws.com/" + filename) // 추후 실제 URL 추출 수정 필요
+                .uploadDate(LocalDateTime.now())
+                .build();
+
+        // 객체 저장... 근데 지금 굳이....?
+        photoRepository.save(photoEntity);
+
+        // 로컬 URL 생성 (나중에 WebMvcConfigurer로 매핑 필요)
+        return photoEntity.getS3Url();
+    }
 
 }
 
