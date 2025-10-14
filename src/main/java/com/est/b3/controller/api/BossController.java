@@ -5,6 +5,7 @@ import com.est.b3.dto.api.ApiResponse;
 import com.est.b3.exception.CustomException;
 import com.est.b3.exception.ErrorCode;
 import com.est.b3.service.BossService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,11 @@ public class BossController {
      * 회원가입
      */
     @PostMapping("/signup")
-    public ResponseEntity<ApiResponse<SignupResponse>> signup(@RequestBody SignupRequest request) {
-        SignupResponse response = bossService.signup(request);
+    public ResponseEntity<ApiResponse<SignupResponse>> signup(
+            @RequestBody SignupRequest request,
+            HttpServletRequest httpRequest
+    ) {
+        SignupResponse response = bossService.signup(request, httpRequest);
 
         return ResponseEntity
                 .status(HttpStatus.CREATED)

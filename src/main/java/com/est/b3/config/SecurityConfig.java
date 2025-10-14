@@ -20,7 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService; // ✅ OAuth2UserService 주입
+    private final CustomOAuth2UserService customOAuth2UserService; // OAuth2UserService 주입
     private final Dotenv dotenv = Dotenv.load();
 
     @Bean
