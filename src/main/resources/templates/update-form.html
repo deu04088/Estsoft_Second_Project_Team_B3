@@ -108,7 +108,7 @@
                             name="description"
                             class="form-control"
                             rows="3"
-
+                            th:text="${restaurant.getDescription()}"
                         ></textarea>
                     </div>
 
@@ -120,7 +120,7 @@
                             id="address"
                             name="address"
                             class="form-control"
-                            th:value="${restaurant.address}"
+                            th:value="${restaurant.getAddress()}"
                         />
                     </div>
 
