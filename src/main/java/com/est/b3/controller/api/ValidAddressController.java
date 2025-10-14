@@ -73,7 +73,8 @@ public class ValidAddressController {
         boss.getSiDo(),
         boss.getGuGun(),
         boss.getDongEupMyeon(),
-        boss.getAddress()
+        boss.getAddress(),
+        boss.getRole()
     );
     session.setAttribute("loginBoss", updatedUser);
 
