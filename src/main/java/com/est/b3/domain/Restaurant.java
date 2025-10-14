@@ -68,4 +68,20 @@ public class Restaurant {
 
   @Column(name = "view_count")
   private Integer viewCount = 0;
+
+    public void update(
+        String name,
+        String menuName,
+        Integer price,
+        String description,
+        String address,
+        Photo photo
+    ) {
+        this.name = name;
+        this.menuName = menuName;
+        this.price = price;
+        this.description = description;
+        this.address = address;
+        this.photo = photo;
+    }
 }

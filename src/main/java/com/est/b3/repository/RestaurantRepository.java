@@ -71,4 +71,8 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
 
   // 이미지 검색을 위한 bossId로 검색
   Optional<Restaurant> findByBossId(Long bossId);
+
+
+  // 주소로 검색
+//    Optional<Restaurant> findByAddress(String address);
 }
