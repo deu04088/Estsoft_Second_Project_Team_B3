@@ -44,22 +44,24 @@ export function getCurrentDongEupMyeon(lat, lng, callback) {
   const geocoder = new google.maps.Geocoder();
   geocoder.geocode({ location: { lat, lng } }, (results, status) => {
     if (status === "OK" && results[0]) {
-      const components = results[0].address_components;
-
-      const level1 = components.find(c => c.types.includes("sublocality_level_1"));
-      const level2 = components.find(c => c.types.includes("sublocality_level_2"));
-
       let current = "";
 
-      // level_1에 동/읍/면이 있으면 우선 사용
-      if (level1 && /(동|읍|면)$/.test(level1.long_name)) {
-        current = level1.long_name;
-      } else if (level2 && /(동|읍|면)$/.test(level2.long_name)) {
-        // level_1에 없으면 level_2 사용
-        current = level2.long_name;
-      }
+      for (let i = 0; i < Math.min(results.length,2); i++) {
+        const components = results[i].address_components || [];
+        const level1 = components.find(c => c.types.includes("sublocality_level_1"));
+        const level2 = components.find(c => c.types.includes("sublocality_level_2"));
 
-      callback(current);
+        // level_1에 동/읍/면이 있으면 우선 사용
+        if (level1 && /(동|읍|면)$/.test(level1.long_name)) {
+          current = level1.long_name;
+          break;
+        } else if (level2 && /(동|읍|면)$/.test(level2.long_name)) {
+          // level_1에 없으면 level_2 사용
+          current = level2.long_name;
+          break;
+        }
+      }
+      callback(current || null);
     } else {
       callback(null);
     }
