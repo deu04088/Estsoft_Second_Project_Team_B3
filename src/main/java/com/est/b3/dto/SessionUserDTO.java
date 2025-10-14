@@ -16,4 +16,16 @@ public class SessionUserDTO {
     private String siDo;
     private String guGun;
     private String dongEupMyeon;
+    private String role;
+
+    @Override
+    public String toString() {
+        return "SessionUserDTO{" +
+                "userId=" + id +
+                ", username='" + userName + '\'' +
+                ", nickname='" + nickName + '\'' +
+                ", address='" + address + '\'' +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

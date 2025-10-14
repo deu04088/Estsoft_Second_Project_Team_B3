@@ -22,6 +22,14 @@ public enum ErrorCode {
   // 세션
   SESSION_NOT_FOUND(HttpStatus.UNAUTHORIZED, "로그인된 세션이 없습니다."),
 
+  // 어드민
+  UNAUTHORIZED(HttpStatus.FORBIDDEN, "권한이 없습니다."),
+  ADMIN_SESSION_EXPIRED(HttpStatus.UNAUTHORIZED, "관리자 인증 세션이 만료되었습니다. 다시 인증해주세요."),
+
+
+  // 게시물
+  POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다."),
+
   INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 오류가 발생했습니다."),
   NULL_POINTER(HttpStatus.BAD_REQUEST, "값을 입력해주세요"),
   ILLEGAL_ARGUMENT(HttpStatus.BAD_REQUEST, "잘못된 인자가 전달되었습니다.");

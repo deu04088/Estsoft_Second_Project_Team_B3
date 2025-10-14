@@ -5,6 +5,7 @@ import com.est.b3.dto.*;
 import com.est.b3.exception.CustomException;
 import com.est.b3.exception.ErrorCode;
 import com.est.b3.repository.BossRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class BossService {
     /**
      * 회원가입
      */
-    public SignupResponse signup(SignupRequest request) {
+    public SignupResponse signup(SignupRequest request, HttpServletRequest httpRequest) {
         // 아이디 중복 검사
         if (bossRepository.existsByUserName(request.getUserName())) {
             throw new CustomException(ErrorCode.USERNAME_DUPLICATE); // 필요하면 ErrorCode.USERNAME_DUPLICATE 추가
@@ -35,6 +36,10 @@ public class BossService {
         // 비밀번호 암호화
         String encodedPassword = passwordEncoder.encode(request.getPassword());
 
+        // User-Agent 추출
+        String rawAgent  = httpRequest.getHeader("User-Agent");
+        String userAgent = simplifyUserAgent(rawAgent);
+
         // Boss 엔티티 생성 및 저장
         Boss boss = Boss.builder()
                 .userName(request.getUserName())
@@ -42,6 +47,7 @@ public class BossService {
                 .password(encodedPassword)
                 .role("ROLE_USER")
                 .state(1) // 기본 활성 상태
+                .userAgent(userAgent)
                 .build();
 
         Boss saved = bossRepository.save(boss);
@@ -77,7 +83,8 @@ public class BossService {
             boss.getAddress(),
             boss.getSiDo(),
             boss.getGuGun(),
-            boss.getDongEupMyeon()
+            boss.getDongEupMyeon(),
+            boss.getRole()
         );
 
         session.setAttribute("loginBoss", sessionUser);
@@ -109,5 +116,20 @@ public class BossService {
          [나중 Security 적용 시 이 부분을 교체]
          SecurityContextHolder.clearContext();
         */
+    }
+
+    private String simplifyUserAgent(String ua) {
+        if (ua == null) return "-";
+
+        ua = ua.toLowerCase();
+
+        if (ua.contains("chrome")) return "Chrome on Windows";
+        if (ua.contains("safari") && !ua.contains("chrome")) return "Safari on macOS";
+        if (ua.contains("firefox")) return "Firefox";
+        if (ua.contains("edg")) return "Edge";
+        if (ua.contains("iphone")) return "Safari on iPhone";
+        if (ua.contains("android")) return "Chrome on Android";
+
+        return "Unknown";
     }
 }

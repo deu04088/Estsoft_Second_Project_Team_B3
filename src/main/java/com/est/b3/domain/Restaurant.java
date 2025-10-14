@@ -69,7 +69,7 @@ public class Restaurant {
   @Column(name = "view_count")
   private Integer viewCount = 0;
 
-    public void update(
+  public void update(
         String name,
         String menuName,
         Integer price,
@@ -90,4 +90,9 @@ public class Restaurant {
         this.guGun = guGun;
         this.dongEupMyeon = dongEupMyeon;
     }
+  }
+
+  public void toggleState() {
+    this.state = (this.state == 1) ? 0 : 1;
+  }
 }
