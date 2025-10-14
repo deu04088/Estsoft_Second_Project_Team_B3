@@ -19,7 +19,9 @@ public class AdminPostResponse {
         this.id = restaurant.getId();
         this.restaurantName = restaurant.getName();
         this.menuName = restaurant.getMenuName();
-        this.bossNickName = restaurant.getBoss().getNickName();
+        this.bossNickName = (restaurant.getBoss() != null)
+                ? restaurant.getBoss().getNickName()
+                : "(알 수 없음)";
         this.address = restaurant.getAddress();
         this.createdAt = restaurant.getCreatedAt();
         this.state = restaurant.getState();

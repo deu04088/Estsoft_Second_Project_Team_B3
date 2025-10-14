@@ -52,18 +52,18 @@ public class SecurityConfig {
                 )
 
                 // 4. OAuth2 로그인 설정
-//                .oauth2Login(oauth2 -> oauth2
-//                        .loginPage("/login") // 사용자 정의 로그인 페이지
-//                        .defaultSuccessUrl("/oauth2/success", true) // 로그인 성공 시 이동
-//                        .failureUrl("/login?error=true") // 로그인 실패 시 이동
-//                        .clientRegistrationRepository(
-//                                new InMemoryClientRegistrationRepository(
-//                                        CustomGoogleClientRegistration.build(clientId, clientSecret)
-//                                )
-//                        )
-//                        // 구글 사용자 정보 처리 서비스 연결
-//                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-//                )
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login") // 사용자 정의 로그인 페이지
+                        .defaultSuccessUrl("/oauth2/success", true) // 로그인 성공 시 이동
+                        .failureUrl("/login?error=true") // 로그인 실패 시 이동
+                        .clientRegistrationRepository(
+                                new InMemoryClientRegistrationRepository(
+                                        CustomGoogleClientRegistration.build(clientId, clientSecret)
+                                )
+                        )
+                        // 구글 사용자 정보 처리 서비스 연결
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                )
 
                 // 5. 기본 로그인(FormLogin) / HTTP Basic 비활성화
                 .formLogin(AbstractHttpConfigurer::disable)

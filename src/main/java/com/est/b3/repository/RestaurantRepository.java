@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
@@ -67,6 +68,9 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
       @Param("dongEupMyeon") String dongEupMyeon,
       @Param("menu") String menu,
       Pageable pageable);
+
+  @Query("SELECT r FROM Restaurant r JOIN FETCH r.boss")
+  List<Restaurant> findAllWithBoss();
 
 
   // 이미지 검색을 위한 bossId로 검색

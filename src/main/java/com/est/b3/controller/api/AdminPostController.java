@@ -24,7 +24,7 @@ public class AdminPostController {
      */
     @GetMapping
     public ResponseEntity<ApiResponse<List<AdminPostResponse>>> getAllPosts() {
-        List<Restaurant> restaurants = restaurantRepository.findAll();
+        List<Restaurant> restaurants = restaurantRepository.findAllWithBoss();
 
         List<AdminPostResponse> responses = restaurants.stream()
                 .map(AdminPostResponse::new)
