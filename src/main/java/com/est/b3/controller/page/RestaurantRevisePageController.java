@@ -1,5 +1,6 @@
 package com.est.b3.controller.page;
 
+import com.est.b3.dto.RestaurantInfoDto;
 import com.est.b3.dto.RestaurantResponseDto;
 import com.est.b3.service.RestaurantReviseService;
 import com.est.b3.service.RestaurantService;
@@ -18,7 +19,7 @@ public class RestaurantRevisePageController {
 
     @GetMapping("/update-form/{id}")
     public String updateForm(@PathVariable Long id, Model model) {
-        RestaurantResponseDto restaurant = restaurantReviseService.getRestaurantById(id);
+        RestaurantInfoDto restaurant = restaurantReviseService.getRestaurantById(id);
         model.addAttribute("restaurant", restaurant);
 
         return "update-form";

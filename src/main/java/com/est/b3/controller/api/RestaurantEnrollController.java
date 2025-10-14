@@ -1,8 +1,10 @@
 package com.est.b3.controller.api;
 
 import com.est.b3.domain.Photo;
+import com.est.b3.dto.SessionUserDTO;
 import com.est.b3.service.RestaurantEnrollService;
 import com.est.b3.service.RestaurantFileService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,8 @@ public class RestaurantEnrollController {
                                      @RequestParam(value="menuName") String menuName,
                                      @RequestParam(value="price") Integer price,
                                      @RequestParam(value="description") String description,
-                                     @RequestParam(value="address") String address) throws IOException {
+                                     @RequestParam(value="address") String address,
+                                     HttpSession session) throws IOException {
 //
         // 사진 파일 저장 후 URL 생성
         //String photoUrl = restaurantEnrollService.savePhoto(photo);
@@ -34,11 +37,11 @@ public class RestaurantEnrollController {
             photoEntity = restaurantFileService.savePhotoLocal(photo);
         }
 
-//        Boss bossId = restaurantEnrollService.saveBossInfo();
+        SessionUserDTO loginBoss = (SessionUserDTO) session.getAttribute("loginBoss");
+        Long bossId = loginBoss.getId();
 
-
-
-        restaurantEnrollService.saveRestaurant(name, menuName, price, description, address, photoEntity); // bossId);
+//        System.out.println(loginBoss.getId());
+        restaurantEnrollService.saveRestaurant(name, menuName, price, description, address, photoEntity, bossId);
 
         return "redirect:/restaurants";
     }

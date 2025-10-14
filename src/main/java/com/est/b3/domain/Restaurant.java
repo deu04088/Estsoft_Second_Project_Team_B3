@@ -75,7 +75,10 @@ public class Restaurant {
         Integer price,
         String description,
         String address,
-        Photo photo
+        Photo photo,
+        String siDo,
+        String guGun,
+        String dongEupMyeon
     ) {
         this.name = name;
         this.menuName = menuName;
@@ -83,5 +86,8 @@ public class Restaurant {
         this.description = description;
         this.address = address;
         this.photo = photo;
+        this.siDo = siDo;
+        this.guGun = guGun;
+        this.dongEupMyeon = dongEupMyeon;
     }
 }

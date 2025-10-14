@@ -1,8 +1,10 @@
 package com.est.b3.controller.page;
 
 import com.est.b3.domain.Boss;
+import com.est.b3.dto.BossDto;
 import com.est.b3.dto.RestaurantResponseDto;
 import com.est.b3.dto.SessionUserDTO;
+import com.est.b3.service.RestaurantEnrollService;
 import com.est.b3.service.RestaurantService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import java.util.Map;
 public class RestaurantPageController {
 
     private final RestaurantService restaurantService;
+    private final RestaurantEnrollService restaurantEnrollService;
 
     // 공통으로 더미 식당 생성하는 헬퍼 메서드 [추후 삭제]
     private Map<String, Object> createRestaurant(Long id, String name, String menuName,
@@ -87,7 +90,7 @@ public class RestaurantPageController {
 
     // 식당 등록 페이지
     @GetMapping("/restaurant-form")
-    public String form(Model model) {
+    public String form(Model model, HttpSession session) {
 
         // 임시 유저 데이터 (추후 로그인 사용자 세션 연동)
         Map<String, Object> user = new HashMap<>();
@@ -96,6 +99,10 @@ public class RestaurantPageController {
         user.put("address", "서울 강서구 화곡동");
 
         model.addAttribute("user", user);
+        SessionUserDTO loginBoss = (SessionUserDTO) session.getAttribute("loginBoss");
+//        Long bossId = loginBoss.getId();
+        BossDto boss = restaurantEnrollService.getBossById(loginBoss.getId());
+        model.addAttribute("boss", boss);
 
         return "restaurant-form"; // templates/restaurant-form.html
     }
