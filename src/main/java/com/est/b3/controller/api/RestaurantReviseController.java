@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Controller
@@ -32,7 +33,12 @@ public class RestaurantReviseController {
         Photo photoEntity = null;
         photoEntity = restaurantFileService.savePhotoLocal(photo);
 
-        restaurantReviseService.updateRestaurant(id, name, menuName, price, description, address, photoEntity);
+        Map<String, String> add = restaurantReviseService.separateAddress(address);
+        String siDo = add.get("siDo");
+        String guGun = add.get("guGun");
+        String dongEupMyeon = add.get("dongeupMyeon");
+
+        restaurantReviseService.updateRestaurant(id, name, menuName, price, description, address, photoEntity, siDo, guGun, dongEupMyeon);
 
         return "redirect:/restaurant-detail/" + id;
     }
