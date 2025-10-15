@@ -1,5 +1,6 @@
 package com.est.b3.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -17,51 +18,51 @@ public class Boss {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동 증가
     private Long id;
 
-    @Column(name = "user_name", length = 100, nullable = false, unique = true)
     private String userName;   // 로그인 ID
 
-    @Column(name = "nick_name", length = 30, nullable = false, unique = true)
     private String nickName;   // 닉네임
 
-    @Column(name = "password", length = 60, nullable = false)
     private String password;   // 암호화된 비밀번호
 
-    @Column(name = "address", length = 50)
     private String address;    // 동네 인증 주소 전체주소
 
-    @Column(name = "siDo", length = 20)
     private String siDo;    // 동네 인증 주소 시도
 
-    @Column(name = "guGun", length = 20)
     private String guGun;    // 동네 인증 주소 구군
 
-    @Column(name = "dongEupMyeon", length = 20)
     private String dongEupMyeon;    // 동네 인증 주소 동읍면
 
-    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "role", length = 10, nullable = false)
     private String role;   // ROLE_USER, ROLE_ADMIN
 
-    @Column(name = "state", nullable = false)
     private Integer state; // 1: 활성, 0: 탈퇴 등
 
+    private String userAgent;  // 가입 당시 브라우저/기기 정보
+
     @OneToMany(mappedBy = "boss", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Like> likes = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
+
         if (this.role == null) this.role = "ROLE_USER";
         if (this.state == null) this.state = 1;
     }
 
-  // 도메인 메서드: 주소 업데이트
+    // 도메인 메서드: 주소 업데이트
     public void updateAddress(String fullAddress, String siDo, String guGun, String dongEupMyeon) {
       this.address = fullAddress;
       this.siDo = siDo;
       this.guGun = guGun;
       this.dongEupMyeon = dongEupMyeon;
-  }
+    }
+
+    // [도메인 메서드] 주소 변경
+    public void toggleState() {
+        this.state = (this.state == 1) ? 0 : 1;
+    }
+
 }

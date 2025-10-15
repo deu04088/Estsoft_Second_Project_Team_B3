@@ -3,23 +3,23 @@
 
 
 -- users
-INSERT INTO bosses (user_name, nick_name, password, address, created_at, role, state)
+INSERT INTO bosses (user_name, nick_name, password, address, si_do, gu_gun, dong_eup_myeon, created_at, role, state)
 VALUES
-    ('test001', 'example001', '$2b$10$TdkRWhKSkAhHRXabE.Ry9ulj/ROINqMFQDYHXVO467hTruipoSkCa', '서울', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1),
-    ('test002', 'example002', '$2b$10$KdniFkA6Bcp39p8OGIdoHuPyCUyLKBTHuaVK4gwGy9xSY2ukJkl5i', '부산', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test003', 'example003', '$2b$10$r8TNFYz102zKrC9/8RVLj.a4HqYHhWpju4Fmy1uGFQZVztc6uh8AK', '인천', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
-    ('test004', 'example004', '$2b$10$Jm6DDoz8nt8yjGI8L1jI4./mifSCusZu7cy3hu/Xl/AS6peO22l6y', '대구', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test005', 'example005', '$2b$10$C5ce9ckep9hhV7N3gU/pJ.ZQimnucR8AQc.PVcKUjjWBsWml400GO', '대전', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
-    ('test006', 'example006', '$2b$10$YvToTedet9J2ehHkm3SYuufSwVR4ZItBi5m37edISFMCeLxdBeXZq', '광주', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test007', 'example007', '$2b$10$8IiC36cLgDWurWL.UPkb6.bTw.qkY2R0x.29q6i4KF4Sic2nRA30C', '울산', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
-    ('test008', 'example008', '$2b$10$E5etMi7Eft3CPUnideXP5OKBBzI.OqBTBdOoJBykM/0lblA3PftQ6', '수원', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test009', 'example009', '$2b$10$lnYdyKLAnh56t2VKBrF5Su.fnyV1fd31HKR7KW8bSPjv4xSnieJBG', '전주', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test010', 'example010', '$2b$10$jQf5P3zqRtkdlcGc0/Y4meKUGgwh8663MEE8pC0a8LP0AW9T1Dym2', '청주', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
-    ('test011', 'example011', '$2b$10$cvBHPEsdlKlqIwXgdcm2Hez46iGSZehyWCh5pagpC.qOUXf4UXKJ6', '김해', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test012', 'example012', '$2b$10$58bNno5YfnalhJ6ficiVTekZ3ldjsiN5HpOKMiQa8fvcJQAB/XGda', '포항', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test013', 'example013', '$2b$10$cjRmbGzjS2uTyZ1OfTNzbOPVvVKTNNBBUQbXHHwEdJjfAc9uflyQ.', '창원', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
-    ('test014', 'example014', '$2b$10$a6/32ykgKdCWmFBa38MFfOCDTmr8gBnqxqdlq3JA5vWoq6MyNx.aW', '안양', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
-    ('test015', 'example015', '$2b$10$983JGu2BUW.XKnxPtJmBeOM7QgYtfYLZQryosgRuq8NdxEP.HXyCW', '의정부', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1);
+    ('test001', 'example001', '$2b$10$TdkRWhKSkAhHRXabE.Ry9ulj/ROINqMFQDYHXVO467hTruipoSkCa','경기도 의정부시 용현동', '경기도', '의정부시', '용현동', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1),
+    ('test002', 'example002', '$2b$10$KdniFkA6Bcp39p8OGIdoHuPyCUyLKBTHuaVK4gwGy9xSY2ukJkl5i','부산광역시 해운대구 좌동', '부산광역시', '해운대구', '좌동',  CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test003', 'example003', '$2b$10$r8TNFYz102zKrC9/8RVLj.a4HqYHhWpju4Fmy1uGFQZVztc6uh8AK','인천광역시 미추홀구 주안동', '인천광역시', '미추홀구', '주안동',  CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test004', 'example004', '$2b$10$Jm6DDoz8nt8yjGI8L1jI4./mifSCusZu7cy3hu/Xl/AS6peO22l6y','대구광역시 수성구 범어동', '대구광역시', '수성구', '범어동',  CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test005', 'example005', '$2b$10$C5ce9ckep9hhV7N3gU/pJ.ZQimnucR8AQc.PVcKUjjWBsWml400GO','대전광역시 서구 둔산동', '대전광역시', '서구', '둔산동', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test006', 'example006', '$2b$10$YvToTedet9J2ehHkm3SYuufSwVR4ZItBi5m37edISFMCeLxdBeXZq', '광주광역시 북구 운암동', '광주광역시', '북구', '운암동', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test007', 'example007', '$2b$10$8IiC36cLgDWurWL.UPkb6.bTw.qkY2R0x.29q6i4KF4Sic2nRA30C', '울산광역시 남구 삼산동', '울산광역시', '남구', '삼산동', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test008', 'example008', '$2b$10$E5etMi7Eft3CPUnideXP5OKBBzI.OqBTBdOoJBykM/0lblA3PftQ6', '경기도 수원시 영통동', '경기도', '수원시', '영통동', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test009', 'example009', '$2b$10$lnYdyKLAnh56t2VKBrF5Su.fnyV1fd31HKR7KW8bSPjv4xSnieJBG', '전라북도 전주시 덕진동', '전라북도', '전주시', '덕진동', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test010', 'example010', '$2b$10$jQf5P3zqRtkdlcGc0/Y4meKUGgwh8663MEE8pC0a8LP0AW9T1Dym2', '충청북도 청주시 상당동', '충청북도', '청주시', '상당동', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test011', 'example011', '$2b$10$cvBHPEsdlKlqIwXgdcm2Hez46iGSZehyWCh5pagpC.qOUXf4UXKJ6', '경상남도 김해시 삼계동', '경상남도', '김해시', '삼계동', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test012', 'example012', '$2b$10$58bNno5YfnalhJ6ficiVTekZ3ldjsiN5HpOKMiQa8fvcJQAB/XGda', '경상북도 포항시 북구', '경상북도', '포항시', '북구', CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test013', 'example013', '$2b$10$cjRmbGzjS2uTyZ1OfTNzbOPVvVKTNNBBUQbXHHwEdJjfAc9uflyQ.', '경상남도 창원시 성산구', '경상남도', '창원시', '성산구', CURRENT_TIMESTAMP, 'ROLE_USER', 0),
+    ('test014', 'example014', '$2b$10$a6/32ykgKdCWmFBa38MFfOCDTmr8gBnqxqdlq3JA5vWoq6MyNx.aW', '경기도 안양시 동안구', '경기도', '안양시', '동안구',CURRENT_TIMESTAMP, 'ROLE_USER', 1),
+    ('test015', 'example015', '$2b$10$983JGu2BUW.XKnxPtJmBeOM7QgYtfYLZQryosgRuq8NdxEP.HXyCW', '경기도 의정부시 가능동', '경기도', '의정부시', '가능동', CURRENT_TIMESTAMP, 'ROLE_ADMIN', 1);
 
 
 -- photo
@@ -43,23 +43,24 @@ VALUES
 
 
 -- restaurants
-INSERT INTO restaurants (name, address, menu_name, price, description, created_at, updated_at, state, boss_id, photo_id)
+INSERT INTO restaurants (name, address, si_do, gu_gun, dong_eup_myeon, menu_name, price, description, created_at, updated_at, state, boss_id, photo_id)
 VALUES
-    ('example001', '서울', '김치찌개', 8000, '김치랑 돼지고기 넣고 끓인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 1),
-    ('example002', '부산', '비빔밥', 9000, '다양한 채소와 고추장을 섞은 밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 2),
-    ('example003', '인천', '불고기', 12000, '달콤한 간장 양념의 소고기 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 3, 3),
-    ('example004', '대구', '떡볶이', 5000, '매콤한 고추장 소스의 떡 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 4, 4),
-    ('example005', '대전', '삼겹살', 13000, '구워 먹는 돼지고기', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 5, 5),
-    ('example006', '광주', '냉면', 7000, '시원한 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 6, 6),
-    ('example007', '울산', '순두부찌개', 8500, '순두부가 주재료인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 7, 7),
-    ('example008', '수원', '갈비탕', 15000, '소갈비가 들어간 맑은 국물 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 8, 8),
-    ('example009', '전주', '짜장면', 6000, '중국식 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 9, 9),
-    ('example010', '청주', '김밥', 4000, '밥과 재료를 김으로 말아 만든 음식', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 10, 10),
-    ('example011', '김해', '닭갈비', 11000, '닭고기 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 11, 11),
-    ('example012', '포항', '짬뽕', 9500, '얼큰한 중국식 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 12, 12),
-    ('example013', '창원', '된장찌개', 7500, '된장으로 끓인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 13, 13),
-    ('example014', '안양', '호떡', 3000, '한국식 길거리 팬케이크', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 14, 14),
-    ('example015', '의정부', '국밥', 8500, '국에 밥말아 먹는 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 15, 15);
+    ('example001', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '김치찌개', 8000, '김치랑 돼지고기 넣고 끓인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 1),
+    ('example002', '부산광역시 해운대구 좌동', '부산광역시', '해운대구', '좌동', '비빔밥', 9000, '다양한 채소와 고추장을 섞은 밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 2),
+    ('example003', '인천광역시 미추홀구 주안동', '인천광역시', '미추홀구', '주안동', '불고기', 12000, '달콤한 간장 양념의 소고기 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 3, 3),
+    ('example004', '대구광역시 수성구 범어동', '대구광역시', '수성구', '범어동', '떡볶이', 5000, '매콤한 고추장 소스의 떡 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 4, 4),
+    ('example005', '대전광역시 서구 둔산동', '대전광역시', '서구', '둔산동', '삼겹살', 13000, '구워 먹는 돼지고기', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 5, 5),
+    ('example006', '광주광역시 북구 운암동', '광주광역시', '북구', '운암동', '냉면', 7000, '시원한 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 6, 6),
+    ('example007', '울산광역시 남구 삼산동', '울산광역시', '남구', '삼산동', '순두부찌개', 8500, '순두부가 주재료인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 7, 7),
+    ('example008', '경기도 수원시 영통동', '경기도', '수원시', '영통동', '갈비탕', 15000, '소갈비가 들어간 맑은 국물 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 8, 8),
+    ('example009', '전라북도 전주시 덕진동', '전라북도', '전주시', '덕진동', '짜장면', 6000, '중국식 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 9, 9),
+    ('example010', '충청북도 청주시 상당동', '충청북도', '청주시', '상당동', '김밥', 4000, '밥과 재료를 김으로 말아 만든 음식', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 10, 10),
+    ('example011', '경상남도 김해시 삼계동', '경상남도', '김해시', '삼계동', '닭갈비', 11000, '닭고기 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 11, 11),
+    ('example012', '경상북도 포항시 북구', '경상북도', '포항시', '북구', '짬뽕', 9500, '얼큰한 중국식 면 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 12, 12),
+    ('example013', '경상남도 창원시 성산구', '경상남도', '창원시', '성산구', '된장찌개', 7500, '된장으로 끓인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 13, 13),
+    ('example014', '경기도 안양시 동안구', '경기도', '안양시', '동안구', '호떡', 3000, '한국식 길거리 팬케이크', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 14, 14),
+    ('example015', '경기도 의정부시 가능동', '경기도', '의정부시', '가능동', '국밥', 8500, '국에 밥말아 먹는 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 15, 15);
+
 
 
 -- likes

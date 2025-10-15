@@ -32,8 +32,10 @@ public class OAuth2SuccessController {
                 boss.getAddress(),
                 boss.getSiDo(),
                 boss.getGuGun(),
-                boss.getDongEupMyeon()
+                boss.getDongEupMyeon(),
+                boss.getRole()
         );
+
         session.setAttribute("loginBoss", sessionUser);
 
         // 주소 유무에 따라 분기
