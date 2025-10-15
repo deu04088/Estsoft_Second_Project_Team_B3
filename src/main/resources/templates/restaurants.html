@@ -82,7 +82,7 @@
                             <!-- S3에 등록된 식당 사진 가져오기 -->
                             <img th:src="${restaurant.s3Url}"
                                  alt="식당 이미지"
-                                 style="width: 100%; height: 100%; object-fit: cover;" />
+                                 style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" />
                             </div>
                             <h5 th:text="${restaurant.name}">식당 이름</h5>
                             <p th:text="${restaurant.menuName}">대표 메뉴</p>

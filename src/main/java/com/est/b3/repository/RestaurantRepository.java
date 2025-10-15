@@ -33,6 +33,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
     LEFT JOIN Like l ON l.restaurant = r
     WHERE r.siDo = :siDo
       AND r.dongEupMyeon = :dongEupMyeon
+      AND r.state = 1
     GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
     ORDER BY COUNT(l) DESC, r.name ASC
 """)
@@ -60,6 +61,7 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
   WHERE r.siDo = :siDo
     AND r.dongEupMyeon = :dongEupMyeon
     AND r.menuName LIKE %:menu%
+    AND r.state = 1
   GROUP BY r.id, r.name, r.menuName, r.price, r.address, p.s3Url, r.viewCount
   ORDER BY COUNT(l) DESC, r.name ASC
 """)

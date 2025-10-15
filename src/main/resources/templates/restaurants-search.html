@@ -63,14 +63,14 @@
                 <div class="col-md-3" th:each="restaurant : ${restaurants}">
                     <a th:href="@{'/restaurant-detail/' + ${restaurant.id}}" class="text-decoration-none text-dark">
                         <div class="restaurant-card">
-                            <div class="mb-2" style="height: 150px; background: #f1f3f5">
-                                <!-- 이미지 자리 -->
-                                <span>사진</span>
-                            </div>
-                            <h5 th:text="${restaurant.name}">한집 돼지국밥</h5>
-                            <p th:text="${restaurant.menuName}">돼지국밥</p>
-                            <p th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'">11,000원</p>
-                            <small>조회수 <span th:text="${restaurant.viewCount}">15</span></small>
+                            <img th:src="${restaurant.s3Url}"
+                                 alt="식당 이미지"
+                                 style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" />
+                        </div>
+                            <h5 th:text="${restaurant.name}"></h5>
+                            <p th:text="${restaurant.menuName}"></p>
+                            <p th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'"></p>
+                            <small>조회수 <span th:text="${restaurant.viewCount}"></span></small>
                         </div>
                     </a>
                 </div>
