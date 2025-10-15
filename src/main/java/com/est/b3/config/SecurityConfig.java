@@ -1,8 +1,8 @@
 package com.est.b3.config;
 
 import com.est.b3.config.security.CustomOAuth2UserService;
-import io.github.cdimascio.dotenv.Dotenv;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,14 +20,18 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService; // OAuth2UserService 주입
-    private final Dotenv dotenv = Dotenv.load();
+    private final CustomOAuth2UserService customOAuth2UserService;
+
+    @Value("${GOOGLE_CLIENT_ID}")
+    private String clientId;
+
+    @Value("${GOOGLE_CLIENT_SECRET}")
+    private String clientSecret;
+
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        String clientId = dotenv.get("GOOGLE_CLIENT_ID");
-        String clientSecret = dotenv.get("GOOGLE_CLIENT_SECRET");
 
         http
                 // 1. CSRF 비활성화 (개발 중 편의)
