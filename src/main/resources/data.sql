@@ -39,7 +39,27 @@ VALUES
     ('sample_012', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
     ('sample_013', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
     ('sample_014', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
-    ('sample_015', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP);
+    ('sample_015', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_016', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_017', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_018', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_019', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_020', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_021', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_022', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_023', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_024', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_025', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_026', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_027', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_028', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_029', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_030', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_031', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP),
+    ('sample_032', '/images/default-restaurant.png', 'default-restaurant.png', CURRENT_TIMESTAMP),
+    ('sample_033', '/images/restaurant-sample.jpg', 'restaurant-sample.jpg', CURRENT_TIMESTAMP),
+    ('sample_034', '/images/restaurant-sample2.jpg', 'restaurant-sample2.jpg', CURRENT_TIMESTAMP),
+    ('sample_035', '/images/restaurant-sample3.jpg', 'restaurant-sample3.jpg', CURRENT_TIMESTAMP);
 
 
 -- restaurants
@@ -60,7 +80,25 @@ VALUES
     ('example013', '경상남도 창원시 성산구', '경상남도', '창원시', '성산구', '된장찌개', 7500, '된장으로 끓인 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 13, 13),
     ('example014', '경기도 안양시 동안구', '경기도', '안양시', '동안구', '호떡', 3000, '한국식 길거리 팬케이크', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 14, 14),
     ('example015', '경기도 의정부시 가능동', '경기도', '의정부시', '가능동', '국밥', 8500, '국에 밥말아 먹는 요리', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 15, 15);
-
+-- restaurants: 의정부시 용현동 추가 식당
+INSERT INTO restaurants (name, address, si_do, gu_gun, dong_eup_myeon, menu_name, price, description, created_at, updated_at, state, boss_id, photo_id)
+VALUES
+    ('example016', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '돈까스', 9000, '바삭하게 튀긴 일본식 돈까스', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 16),
+    ('example017', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '우동', 7000, '쫄깃한 면발의 일본식 국수', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 17),
+    ('example018', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '오므라이스', 8000, '계란으로 감싼 볶음밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 18),
+    ('example019', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '카레라이스', 8500, '매콤한 일본식 카레', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 19),
+    ('example020', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '쌀국수', 9500, '베트남식 소고기 쌀국수', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 1, 20),
+    ('example021', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '해장국', 8500, '얼큰한 국물의 해장용 국밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 21),
+    ('example022', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '제육볶음', 9000, '매콤한 돼지고기 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 22),
+    ('example023', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '칼국수', 7000, '손으로 밀어 만든 국수', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 23),
+    ('example024', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '부대찌개', 10000, '햄과 소시지가 들어간 찌개', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 24),
+    ('example025', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '쭈꾸미볶음', 11000, '매콤한 해산물 볶음', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 25),
+    ('example026', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '냉모밀', 8000, '차가운 메밀국수', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 26),
+    ('example027', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '치킨', 16000, '바삭한 후라이드 치킨', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 27),
+    ('example028', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '라멘', 9500, '진한 육수의 일본식 라멘', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 28),
+    ('example029', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '소바', 8500, '일본식 메밀국수', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 2, 29),
+    ('example030', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '볶음밥', 7000, '불맛 가득한 볶음밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 3, 30),
+    ('example031', '경기도 의정부시 용현동', '경기도', '의정부시', '용현동', '오징어덮밥', 9500, '매콤한 오징어 볶음 덮밥', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1, 3, 31);
 
 
 -- likes
