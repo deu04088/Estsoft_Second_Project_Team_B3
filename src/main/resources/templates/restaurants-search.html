@@ -35,28 +35,32 @@
             <h2>우리 동네 식당 소개</h2>
             <p>오늘도 가장 앞서 뜨겁게 달립니다.</p>
         </section>
+        <!--
+            [검색 결과 페이지 흐름]
 
+            1. 사용자가 검색창에 메뉴명을 입력 후 제출
+               → GET /search?menu=값&page=n 요청
+
+            2. 백엔드에서:
+               - 로그인한 사용자의 address(User.address) 기반으로 Restaurant 테이블 조회
+               - menu LIKE 검색 조건 + address 필터 적용
+               - 페이징 처리하여 결과 반환
+
+            3. 화면 출력:
+               - 검색 키워드를 제목에 표시
+               - 검색된 식당 리스트를 카드 형태로 반복 렌더링
+
+            4. 카드 클릭:
+               - 해당 식당 상세 페이지(/restaurant-detail/{id})로 이동
+        -->
         <main class="container my-5">
-            <!--
-    [검색 결과 페이지 흐름]
 
-    1. 사용자가 검색창에 메뉴명을 입력 후 제출
-       → GET /search?menu=값&page=n 요청
-
-    2. 백엔드에서:
-       - 로그인한 사용자의 address(User.address) 기반으로 Restaurant 테이블 조회
-       - menu LIKE 검색 조건 + address 필터 적용
-       - 페이징 처리하여 결과 반환
-
-    3. 화면 출력:
-       - 검색 키워드를 제목에 표시
-       - 검색된 식당 리스트를 카드 형태로 반복 렌더링
-
-    4. 카드 클릭:
-       - 해당 식당 상세 페이지(/restaurant-detail/{id})로 이동
--->
 
             <h3 class="text-center mb-4">우리 동네 식당 소개</h3>
+            <!-- 검색된 식당이 없을 경우 안내 문구 -->
+            <div th:if="${page.totalElements == 0}" class="text-center my-5">
+                <p class="text-muted">검색한 메뉴를 파는 식당이 없습니다.</p>
+            </div>
             <!-- 검색 결과 리스트 -->
             <div class="row g-4">
                 <!-- 반복 렌더링 -->
@@ -66,12 +70,11 @@
                             <img th:src="${restaurant.s3Url}"
                                  alt="식당 이미지"
                                  style="width: 100%; aspect-ratio: 4/3; object-fit: cover;" />
-                        </div>
+                            </div>
                             <h5 th:text="${restaurant.name}"></h5>
                             <p th:text="${restaurant.menuName}"></p>
                             <p th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'"></p>
                             <small>조회수 <span th:text="${restaurant.viewCount}"></span></small>
-                        </div>
                     </a>
                 </div>
             </div>
