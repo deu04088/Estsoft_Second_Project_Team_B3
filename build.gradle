@@ -34,7 +34,7 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'com.h2database:h2'
-	runtimeOnly 'org.postgresql:postgresql'
+    implementation 'org.postgresql:postgresql:42.6.0'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
@@ -46,6 +46,7 @@ dependencies {
 	implementation 'org.webjars:stomp-websocket:2.3.4'
 	implementation 'software.amazon.awssdk:s3:2.20.26'
 	implementation 'me.paulschwarz:spring-dotenv:2.5.4'
+
 }
 
 tasks.named('test') {
