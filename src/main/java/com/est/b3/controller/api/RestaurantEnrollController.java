@@ -6,6 +6,7 @@ import com.est.b3.service.RestaurantEnrollService;
 import com.est.b3.service.RestaurantFileService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,9 @@ public class RestaurantEnrollController {
     private final RestaurantEnrollService restaurantEnrollService;
     private final RestaurantFileService restaurantFileService;
 
+    @Value("${spring.profiles.active:local}")
+    private String activeProfile;
+
     @PostMapping("/api/restaurant-form")
     public String saveRestaurantInfo(@RequestParam(value="photo") MultipartFile photo,
                                      @RequestParam(value="name") String name,
@@ -31,12 +35,11 @@ public class RestaurantEnrollController {
         // 사진 파일 저장 후 URL 생성
         //String photoUrl = restaurantEnrollService.savePhoto(photo);
 
+
         Photo photoEntity = null;
 
         if (photo != null && !photo.isEmpty()) {
-
-            // 현재 활성화된 프로필 가져오기
-            String activeProfile = System.getProperty("spring.profiles.active");
+            System.out.println("================ activeProfile = " + activeProfile);
 
             if ("local".equals(activeProfile)) {
                 photoEntity = restaurantFileService.savePhotoLocal(photo);

@@ -75,6 +75,12 @@ public interface RestaurantRepository extends JpaRepository<Restaurant, Long> {
   List<Restaurant> findAllWithBoss();
 
 
+  @Query("SELECT r.siDo, r.guGun, r.dongEupMyeon, COUNT(r) " +
+          "FROM Restaurant r " +
+          "GROUP BY r.siDo, r.guGun, r.dongEupMyeon")
+  List<Object[]> countRestaurantsByRegion();
+
+
   // 이미지 검색을 위한 bossId로 검색
   Optional<Restaurant> findByBossId(Long bossId);
 

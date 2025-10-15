@@ -7,6 +7,8 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <link th:href="@{/css/footer.css}" rel="stylesheet" />
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <!-- 내부 CSS  -->
     <style>
         .detail-container {
@@ -132,6 +134,10 @@
 <!-- Footer -->
 <div th:replace="partials/footer :: footer"></div>
 
+<!-- 관리자 모달 include -->
+<div th:replace="~{partials/admin-modal :: admin-modal}"></div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/js/admin-modal.js}"></script>
 </body>
 </html>

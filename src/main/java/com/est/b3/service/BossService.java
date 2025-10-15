@@ -63,6 +63,12 @@ public class BossService {
         Boss boss = bossRepository.findByUserName(request.getUserName())
                 .orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
 
+        // 탈퇴 회원 여부 체크
+        if (boss.getState() == 0) {
+            throw new CustomException(ErrorCode.WITHDRAWN_USER);
+        }
+
+        // 비밀번호 일치 검사
         if (!passwordEncoder.matches(request.getPassword(), boss.getPassword())) {
             throw new CustomException(ErrorCode.PASSWORD_MISMATCH);
         }

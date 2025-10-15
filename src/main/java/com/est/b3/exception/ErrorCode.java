@@ -18,6 +18,7 @@ public enum ErrorCode {
   USER_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 사용자를 찾을 수 없습니다."),
   PASSWORD_MISMATCH(HttpStatus.CONFLICT, "비밀번호가 일치하지 않습니다."),
   INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
+  WITHDRAWN_USER(HttpStatus.FORBIDDEN, "탈퇴한 회원입니다."),
 
   // 세션
   SESSION_NOT_FOUND(HttpStatus.UNAUTHORIZED, "로그인된 세션이 없습니다."),
