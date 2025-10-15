@@ -1,22 +1,21 @@
 package com.est.b3.controller.page;
 
+
 import com.est.b3.dto.SessionUserDTO;
-import java.util.HashMap;
-import java.util.Map;
-
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
-import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
+@RequiredArgsConstructor
 public class HomePageController {
 
-    private final String googleMapsApiKey = Dotenv.load().get("GOOGLE_MAPS_API_KEY");
+    @Value("${GOOGLE_MAPS_API_KEY}")
+    private String googleMapsApiKey;
 
 
   // 메인 페이지[단순 연결]
