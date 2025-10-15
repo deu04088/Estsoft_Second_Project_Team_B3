@@ -42,7 +42,7 @@ public class RestaurantReviseService {
     }
 
     @Transactional
-    public void updateRestaurant(Long id,
+    public void  updateRestaurant(Long id,
                                  String name,
                                  String menuName,
                                  Integer price,
