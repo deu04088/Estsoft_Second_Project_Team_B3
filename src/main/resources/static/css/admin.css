@@ -1,13 +1,11 @@
 /* ===== 관리자 공통 레이아웃 ===== */
 
-/* 전체 레이아웃 - 여백 최소화 */
 .admin-dashboard {
     min-height: 95vh;
     max-width: 95vw;
     margin: 0 auto;
 }
 
-/* 상단 라인 (대시보드 + 타이머 + 탭) */
 .admin-topbar {
     border-bottom: 1px solid #e9ecef;
     padding-bottom: 0.75rem;
@@ -23,11 +21,8 @@
     padding: 2px 10px;
 }
 
-/* 오른쪽 탭 */
-.admin-tabs {
-    gap: 1rem;
-}
-
+/* 탭 */
+.admin-tabs { gap: 1rem; }
 .admin-tab {
     font-weight: 500;
     color: #6c757d;
@@ -36,45 +31,53 @@
     padding-bottom: 0.25rem;
     border-bottom: 2px solid transparent;
 }
-
-.admin-tab:hover {
-    color: #212529;
-}
-
+.admin-tab:hover { color: #212529; }
 .admin-tab.active {
     color: #000;
     border-bottom-color: #000;
 }
 
-/* 콘텐츠 박스 */
+/* 콘텐츠 */
 .admin-content-box {
     background-color: #fff;
     border: 1px solid #e9ecef;
     border-radius: 0.75rem;
-    min-height: 400px;
+    min-height: 80vh;
 }
 
 /* 반응형 */
 @media (max-width: 992px) {
-    .admin-dashboard {
-        padding: 2rem 1rem;
-    }
+    .admin-dashboard { padding: 2rem 1rem; }
     .admin-topbar {
         flex-direction: column;
         align-items: flex-start;
         gap: 1rem;
     }
-    .admin-tabs {
-        flex-wrap: wrap;
-    }
+    .admin-tabs { flex-wrap: wrap; }
 }
 
-/* 테이블 행 hover 효과 */
-#userTable tbody tr:hover {
+/* 테이블 hover */
+#postTable tbody tr:hover {
     background-color: #f8f9fa;
 }
+.toggle-btn { min-width: 60px; }
 
-/* 상태 버튼 스타일 */
-.toggle-btn {
-    min-width: 60px;
+/* 페이지네이션 */
+.pagination {
+    justify-content: center;
+    gap: 0.25rem;
+}
+.page-item.active .page-link {
+    background-color: #20a198;
+    border-color: #20a198;
+    color: #fff;
+}
+.page-link {
+    color: #20a198;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+.page-link:hover {
+    background-color: #e8f7f7;
+    color: #18887f;
 }
