@@ -98,7 +98,7 @@
 }
 
 .message.me .message-content {
-    background: #20a198;
+    background: rgb(35, 143, 155);
     color: white;
 }
 
@@ -121,8 +121,8 @@
 
 /*메시지 전송 버튼*/
 .message-input button {
-    background-color: #20a198;
-    border-color: #20a198;
+    background-color: rgb(35, 143, 155);
+    border-color: rgb(35, 143, 155);
     color: white;
     font-weight: bold;
     padding: 0.5rem 1rem;
@@ -150,7 +150,7 @@
 }
 
 .message.me .message-content {
-    background: #20a198;
+    background: rgb(35, 143, 155);
     color: white;
 }
 

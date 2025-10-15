@@ -169,4 +169,32 @@ public class ChatService {
             throw new IllegalStateException("Sender ID " + senderId + " chatRoom ID " + chatRoomId);
         }
     }
+
+    // 채팅방 만들기(상점소개 게시물에서 사용)
+    public Long getOrCreateChatRoom(Long myBossId, Long partnerBossId) {
+        // 낮은 숫자의 id가 1, 큰 숫자의 id가 2
+        Long boss1Id = Math.min(myBossId, partnerBossId);
+        Long boss2Id = Math.max(myBossId, partnerBossId);
+
+        // 기존 채팅방 존재 확인
+        Optional<ChatRoom> existingRoom = chatRoomRepository.findByUser_IdAndUser2_Id(boss1Id, boss2Id);
+
+        if (existingRoom.isPresent()) {
+            // 이미 존재하는 경우, 해당 ID를 반환
+            return existingRoom.get().getId();
+        }
+
+        // 채팅방이 없다면 새로 생성
+        Boss boss1 = bossRepository.findById(boss1Id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 ID를 찾을 수 없습니다: " + boss1Id));
+        Boss boss2 = bossRepository.findById(boss2Id)
+                .orElseThrow(() -> new IllegalArgumentException("사용자 ID를 찾을 수 없습니다: " + boss2Id));
+
+        // ChatRoom의 정적 팩토리 메서드를 통해 생성 (내부에서 ID 정규화 처리)
+        ChatRoom newRoom = ChatRoom.create(boss1, boss2);
+
+        chatRoomRepository.save(newRoom);
+
+        return newRoom.getId();
+    }
 }
