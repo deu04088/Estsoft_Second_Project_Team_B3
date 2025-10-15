@@ -70,35 +70,39 @@
         <a th:href="@{/restaurants}" class="btn btn-link mb-3">&lt; 뒤로가기</a>
 
         <!-- 대표 이미지 -->
-        <img th:src="${restaurant.photoUrl}" alt="식당 이미지" class="restaurant-img">
+        <img th:src="${restaurant.getS3Url()}" alt="식당 이미지" class="restaurant-img">
 
         <!-- 상호명 -->
-        <h3 th:text="${restaurant.name}">OK Burger</h3>
+        <h3 th:text="${restaurant.getName()}">OK Burger</h3>
 
         <!-- 조회수/좋아요 -->
         <p>
-            조회수 <span th:text="${restaurant.viewCount}">15</span> |
-            좋아요 <span th:text="${restaurant.likeCount}">20</span>
-            <button class="btn btn-sm btn-outline-warning">👍</button>
+            조회수 <span th:text="${restaurant.getViewCount()}">15</span> |
+<!--            좋아요 <span th:text="${testRestaurant.likeCount}">20</span>-->
+<!--            <button class="btn btn-sm btn-outline-warning">👍</button>-->
+            좋아요 <span id="like-count" th:text="${restaurant.getLikeCount()}">0</span>
+            <button id="like-btn" class="btn btn-sm btn-outline-warning"
+                    th:attr="data-restaurant-id=${restaurant.getId()}">👍
+            </button>
 
             <!-- 타인 가게일 경우 (채팅하기) -->
-            <div th:unless="${restaurant.userId == sessionUser.id}">
-                <a th:href="@{'/chat?partnerId=' + ${restaurant.userId}}" class="btn btn-primary btn-action">채팅하기</a>
+            <div th:unless="${restaurant.getId() == sessionUser.id}">
+                <a th:href="@{'/chat?partnerId=' + ${restaurant.getId()}}" class="btn btn-primary btn-action">채팅하기</a>
             </div>
         </p>
 
         <!-- 대표 메뉴/가격 -->
-        <h5 th:text="${restaurant.menuName}">데리야끼 버거</h5>
-        <p th:text="${restaurant.description}">스테이크 200g과 양상추, 토마토로 당일 생산합니다.</p>
-        <p><strong th:text="${#numbers.formatInteger(restaurant.price,0)} + '원'">11,000원</strong></p>
-        <p>장소 | <span th:text="${restaurant.address}">강서구 화곡동</span></p>
+        <h5 th:text="${restaurant.getMenuName()}">데리야끼 버거</h5>
+        <p th:text="${restaurant.getDescription()}">스테이크 200g과 양상추, 토마토로 당일 생산합니다.</p>
+        <p><strong th:text="${#numbers.formatInteger(restaurant.getPrice(),0)} + '원'">11,000원</strong></p>
+        <p>장소 | <span th:text="${restaurant.getAddress()}">강서구 화곡동</span></p>
 
         <!-- 버튼 영역 -->
         <div class="mt-4">
             <!-- 본인 가게일 경우 (수정/삭제) -->
-            <div th:if="${restaurant.userId == sessionUser.id}">
-                <a th:href="@{'/update-form/' + ${restaurant.id}}" class="btn btn-secondary btn-action">수정하기</a>
-                <form th:action="@{'/api/restaurants/' + ${restaurant.id}}" method="post" style="display:inline;">
+            <div th:if="${restaurant.getId() == sessionUser.id}">
+                <a th:href="@{'/update-form/' + ${restaurant.getId()}}" class="btn btn-secondary btn-action">수정하기</a>
+                <form th:action="@{'/api/restaurants/' + ${restaurant.getId()}}" method="post" style="display:inline;">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" class="btn btn-danger btn-action">삭제하기</button>
                 </form>
@@ -106,6 +110,24 @@
         </div>
     </div>
 </main>
+
+<script th:inline="javascript">
+    const likeBtn = document.getElementById('like-btn');
+    const likeCountSpan = document.getElementById('like-count');
+
+    likeBtn.addEventListener('click', function() {
+        const restaurantId = this.getAttribute('data-restaurant-id');
+
+        fetch('/api/restaurants/' + restaurantId + '/like', {
+            method: 'POST',
+        })
+            .then(response => response.json())
+            .then(data => {
+                likeCountSpan.textContent = data.likeCount; // 서버에서 새 좋아요 수 반환
+            })
+            .catch(err => console.error(err));
+    });
+</script>
 
 <!-- Footer -->
 <div th:replace="partials/footer :: footer"></div>

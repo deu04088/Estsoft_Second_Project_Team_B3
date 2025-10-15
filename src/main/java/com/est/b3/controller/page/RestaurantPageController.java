@@ -2,10 +2,14 @@ package com.est.b3.controller.page;
 
 import com.est.b3.domain.Boss;
 import com.est.b3.dto.BossDto;
+import com.est.b3.dto.RestaurantInfoDto;
 import com.est.b3.dto.RestaurantResponseDto;
 import com.est.b3.dto.SessionUserDTO;
+import com.est.b3.repository.RestaurantRepository;
 import com.est.b3.service.RestaurantEnrollService;
+import com.est.b3.service.RestaurantReviseService;
 import com.est.b3.service.RestaurantService;
+import com.est.b3.service.RestaurantViewcountService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,6 +29,8 @@ public class RestaurantPageController {
 
     private final RestaurantService restaurantService;
     private final RestaurantEnrollService restaurantEnrollService;
+    private final RestaurantReviseService restaurantReviseService;
+    private final RestaurantViewcountService restaurantViewcountService;
 
     // 공통으로 더미 식당 생성하는 헬퍼 메서드 [추후 삭제]
     private Map<String, Object> createRestaurant(Long id, String name, String menuName,
@@ -112,14 +118,17 @@ public class RestaurantPageController {
     public String detail(@PathVariable Long id, Model model) {
 
         // 임시 데이터 [연결 확인용] : 추후 개발시 지우세요
-        Map<String, Object> restaurant = createRestaurant(
+        Map<String, Object> testRestaurant = createRestaurant(
                 id, "OK Burger", "더블치즈 버거", 11000, 15,
                 "/images/sample-burger.png", 12, 1L
         );
 
-        restaurant.put("description", "스테이크 200g과 양상추, 토마토로 당일 생산합니다.");
-        restaurant.put("address", "강서구 화곡동");
+        testRestaurant.put("description", "스테이크 200g과 양상추, 토마토로 당일 생산합니다.");
+        testRestaurant.put("address", "강서구 화곡동");
+        model.addAttribute("testRestaurant", testRestaurant);
 
+        RestaurantInfoDto restaurant = restaurantReviseService.getRestaurantById(id);
+        restaurantViewcountService.getRestaurantViewcount(restaurant.getId());
         model.addAttribute("restaurant", restaurant);
 
         // 임시 로그인 유저 (세션 대신)
