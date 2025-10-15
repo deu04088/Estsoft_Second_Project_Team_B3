@@ -89,10 +89,10 @@ public class Restaurant {
         this.siDo = siDo;
         this.guGun = guGun;
         this.dongEupMyeon = dongEupMyeon;
-    }
   }
 
   public void toggleState() {
     this.state = (this.state == 1) ? 0 : 1;
   }
+
 }
