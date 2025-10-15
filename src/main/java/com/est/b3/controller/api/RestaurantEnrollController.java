@@ -34,8 +34,21 @@ public class RestaurantEnrollController {
         Photo photoEntity = null;
 
         if (photo != null && !photo.isEmpty()) {
-            photoEntity = restaurantFileService.savePhotoLocal(photo);
+
+            // 현재 활성화된 프로필 가져오기
+            String activeProfile = System.getProperty("spring.profiles.active");
+
+            if ("local".equals(activeProfile)) {
+                photoEntity = restaurantFileService.savePhotoLocal(photo);
+
+                System.out.println("[Local Mode] 로컬 uploads 폴더에 저장됨: " + photoEntity.getS3Url());
+            } else {
+                photoEntity = restaurantFileService.savePhotoS3(photo);
+
+                System.out.println("[Production Mode] S3 버킷에 저장됨: " + photoEntity.getS3Url());
+            }
         }
+
 
         SessionUserDTO loginBoss = (SessionUserDTO) session.getAttribute("loginBoss");
         Long bossId = loginBoss.getId();
