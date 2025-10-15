@@ -95,4 +95,13 @@ public class Restaurant {
     this.state = (this.state == 1) ? 0 : 1;
   }
 
+  public void incrementView() {
+      if(this.viewCount == null) {
+          this.viewCount = 1;
+      }
+      else{
+          this.viewCount += 1;
+      }
+  }
+
 }
