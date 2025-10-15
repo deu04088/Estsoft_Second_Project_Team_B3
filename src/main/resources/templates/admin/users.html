@@ -36,6 +36,20 @@
 
     <!-- 메인 콘텐츠 -->
     <section class="admin-content-box shadow-sm rounded-4 p-4">
+
+        <!-- 필터 영역 -->
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <label for="stateFilter" class="fw-semibold text-secondary">회원 상태:</label>
+                <select id="stateFilter" class="form-select form-select-sm" style="width: 160px;">
+                    <option value="all">전체</option>
+                    <option value="active">정상 회원</option>
+                    <option value="deleted">탈퇴 회원</option>
+                </select>
+            </div>
+            <p class="small text-muted mb-0">총 <span id="userCount">0</span>명</p>
+        </div>
+
         <div class="table-responsive">
             <table class="table align-middle text-center" id="userTable">
                 <thead class="table-light">
@@ -53,6 +67,11 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- 페이지네이션 -->
+        <nav>
+            <ul class="pagination justify-content-center mt-4" id="pagination"></ul>
+        </nav>
     </section>
 
 </main>

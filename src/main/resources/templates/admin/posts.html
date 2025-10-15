@@ -12,6 +12,7 @@
 </head>
 
 <body>
+<!-- 헤더 -->
 <div th:replace="partials/logined-header :: logined-header"></div>
 
 <main class="admin-dashboard container-fluid px-4 py-5">
@@ -33,8 +34,23 @@
         </nav>
     </div>
 
-    <!-- 게시물 테이블 -->
+    <!-- 메인 콘텐츠 -->
     <section class="admin-content-box shadow-sm rounded-4 p-4">
+
+        <!-- 필터 -->
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+            <div class="d-flex align-items-center gap-2">
+                <label for="stateFilter" class="fw-semibold text-secondary">게시물 상태:</label>
+                <select id="stateFilter" class="form-select form-select-sm" style="width:150px;">
+                    <option value="all">전체</option>
+                    <option value="public">공개 게시글</option>
+                    <option value="private">비공개 게시글</option>
+                </select>
+            </div>
+            <p class="small text-muted mb-0">총 <span id="postCount">0</span>건</p>
+        </div>
+
+        <!-- 테이블 -->
         <div class="table-responsive">
             <table class="table align-middle text-center" id="postTable">
                 <thead class="table-light">
@@ -53,9 +69,15 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- 페이지네이션 -->
+        <nav>
+            <ul class="pagination justify-content-center mt-4" id="pagination"></ul>
+        </nav>
     </section>
 </main>
 
+<!-- 푸터 -->
 <div th:replace="partials/footer :: footer"></div>
 <div th:replace="~{partials/admin-modal :: admin-modal}"></div>
 

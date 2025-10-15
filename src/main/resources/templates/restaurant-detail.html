@@ -7,107 +7,201 @@
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <link th:href="@{/css/header.css}" rel="stylesheet" />
     <link th:href="@{/css/footer.css}" rel="stylesheet" />
-    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
-    <!-- 내부 CSS  -->
+
     <style>
-        .detail-container {
-            max-width: 800px;
-            margin: 2rem auto;
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 8px;
+        /* ---------- 전체 레이아웃 ---------- */
+        main.container {
+            max-width: 90vw;
+            margin: 4rem auto 5rem;
+            min-height: 85vh; /* footer 안보이게 */
         }
 
+        .detail-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 3rem;
+            flex-wrap: wrap;
+        }
+
+        /* ---------- 뒤로가기 버튼 ---------- */
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            margin-top: 2rem; /* 위 여백 확보 */
+            color: #009688;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* ---------- 좌측 이미지 ---------- */
         .restaurant-img {
-            width: 100%;
-            height: 300px;
+            flex: 1 1 50%;
+            max-width: 800px;
+            height: 680px;
             object-fit: cover;
-            border-radius: 6px;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.18);
+        }
+
+        /* ---------- 우측 정보 상자 ---------- */
+        .info-box {
+            flex: 1 1 35%;
+            background: #fff;
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .info-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 1rem;
         }
 
+        .info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #222;
+            margin: 0;
+        }
+
+        /* ---------- 항목 줄 ---------- */
+        .info-line {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.6rem;
+            font-size: 1rem;
+            color: #555;
+        }
+        .info-line span.value {
+            font-weight: 500;
+            color: #222;
+        }
+
+        /* ---------- 설명 / 가격 ---------- */
+        .description {
+            margin-top: 1rem;
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #444;
+        }
+        .price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #009688;
+            margin-top: 1rem;
+        }
+
+        /* ---------- 메타(조회수, 좋아요) ---------- */
+        .meta {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: #666;
+        }
+        .meta i {
+            margin-right: 6px;
+            color: #ff6b6b;
+        }
+
+        /* ---------- 버튼 ---------- */
         .btn-action {
-            min-width: 100px;
+            min-width: 110px;
+            font-size: 0.9rem;
+        }
+        .btn-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        /* ---------- 반응형 ---------- */
+        @media (max-width: 992px) {
+            .detail-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .restaurant-img {
+                width: 100%;
+                height: 380px;
+            }
+            .info-box {
+                width: 100%;
+                padding: 2rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
 <!-- Header -->
 <div th:replace="partials/logined-header :: logined-header"></div>
 
 <main class="container">
-
-<!--
-    [식당 상세 페이지 흐름]
-
-    1. 페이지 진입 시:
-       - GET /api/restaurants/{id} API 호출 → Restaurant 데이터 조회
-       - 조회수 +1 업데이트 처리(POST)
-
-    2. 버튼 표시 조건:
-       - restaurant.userId == session.user.id → 수정하기/삭제하기 버튼 표시
-       - restaurant.userId != session.user.id → 채팅하기 버튼 표시
-
-    3. 좋아요:
-       - "👍" 버튼 클릭 시 POST /api/restaurants/{id}/like
-       - 이미 좋아요 누른 경우 → DELETE /api/restaurants/{id}/like
-
-    4. 수정하기:
-       - /restaurant-form/{id} 페이지로 이동 (기존 값 불러오기)
-
-    5. 삭제하기:
-       - DELETE /api/restaurants/{id} API 호출
-       - 성공 시 → /restaurants 페이지로 redirect
-
-    6. 채팅하기:
-       - POST /chats 요청 (상대방 userId 전달)
-       - 성공 시 → /chat/{roomId} 페이지로 이동
-    -->
-
+    <!-- 뒤로가기 -->
+    <a th:href="@{/restaurants}" class="back-btn">&lt; 목록으로 돌아가기</a>
 
     <div class="detail-container">
-        <!-- 뒤로가기 -->
-        <a th:href="@{/restaurants}" class="btn btn-link mb-3">&lt; 뒤로가기</a>
-
-        <!-- 대표 이미지 -->
+        <!-- 좌측 이미지 -->
         <img th:src="${restaurant.getS3Url()}" alt="식당 이미지" class="restaurant-img">
 
-        <!-- 상호명 -->
-        <h3 th:text="${restaurant.getName()}">OK Burger</h3>
+        <!-- 우측 정보 -->
+        <div class="info-box">
+            <div>
+                <div class="info-header">
+                    <h3 class="info-title" th:text="${restaurant.getName()}">식당 이름</h3>
 
-        <!-- 조회수/좋아요 -->
-        <p>
-            조회수 <span th:text="${restaurant.getViewCount()}">15</span> |
-<!--            좋아요 <span th:text="${testRestaurant.likeCount}">20</span>-->
-<!--            <button class="btn btn-sm btn-outline-warning">👍</button>-->
-            좋아요 <span id="like-count" th:text="${restaurant.getLikeCount()}">0</span>
-            <button id="like-btn" class="btn btn-sm btn-outline-warning"
-                    th:attr="data-restaurant-id=${restaurant.getId()}">👍
-            </button>
+                    <!-- 버튼 (상호명 옆으로 이동) -->
+                    <div class="btn-header">
+                        <!-- 본인 가게 -->
+                        <div th:if="${restaurant.getId() == sessionUser.id}">
+                            <a th:href="@{'/update-form/' + ${restaurant.getId()}}" class="btn btn-secondary btn-action">수정</a>
+                            <form th:action="@{|/api/restaurants/${restaurant.getId()}/delete|}" method="post" style="display:inline;">
+                                <input type="hidden" name="_method" value="delete">
+                                <button type="submit" class="btn btn-danger btn-action">삭제</button>
+                            </form>
+                        </div>
 
-            <!-- 타인 가게일 경우 (채팅하기) -->
-            <div th:unless="${restaurant.getId() == sessionUser.id}">
-                <a th:href="@{'/chat?partnerId=' + ${restaurant.getId()}}" class="btn btn-primary btn-action">채팅하기</a>
-            </div>
-        </p>
+                        <!-- 타인 가게 -->
+                        <div th:unless="${restaurant.getId() == sessionUser.id}">
+                            <a th:href="@{'/chat?partnerId=' + ${restaurant.getId()}}" class="btn btn-primary btn-action">채팅하기</a>
+                        </div>
+                    </div>
+                </div>
 
-        <!-- 대표 메뉴/가격 -->
-        <h5 th:text="${restaurant.getMenuName()}">데리야끼 버거</h5>
-        <p th:text="${restaurant.getDescription()}">스테이크 200g과 양상추, 토마토로 당일 생산합니다.</p>
-        <p><strong th:text="${#numbers.formatInteger(restaurant.getPrice(),0)} + '원'">11,000원</strong></p>
-        <p>장소 | <span th:text="${restaurant.getAddress()}">강서구 화곡동</span></p>
+                <div class="info-line">
+                    <span>대표 메뉴</span>
+                    <span class="value" th:text="${restaurant.getMenuName()}">김치찌개</span>
+                </div>
+                <div class="info-line">
+                    <span>가격</span>
+                    <span class="value" th:text="${#numbers.formatInteger(restaurant.getPrice(),0)} + '원'">8,000원</span>
+                </div>
+                <div class="info-line">
+                    <span>주소</span>
+                    <span class="value" th:text="${restaurant.getAddress()}">서울 강서구 화곡동</span>
+                </div>
 
-        <!-- 버튼 영역 -->
-        <div class="mt-4">
-            <!-- 본인 가게일 경우 (수정/삭제) -->
-            <div th:if="${restaurant.getId() == sessionUser.id}">
-                <a th:href="@{'/update-form/' + ${restaurant.getId()}}" class="btn btn-secondary btn-action">수정하기</a>
-                <form th:action="@{|/api/restaurants/${restaurant.getId()}/delete|}" method="post" style="display:inline;">
-                    <input type="hidden" name="_method" value="delete">
-                    <button type="submit" class="btn btn-danger btn-action">삭제하기</button>
-                </form>
+                <p class="description" th:text="${restaurant.getDescription()}">
+                    김치와 돼지고기를 넣고 깊게 끓인 진한 김치찌개입니다.
+                </p>
+
+                <div class="meta">
+                    <span><i class="fa-solid fa-eye"></i>조회수 <span th:text="${restaurant.getViewCount()}">0</span></span>
+                    &nbsp;&nbsp;|&nbsp;&nbsp;
+                    <span><i class="fa-solid fa-heart"></i>좋아요 <span id="like-count" th:text="${restaurant.getLikeCount()}">0</span></span>
+                    <button id="like-btn" class="btn btn-sm btn-outline-warning ms-2"
+                            th:attr="data-restaurant-id=${restaurant.getId()}">좋아요</button>
+                </div>
             </div>
         </div>
     </div>
@@ -116,19 +210,17 @@
 <script th:inline="javascript">
     const likeBtn = document.getElementById('like-btn');
     const likeCountSpan = document.getElementById('like-count');
-
-    likeBtn.addEventListener('click', function() {
-        const restaurantId = this.getAttribute('data-restaurant-id');
-
-        fetch('/api/restaurants/' + restaurantId + '/like', {
-            method: 'POST',
-        })
-            .then(response => response.json())
-            .then(data => {
-                likeCountSpan.textContent = data.likeCount; // 서버에서 새 좋아요 수 반환
-            })
-            .catch(err => console.error(err));
-    });
+    if (likeBtn) {
+        likeBtn.addEventListener('click', function() {
+            const restaurantId = this.getAttribute('data-restaurant-id');
+            fetch('/api/restaurants/' + restaurantId + '/like', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    likeCountSpan.textContent = data.likeCount;
+                })
+                .catch(err => console.error(err));
+        });
+    }
 </script>
 
 <!-- Footer -->
