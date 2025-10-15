@@ -63,7 +63,7 @@ public class Restaurant {
   @JoinColumn(name = "photo_id")
   private Photo photo;
 
-  @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY /*park*/, cascade = CascadeType.REMOVE, orphanRemoval = true)
   private List<Like> likes = new ArrayList<>();
 
   @Column(name = "view_count")
