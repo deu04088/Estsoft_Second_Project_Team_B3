@@ -109,7 +109,8 @@ export function setupButton() {
         // 시/도 + 구/군 + 동/읍/면 가져오기
         const juso = data.juso[0];
         const fullAddress = [juso.siNm, juso.sggNm, juso.emdNm]
-        .filter(p => p && p.trim() !== "")
+        .map(p => p ? p.trim().split(" ")[0] : "")
+        .filter(p => p !== "")
         .join(" ");
 
       // 기기위치로 지도 새로 표시
