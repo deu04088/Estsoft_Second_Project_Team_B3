@@ -60,6 +60,11 @@ public class RestaurantPageController {
             return "redirect:/login"; // 로그인 안 되어 있으면 index.html로 이동
         }
 
+        // 주소 정보가 없으면 동네 인증 페이지로
+        if (sessionUser.getAddress() == null || sessionUser.getAddress().isBlank()) {
+            return "redirect:/address-certify";
+        }
+
         Long bossId = sessionUser.getId();
         Page<RestaurantResponseDto> page = restaurantService.getRestaurantsByBossAddress(bossId, pageable);
 

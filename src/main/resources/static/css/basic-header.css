@@ -67,3 +67,27 @@
 .auth-page .custom-header .header-title {
     color: #333; /* 글자도 처음부터 검정 */
 }
+
+
+/* ===== certify-page 페이지 전용  ===== */
+.certify-page .custom-header {
+    z-index: 0;
+}
+
+.certify-page .custom-header .header-title {
+    color: #333; /* 글자도 처음부터 검정 */
+}
+
+.btn-mainpage {
+    background-color: #009688;
+    color: white;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+.btn-mainpage:hover {
+    background-color: #009688;
+    color: white;
+}
