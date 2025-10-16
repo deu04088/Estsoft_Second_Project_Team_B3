@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
+    // 사용자 검색으로 채팅방 리스트 반환
     List<ChatRoom> findByUser_Id(Long userId);
 
     List<ChatRoom> findByUser2_Id(Long userId);
@@ -19,4 +21,3 @@ public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     // 찾고 내림차순 정렬
     List<ChatRoom> findByUser_IdOrUser2_IdOrderByCreatedAtDesc(Long bossId1, Long bossId2);
 }
-
