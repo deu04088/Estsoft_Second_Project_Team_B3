@@ -38,6 +38,11 @@ public class ChatPageController {
             return "redirect:/login";
         }
 
+        // 주소 정보가 없으면 동네 인증 페이지로
+        if (sessionUser.getAddress() == null || sessionUser.getAddress().isBlank()) {
+            return "redirect:/address-certify";
+        }
+
         // 사용자 아이디 확인
         Long bossId = sessionUser.getId();
         log.info("[SESSION] boss id : " + bossId);

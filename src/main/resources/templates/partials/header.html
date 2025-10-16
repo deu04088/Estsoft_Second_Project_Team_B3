@@ -8,7 +8,7 @@
         </a>
 
         <!-- 버튼 -->
-        <div>
+        <div class="d-flex align-items-center gap-2">
             <!-- 로그인 안 한 경우 -->
             <a th:if="${session.loginBoss == null}"
                th:href="@{/login}"
@@ -17,14 +17,22 @@
             </a>
 
             <!-- 로그인 한 경우 -->
-            <form th:if="${session.loginBoss != null}"
-                  id="logoutForm"
-                  th:action="@{/api/bosses/logout}"
-                  method="post" class="d-inline">
-                <button type="submit" class="btn-rounded btn-logout">
-                    <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
-                </button>
-            </form>
+            <div th:if="${session.loginBoss != null}" class="d-flex align-items-center gap-2">
+
+                <!-- 메인 페이지 이동 버튼 -->
+                <a th:href="@{/restaurants}" class="btn-rounded btn-mainpage">
+                    <i class="fa-solid fa-store"></i> 우리동네
+                </a>
+
+                <!-- 로그아웃 -->
+                <form id="logoutForm"
+                      th:action="@{/api/bosses/logout}"
+                      method="post" class="d-inline">
+                    <button type="submit" class="btn-rounded btn-logout">
+                        <i class="fa-solid fa-right-from-bracket"></i> 로그아웃
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
 
