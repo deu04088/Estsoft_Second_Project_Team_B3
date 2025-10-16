@@ -73,13 +73,14 @@ public class ChatService {
 
         // 상대 사용자 Boss ID로 Restaurant에서 사진 찾기
         String profileUrl = "/images/default-profile.png"; // 기본값 - 없으면 들어감
-        Optional<Restaurant> restaurantOpt = restaurantRepository.findByBossId(partner.getId());
 
-        if (restaurantOpt.isPresent()) {
-            Restaurant restaurant = restaurantOpt.get();
-            Photo photo = restaurant.getPhoto();
-
-            if (photo != null) {
+        // 여러 식당을 운영하는 사장의 경우 가장 낮은 id의 사진을 가져옴
+        // 대표 식당의 이미지 느낌
+        List<Restaurant> restaurants = restaurantRepository.findAllByBossIdOrderByIdAsc(partner.getId());
+        if (!restaurants.isEmpty()) {
+            Restaurant firstRestaurant = restaurants.get(0); // 가장 낮은 ID
+            Photo photo = firstRestaurant.getPhoto();
+            if (photo != null && photo.getS3Url() != null) {
                 profileUrl = photo.getS3Url();
             }
         }
@@ -171,7 +172,13 @@ public class ChatService {
     }
 
     // 채팅방 만들기(상점소개 게시물에서 사용)
+    @Transactional
     public Long getOrCreateChatRoom(Long myBossId, Long partnerBossId) {
+        // 자기와의 채팅 기능 없음
+        if (myBossId.equals(partnerBossId)) {
+            throw new IllegalArgumentException("자기 자신과 채팅방을 생성할 수 없습니다.");
+        }
+
         // 낮은 숫자의 id가 1, 큰 숫자의 id가 2
         Long boss1Id = Math.min(myBossId, partnerBossId);
         Long boss2Id = Math.max(myBossId, partnerBossId);
@@ -192,8 +199,18 @@ public class ChatService {
 
         // ChatRoom의 정적 팩토리 메서드를 통해 생성 (내부에서 ID 정규화 처리)
         ChatRoom newRoom = ChatRoom.create(boss1, boss2);
+        ChatRoom savedRoom = chatRoomRepository.save(newRoom);
 
-        chatRoomRepository.save(newRoom);
+        // 채팅방 생성되면 자동으로 메시지 하나 보냄
+        Message initialMessage = Message.builder()
+                .chatRoom(savedRoom)
+                .sender(bossRepository.getReferenceById(myBossId)) // 메시지 보낸 사람은 myBossId
+                .content("안녕하세요~ 항상 수고하십니다~")
+                .isRead(0) // 초기 메시지는 상대방이 읽지 않은 상태
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        messageRepository.save(initialMessage);
 
         return newRoom.getId();
     }

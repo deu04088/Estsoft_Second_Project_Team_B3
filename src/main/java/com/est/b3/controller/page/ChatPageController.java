@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Comparator;
 import java.util.List;
@@ -25,7 +26,7 @@ public class ChatPageController {
     private final ChatService chatService;
 
     @GetMapping
-    public String chatList(HttpSession session, Model model) {
+    public String chatList(HttpSession session, Model model, @RequestParam(required = false) Long partnerId) {
         // 세션 내의 정보 확인
         Object sessionAttribute = session.getAttribute("loginBoss");
 
@@ -40,6 +41,26 @@ public class ChatPageController {
         // 사용자 아이디 확인
         Long bossId = sessionUser.getId();
         log.info("[SESSION] boss id : " + bossId);
+
+        if (partnerId != null) {
+            // 자기 자신과의 채팅 방지
+            if (bossId.equals(partnerId)) {
+                log.warn("[CHAT] 자기 자신과 채팅 시도: bossId={}", bossId);
+                return "redirect:/chat"; // 목록 페이지로 돌아감
+            }
+
+            try {
+                // ChatService에서 채팅방 생성 및 초기 메시지 저장이 모두 처리됨
+                Long chatRoomId = chatService.getOrCreateChatRoom(bossId, partnerId);
+                log.info("[CHAT] 채팅방 생성 또는 조회 성공: roomId={}", chatRoomId);
+
+                // 생성된 채팅방 ID로 리다이렉트하여 상세 페이지 로드
+                return "redirect:/chat/" + chatRoomId;
+            } catch (IllegalArgumentException e) {
+                log.error("[CHAT] 채팅방 생성 오류: {}", e.getMessage());
+                return "redirect:/chat"; // 오류 시 목록 페이지로 리다이렉트
+            }
+        }
 
         // 채팅방 리스트 가져오기, 최근 메시지 시간 기준으로 내림차순 정렬
         // 채팅방, 사용자 id 전달
