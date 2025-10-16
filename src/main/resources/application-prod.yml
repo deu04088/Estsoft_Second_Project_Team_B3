@@ -25,9 +25,7 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
             redirect-uri: "https://b3-pjt.kro.kr/login/oauth2/code/google"
-            scope:
-              - email
-              - profile
+            scope: profile,email
 
 aws:
   access-key-id: ${AWS_ACCESS_KEY_ID}

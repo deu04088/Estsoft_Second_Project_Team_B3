@@ -16,7 +16,7 @@ public class CustomGoogleClientRegistration {
                 .userInfoUri("https://www.googleapis.com/oauth2/v3/userinfo") // 사용자 정보 요청 URL
                 .userNameAttributeName("sub") // 구글의 사용자 고유 ID
                 .clientName("Google")
-                .redirectUri("{baseUrl}/login/oauth2/code/google") // OAuth2 표준 리디렉트 경로
+                .redirectUri("https://b3-pjt.kro.kr/login/oauth2/code/google") // OAuth2 표준 리디렉트 경로
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .build();
     }
