@@ -106,55 +106,50 @@
 <main class="container">
     <h2 class="text-center mb-4 fw-bold">식당 등록</h2>
 
-    <div class="form-container">
-        <!-- 왼쪽: 이미지 업로드 -->
-        <div class="upload-section">
-            <label class="form-label mb-3 fw-semibold">업장 사진</label>
-            <div class="upload-box">
-                <label for="photo">
-                    <img id="preview" src="/images/upload-icon.png" alt="업로드 미리보기" />
-                </label>
-                <input type="file" id="photo" name="photo" accept="image/*" />
+    <form th:action="@{/api/restaurant-form}" method="post" enctype="multipart/form-data">
+        <div class="form-container">
+            <!-- 왼쪽: 이미지 업로드 -->
+            <div class="upload-section">
+                <label class="form-label mb-3 fw-semibold">업장 사진</label>
+                <div class="upload-box">
+                    <label for="photo">
+                        <img id="preview" src="/images/upload-icon.png" alt="업로드 미리보기" />
+                    </label>
+                    <input type="file" id="photo" name="photo" accept="image/*" />
+                </div>
             </div>
-        </div>
 
-        <!-- 오른쪽: 입력 폼 -->
-        <div class="form-fields">
-            <form th:action="@{/api/restaurant-form}" method="post" enctype="multipart/form-data">
+            <!-- 오른쪽: 입력 폼 -->
+            <div class="form-fields">
                 <div class="mb-3">
                     <label for="name" class="form-label">상호명</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="상호명을 입력해주세요" required />
+                    <input type="text" id="name" name="name" class="form-control" required />
                 </div>
-
                 <div class="mb-3">
                     <label for="menuName" class="form-label">대표 메뉴</label>
-                    <input type="text" id="menuName" name="menuName" class="form-control" placeholder="대표 메뉴를 입력해주세요" required />
+                    <input type="text" id="menuName" name="menuName" class="form-control" required />
                 </div>
-
                 <div class="mb-3">
                     <label for="price" class="form-label">가격</label>
                     <input type="number" id="price" name="price" class="form-control" placeholder="가격을 입력해주세요"
                            inputmode="numeric" pattern="[0-9]*" required />
                 </div>
-
                 <div class="mb-3">
                     <label for="description" class="form-label">대표 메뉴 설명</label>
-                    <textarea id="description" name="description" class="form-control" rows="3"
-                              placeholder="대표 메뉴에 대한 설명을 적어주세요"></textarea>
+                    <textarea id="description" name="description" class="form-control"></textarea>
                 </div>
-
                 <div class="mb-3">
                     <label for="address" class="form-label">가게 위치</label>
                     <input type="text" id="address" name="address" class="form-control"
-                           th:value="${boss.address}" placeholder="가게 주소를 입력해주세요" />
+                           th:value="${boss.address}" />
                 </div>
-
                 <div class="d-grid gap-2 mt-4">
                     <button type="submit" class="btn btn-submit">완료</button>
                 </div>
-            </form>
+            </div>
         </div>
-    </div>
+    </form>
+
 </main>
 
 <!-- Footer -->
