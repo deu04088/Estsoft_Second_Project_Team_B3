@@ -24,21 +24,18 @@ public class RestaurantEnrollController {
     private String activeProfile;
 
     @PostMapping("/api/restaurant-form")
-    public String saveRestaurantInfo(@RequestParam(value="photo") MultipartFile photo,
+    public String saveRestaurantInfo(@RequestParam(value="photo", required = false) MultipartFile photo,
                                      @RequestParam(value="name") String name,
                                      @RequestParam(value="menuName") String menuName,
                                      @RequestParam(value="price") Integer price,
                                      @RequestParam(value="description") String description,
                                      @RequestParam(value="address") String address,
                                      HttpSession session) throws IOException {
-//
-        // 사진 파일 저장 후 URL 생성
-        //String photoUrl = restaurantEnrollService.savePhoto(photo);
-
 
         Photo photoEntity = null;
 
         if (photo != null && !photo.isEmpty()) {
+            System.out.println("업로드된 파일명: " + photo.getOriginalFilename());
             System.out.println("================ activeProfile = " + activeProfile);
 
             if ("local".equals(activeProfile)) {
@@ -50,15 +47,31 @@ public class RestaurantEnrollController {
 
                 System.out.println("[Production Mode] S3 버킷에 저장됨: " + photoEntity.getS3Url());
             }
+
+        } else {
+
+            System.out.println("사진이 업로드되지 않았습니다.");
+
+            photoEntity = Photo.builder()
+                    .s3Key("default-restaurant.png")
+                    .s3Url("/images/default-restaurant.png")  // static 폴더 경로
+                    .originalFilename("기본 이미지")
+                    .uploadDate(java.time.LocalDateTime.now())
+                    .build();
         }
 
-
         SessionUserDTO loginBoss = (SessionUserDTO) session.getAttribute("loginBoss");
-        Long bossId = loginBoss.getId();
 
-//        System.out.println(loginBoss.getId());
+        if (loginBoss == null) {
+            System.out.println("세션이 없습니다. loginBoss == null");
+
+            throw new IllegalStateException("로그인 세션이 만료되었습니다.");
+        }
+
+        Long bossId = loginBoss.getId();
         restaurantEnrollService.saveRestaurant(name, menuName, price, description, address, photoEntity, bossId);
 
         return "redirect:/restaurants";
     }
+
 }
