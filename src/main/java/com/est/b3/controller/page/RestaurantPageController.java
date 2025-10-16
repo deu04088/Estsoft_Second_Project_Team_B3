@@ -5,7 +5,6 @@ import com.est.b3.dto.BossDto;
 import com.est.b3.dto.RestaurantInfoDto;
 import com.est.b3.dto.RestaurantResponseDto;
 import com.est.b3.dto.SessionUserDTO;
-import com.est.b3.repository.BossRepository;
 import com.est.b3.repository.RestaurantRepository;
 import com.est.b3.service.RestaurantEnrollService;
 import com.est.b3.service.RestaurantReviseService;
