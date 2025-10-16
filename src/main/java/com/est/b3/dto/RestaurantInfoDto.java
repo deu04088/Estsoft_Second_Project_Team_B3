@@ -19,11 +19,12 @@ public class RestaurantInfoDto {
     private String guGun;
     private String dongEupMyeon;
     private Integer likeCount = 0;
+    private Long bossId;
 
 
     public RestaurantInfoDto(Long id, String name, String menuName, int price,
         String address, String photoUrl, Integer viewCount, String description,
-        String siDo, String guGun, String dongEupMyeon, Integer likeCount) {
+        String siDo, String guGun, String dongEupMyeon, Integer likeCount, Long bossId) {
         this.id = id;
         this.name = name;
         this.menuName = menuName;
@@ -36,6 +37,7 @@ public class RestaurantInfoDto {
         this.guGun = guGun;
         this.dongEupMyeon = dongEupMyeon;
         this.likeCount = likeCount;
+        this.bossId = bossId;
     }
 
 }

@@ -38,7 +38,8 @@ public class RestaurantReviseService {
                 restaurant.getSiDo(),
                 restaurant.getGuGun(),
                 restaurant.getDongEupMyeon(),
-                restaurant.getLikes() != null ? restaurant.getLikes().size() : 0
+                restaurant.getLikes() != null ? restaurant.getLikes().size() : 0,
+                restaurant.getBoss().getId()
         );
     }
 
