@@ -173,38 +173,42 @@
 </section>
 
 <main class="container">
-    <!-- 인기 식당 TOP4 -->
-    <div class="section-title">
-        <i class="fa-solid fa-crown"></i>
-        우리 동네 인기 식당 TOP 4
-    </div>
 
-    <div class="row g-4 mb-5">
-        <div class="col-md-3 col-sm-6"
-             th:each="restaurant, iterStat : ${restaurants}"
-             th:if="${iterStat.index < 4}">
-            <a th:href="@{/restaurant-detail/{id}(id=${restaurant.id})}" class="text-decoration-none">
-                <div class="restaurant-card top-card">
-                    <div class="restaurant-header" th:text="${restaurant.name}">식당 이름</div>
-                    <img th:src="${restaurant.s3Url}" alt="식당 이미지" class="restaurant-img" />
-                    <div class="restaurant-body">
-                        <p><span>대표메뉴:</span> <span th:text="${restaurant.menuName}">김치찌개</span></p>
-                        <p><span>대표가격:</span> <span th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'">8000원</span></p>
-                        <div class="stats">
-                            <i class="fa-solid fa-eye"></i>
-                            <span th:text="${restaurant.viewCount != null ? restaurant.viewCount : 0}">0</span>
+    <!-- 인기 식당 TOP4 -->
+    <div th:if="${page.number == 0}">
+        <div class="section-title">
+            <i class="fa-solid fa-crown"></i>
+            우리 동네 인기 식당 TOP 4
+        </div>
+
+        <div class="row g-4 mb-5">
+            <div class="col-md-3 col-sm-6"
+                 th:each="restaurant, iterStat : ${restaurants}"
+                 th:if="${iterStat.index < 4}">
+                <a th:href="@{/restaurant-detail/{id}(id=${restaurant.id})}" class="text-decoration-none">
+                    <div class="restaurant-card top-card">
+                        <div class="restaurant-header" th:text="${restaurant.name}">식당 이름</div>
+                        <img th:src="${restaurant.s3Url}" alt="식당 이미지" class="restaurant-img" />
+                        <div class="restaurant-body">
+                            <p><span>대표메뉴:</span> <span th:text="${restaurant.menuName}">김치찌개</span></p>
+                            <p><span>대표가격:</span> <span th:text="${#numbers.formatInteger(restaurant.price, 0)} + '원'">8000원</span></p>
+                            <div class="stats">
+                                <i class="fa-solid fa-eye"></i>
+                                <span th:text="${restaurant.viewCount != null ? restaurant.viewCount : 0}">0</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
     </div>
+
 
     <!-- 나머지 식당 리스트 -->
     <div class="row g-4">
         <div class="col-md-3 col-sm-6"
              th:each="restaurant, iterStat : ${restaurants}"
-             th:if="${iterStat.index >= 4}">
+             th:if="${page.number == 0 ? iterStat.index >= 4 : true}">
             <a th:href="@{/restaurant-detail/{id}(id=${restaurant.id})}" class="text-decoration-none">
                 <div class="restaurant-card">
                     <div class="restaurant-header" th:text="${restaurant.name}">식당 이름</div>
@@ -221,6 +225,7 @@
             </a>
         </div>
     </div>
+
 
     <!-- 페이지네이션 -->
     <div class="d-flex justify-content-center my-4" th:if="${page.totalElements > 0}">
