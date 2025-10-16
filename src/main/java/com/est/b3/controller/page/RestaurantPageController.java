@@ -115,28 +115,32 @@ public class RestaurantPageController {
 
     // 식당 상세 페이지
     @GetMapping("/restaurant-detail/{id}")
-    public String detail(@PathVariable Long id, Model model) {
+    public String detail(@PathVariable Long id, Model model, HttpSession session) {
 
         // 임시 데이터 [연결 확인용] : 추후 개발시 지우세요
-        Map<String, Object> testRestaurant = createRestaurant(
-                id, "OK Burger", "더블치즈 버거", 11000, 15,
-                "/images/sample-burger.png", 12, 1L
-        );
-
-        testRestaurant.put("description", "스테이크 200g과 양상추, 토마토로 당일 생산합니다.");
-        testRestaurant.put("address", "강서구 화곡동");
-        model.addAttribute("testRestaurant", testRestaurant);
+//        Map<String, Object> testRestaurant = createRestaurant(
+//                id, "OK Burger", "더블치즈 버거", 11000, 15,
+//                "/images/sample-burger.png", 12, 1L
+//        );
+//
+//        testRestaurant.put("description", "스테이크 200g과 양상추, 토마토로 당일 생산합니다.");
+//        testRestaurant.put("address", "강서구 화곡동");
+//        model.addAttribute("testRestaurant", testRestaurant);
 
         RestaurantInfoDto restaurant = restaurantReviseService.getRestaurantById(id);
         restaurantViewcountService.getRestaurantViewcount(restaurant.getId());
         model.addAttribute("restaurant", restaurant);
 
         // 임시 로그인 유저 (세션 대신)
-        Map<String, Object> sessionUser = new HashMap<>();
-        sessionUser.put("id", 1L);   // 현재 로그인했다고 가정
-        sessionUser.put("username", "tester");
+//        Map<String, Object> sessionUser = new HashMap<>();
+//        sessionUser.put("id", 1L);   // 현재 로그인했다고 가정
+//        sessionUser.put("username", "tester");
+//
+//        model.addAttribute("sessionUser", sessionUser);
 
-        model.addAttribute("sessionUser", sessionUser);
+        Long bossId = ((SessionUserDTO) session.getAttribute("loginBoss")).getId();
+        BossDto boss = restaurantEnrollService.getBossById(bossId);
+        model.addAttribute("boss", boss);
 
         return "restaurant-detail"; // templates/restaurant-detail.html
     }
