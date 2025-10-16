@@ -163,7 +163,7 @@
                     <!-- 버튼 (상호명 옆으로 이동) -->
                     <div class="btn-header">
                         <!-- 본인 가게 -->
-                        <div th:if="${restaurant.getId() == sessionUser.id}">
+                        <div th:if="${restaurant.getBossId() == boss.getId()}">
                             <a th:href="@{'/update-form/' + ${restaurant.getId()}}" class="btn btn-secondary btn-action">수정</a>
                             <form th:action="@{|/api/restaurants/${restaurant.getId()}/delete|}" method="post" style="display:inline;">
                                 <input type="hidden" name="_method" value="delete">
@@ -172,7 +172,7 @@
                         </div>
 
                         <!-- 타인 가게 -->
-                        <div th:unless="${restaurant.getId() == sessionUser.id}">
+                        <div th:unless="${restaurant.getBossId() == boss.getId()}">
                             <a th:href="@{'/chat?partnerId=' + ${restaurant.getId()}}" class="btn btn-primary btn-action">채팅하기</a>
                         </div>
                     </div>
