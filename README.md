@@ -81,6 +81,28 @@
 | **배포** | <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> |
 | **협업툴** | <img src="https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> |
 ---
+## 프로젝트 구조
+```plaintext
+B3 Project
+ ├─ java
+ │    ├─ config               # 환경 설정 관련 클래스 (시큐리티, CORS 등)
+ │    ├─ controller           # 클라이언트 요청을 처리하는 컨트롤러
+ │    ├─ domain               # 엔티티(Entity) 클래스
+ │    ├─ dto                  # 데이터 전송 객체 (Data Transfer Object)
+ │    ├─ exception            # 예외 처리 관련 클래스
+ │    ├─ repository           # JPA 리포지토리 인터페이스
+ │    ├─ service              # 비즈니스 로직을 담당하는 서비스 클래스
+ │    └─ B3Application.java   # 스프링 부트 메인 실행 클래스
+ │
+ └─ resources
+     ├─ static                  # 정적 리소스 (CSS, JS, 이미지 등)
+     ├─ templates               # Thymeleaf 템플릿 파일 (HTML)
+     ├─ application.yml         # 공통 설정 파일
+     ├─ application-local.yml   # 로컬 환경 설정 파일
+     ├─ application-prod.yml    # 운영 환경 설정 파일
+     └─ data.sql                # 초기 데이터 삽입용 SQL 스크립트
+```
+---
 ## 🖋 커밋 컨벤션
 | **type** | **설명** |
 | --- | --- |
