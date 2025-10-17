@@ -1,5 +1,5 @@
 ## 🖥️ 프로젝트 소개
- 배달의 민족 이용하는 가게 사장님들을 위한 배달 시스템 관리 플랫폼 구현 
+- 배달의 민족 이용하는 가게 사장님들을 위한 배달 시스템 관리 플랫폼 구현 
 ---
 ## 👨‍👩‍👧‍👦 팀 소개
 - 최보운 : 팀장(프로젝트 총괄), 초기 기초 틀 작성 / 메인페이지, 로그인, 로그아웃, 시큐리티 구현
@@ -15,7 +15,7 @@
 - spring 기반 프로젝트 구성
 - view 의 경우에는 html+타임리프를 권장
 - 아래와 같은 화면의 레이아웃과 화면 내 구현 기능은 필수로 구성
-- <img width="1728" height="1129" alt="image" src="https://github.com/user-attachments/assets/36ff6604-20fd-40ce-a50a-47ea93f544c9" />
+- <img width="1728" height="1129" alt="image" src="https://github.com/user-attachments/assets/36ff6604-20fd-40ce-a50a-47ea93f544c9" width="700" height="370"/>
 - 기본 구성 외 추가적인 기능, 스타일링, 반응형은 자유롭게 진행
 - 작업 진행 사항은 매일 업데이트
 
