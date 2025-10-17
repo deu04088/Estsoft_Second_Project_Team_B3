@@ -2,11 +2,21 @@
 - 배달의 민족 이용하는 가게 사장님들을 위한 배달 시스템 관리 플랫폼 구현 
 ---
 ## 👨‍👩‍👧‍👦 팀 소개
-| **최보윤** | **김승호** | **김재영** | **박주영** | **장중원** |
-| --- | --- | --- | --- | --- |
-| 팀장 | 문서 관리자 | 요구사항 명세서 작성자 | Git 관리자 | DB 관리자 |
-| 메인페이지, 로그인, 로그아웃, 시큐리티 구현 | 채팅 구현 | 주소 인증 구현, AWS 셋팅 및 배포 | 식당 등록, 식당 상세 구현 | 식당 목록, 식당 검색 구현 |
-
+- 최보운
+  - 팀장(프로젝트 총괄), 초기 기초 틀 작성
+  - 메인페이지, 로그인, 로그아웃, 시큐리티 구현
+- 김승호
+  - 문서 관리(노션 팀페이지, 회의록)
+  - 채팅 구현
+- 김재영
+  - 요구사항 명세서 작성, 전역 예제처리 구현
+  - 주소 인증 구현, AWS 셋팅 및 배포
+- 박주영
+  - Git 관리(커밋 컨벤션 정리)
+  - 식당 등록, 식당 상세 구현
+- 장중원
+  - DB 관리(JPA Entity, Repository)
+  - 식당 목록, 식당 검색 구현
 ---
 ## 🕰️ 개발 기간
 - 9월 23일 ~ 10월 20일
@@ -62,14 +72,14 @@
 - 지역별 등록 식당 수 통계
 ---
 ## ⚙ 기술 스택
+| **영역** | **기술** |
+| --- | --- |
 | **Backend** | <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=SpringBoot&logoColor=white"> |
 | **Frontend** | <img src="https://img.shields.io/badge/thymeleaf-005F0F?style=for-the-badge&logo=Thymeleaf&logoColor=white"> <img src="https://img.shields.io/badge/bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">|
 | **Database** | <img src="https://img.shields.io/badge/h2database-09476B?style=for-the-badge&logo=h2database&logoColor=white"> <img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"> |
-| **API** | <img src="https://img.shields.io/badge/postgresql-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"> |
-| **배포** | <img src="https://img.shields.io/badge/googlemaps-4285F4?style=for-the-badge&logo=googlemaps&logoColor=white"> |
-| **협업툴** | <img src="https://img.shields.io/badge/Notion-%23000000.svg?style=flat&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> |
-
-- Database : PostgreSQL 
+| **API** | <img src="https://img.shields.io/badge/googlemaps-4285F4?style=for-the-badge&logo=googlemaps&logoColor=white"> |
+| **배포** | <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> |
+| **협업툴** | <img src="https://img.shields.io/badge/Notion-000000.svg?style=flat&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white"> |
 ---
 ## 🖋 커밋 컨벤션
 | **type** | **설명** |
