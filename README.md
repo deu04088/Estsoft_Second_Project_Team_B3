@@ -1,7 +1,11 @@
 ## 🖥️ 프로젝트 소개
 - 배달의 민족 이용하는 가게 사장님들을 위한 배달 시스템 관리 플랫폼 구현
-  |<img width="250" height="120" alt="image" src="https://github.com/user-attachments/assets/cfbdd168-e97e-4e5b-a00c-58575fa2c961" />|<img width="250" height="120" alt="image" src="https://github.com/user-attachments/assets/d0d89e39-1008-4720-b004-fb778efba7a4" />
-|
+  
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/cfbdd168-e97e-4e5b-a00c-58575fa2c961" width="49%" />
+  <img src="https://github.com/user-attachments/assets/d0d89e39-1008-4720-b004-fb778efba7a4" width="49%" />
+</p>
+
 
 ---
 ## 👨‍👩‍👧‍👦 팀 소개
