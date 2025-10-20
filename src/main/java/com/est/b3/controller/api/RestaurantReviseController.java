@@ -2,6 +2,7 @@ package com.est.b3.controller.api;
 
 import com.est.b3.domain.Photo;
 import com.est.b3.domain.Restaurant;
+import com.est.b3.repository.PhotoRepository;
 import com.est.b3.repository.RestaurantRepository;
 import com.est.b3.service.RestaurantFileService;
 import com.est.b3.service.RestaurantReviseService;
@@ -20,18 +21,26 @@ public class RestaurantReviseController {
     private final RestaurantReviseService restaurantReviseService;
     private final RestaurantFileService restaurantFileService;
     private final RestaurantRepository restaurantRepository;
+    private final PhotoRepository photoRepository;
 
     @PostMapping("/api/update-form")
-    public String updateRestaurantInfo(@RequestParam(value="id") Long id,
-                                       @RequestParam(value="photo") MultipartFile photo,
-                                       @RequestParam(value="name") String name,
-                                       @RequestParam(value="menuName") String menuName,
-                                       @RequestParam(value="price") Integer price,
-                                       @RequestParam(value="description") String description,
-                                       @RequestParam(value="address") String address) throws IOException {
+    public String updateRestaurantInfo(@RequestParam("id") Long id,
+        @RequestParam(value = "photo", required = false) MultipartFile photo,
+        @RequestParam(value = "existingPhotoId", required = false) Long existingPhotoId,
+        @RequestParam("name") String name,
+        @RequestParam("menuName") String menuName,
+        @RequestParam("price") Integer price,
+        @RequestParam("description") String description,
+        @RequestParam("address") String address) throws IOException {
 
-        Photo photoEntity = null;
-        photoEntity = restaurantFileService.savePhotoLocal(photo);
+        Photo photoEntity;
+
+        if (photo != null && !photo.isEmpty()) {
+            photoEntity = restaurantFileService.savePhotoLocal(photo);
+        } else {
+            photoEntity = photoRepository.findById(existingPhotoId)
+                .orElseThrow(() -> new IllegalArgumentException("기존 사진을 찾을 수 없습니다."));
+        }
 
         Map<String, String> add = restaurantReviseService.separateAddress(address);
         String siDo = add.get("siDo");

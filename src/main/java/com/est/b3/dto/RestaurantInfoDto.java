@@ -1,5 +1,6 @@
 package com.est.b3.dto;
 
+import com.est.b3.domain.Photo;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -20,11 +21,13 @@ public class RestaurantInfoDto {
     private String dongEupMyeon;
     private Integer likeCount = 0;
     private Long bossId;
+    private Photo photo;
 
 
     public RestaurantInfoDto(Long id, String name, String menuName, int price,
         String address, String photoUrl, Integer viewCount, String description,
-        String siDo, String guGun, String dongEupMyeon, Integer likeCount, Long bossId) {
+        String siDo, String guGun, String dongEupMyeon, Integer likeCount, Long bossId,
+        Photo photo) {
         this.id = id;
         this.name = name;
         this.menuName = menuName;
@@ -38,6 +41,7 @@ public class RestaurantInfoDto {
         this.dongEupMyeon = dongEupMyeon;
         this.likeCount = likeCount;
         this.bossId = bossId;
+        this.photo = photo;
     }
 
 }
