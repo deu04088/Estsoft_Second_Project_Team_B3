@@ -50,9 +50,17 @@
                 <!-- 등록 폼 -->
                 <form th:action="@{/api/update-form}" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="id" th:value="${restaurant.getId()}" >
+                    <!-- 기존 사진 -->
+                    <div class="mb-3">
+                        <label class="form-label">현재 식당 사진</label>
+                        <div>
+                            <img th:src="@{${restaurant.photo.s3Url}}" alt="현재 사진" width="200" />
+                        </div>
+                    </div>
+
                     <!-- 사진 업로드 -->
                     <div class="mb-3">
-                        <label class="form-label">업장 사진</label>
+                        <label class="form-label">식당 사진 변경</label>
                         <div class="upload-box">
                             <label for="photo">
                                 <img src="/images/upload-icon.png" alt="업로드" width="40" />
@@ -60,6 +68,9 @@
                             <input type="file" id="photo" name="photo" accept="image/*" />
                         </div>
                     </div>
+
+                    <!-- 기존 사진 ID 전달 -->
+                    <input type="hidden" name="existingPhotoId" th:value="${restaurant.photo.id}" />
 
                     <!-- 상호명 -->
                     <div class="mb-3">
